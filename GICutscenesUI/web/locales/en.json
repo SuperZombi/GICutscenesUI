@@ -1,0 +1,18 @@
+{
+	"title": "GICutscenes",
+	"files_mode": "Files Mode",
+	"folder_mode": "Folder Mode",
+	"settings": "Settings",
+	"select_files": "Select Files",
+	"select_files_dots": "Select Files:",
+
+	"change": "Change",
+	"reset": "Reset",
+	"reset_title": "Delete Settings File",
+	"export": "Export",
+	"export_title": "Export Settings to File",
+	"language": "Language:",
+	"merge": "Merge Video and Audio",
+	"clear": "🗑Clear",
+	"start": "START"
+}
