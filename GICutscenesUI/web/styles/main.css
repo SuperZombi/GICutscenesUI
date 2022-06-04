@@ -1,3 +1,6 @@
+:root{
+	scroll-behavior: smooth;
+}
 body{
 	font-family: sans-serif;
 }
@@ -106,7 +109,7 @@ label{
 }
 
 #start{
-	position: absolute;
+	position: fixed;
 	right: 10px;
 	bottom: 14px;
 	font-size: 18pt;
