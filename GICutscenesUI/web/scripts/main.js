@@ -20,6 +20,7 @@ function openTab(tab){
 	document.getElementById(tab).classList.add("showed")
 	document.querySelector(".tab > button.active").classList.remove("active")
 	document.querySelector(`.tab > button[data=${tab}]`).classList.add("active")
+	setTimeout(_=>{window.scrollTo(0, 0)})
 }
 
 
