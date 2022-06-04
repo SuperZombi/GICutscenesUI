@@ -7,6 +7,7 @@ User Interface for [Genshin Cutscenes Demuxer](https://github.com/ToaHartor/GI-c
 
 ## Screenshots:
 <details>
+  <summary></summary>
   <img src="github/images/main.png" width="550px">
   <img src="github/images/settings.png" width="550px">
 </details>
