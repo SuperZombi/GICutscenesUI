@@ -7,7 +7,7 @@ import subprocess
 import json
 
 CONSOLE_DEBUG_MODE = False
-__version__ = '0.0.2'
+__version__ = '0.1.0'
 
 # ---- Required Functions ----
 
