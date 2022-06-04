@@ -16,27 +16,9 @@ def resource_path(relative_path):
 	base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
 	return os.path.join(base_path, relative_path)
 
-def executable_path(to_where="folder"):
-	_path = os.path.abspath(__file__)
-	
-	if to_where == "file":
-		return _path
-
-	_path = _path.split("\\")
-	_path = _path[0:-1]
-
-	final_path = ""
-	for i in range(len(_path)):
-		final_path += _path[i]
-		if i != len(_path)-1:
-			final_path += "\\"
-
-	return final_path
-
 @eel.expose
 def get_version():
 	return __version__
-
 
 # ---- Locales ----
 
@@ -53,12 +35,12 @@ def get_translation(code):
 # ---- GICutscenes Functions ----
 
 def find_GICutscenes():
-	cur_folder = executable_path()
+	cur_folder = os.getcwd()
 	files = [f for f in os.listdir(cur_folder) if os.path.isfile(os.path.join(cur_folder, f))]
 	if "GICutscenes.exe" in files:
 		return os.path.join(cur_folder, "GICutscenes.exe")
 
-	cur_folder = os.path.dirname(executable_path())
+	cur_folder = os.path.dirname(os.getcwd())
 	files = [f for f in os.listdir(cur_folder) if os.path.isfile(os.path.join(cur_folder, f))]
 	if "GICutscenes.exe" in files:
 		return os.path.join(cur_folder, "GICutscenes.exe")
@@ -69,7 +51,7 @@ def find_GICutscenes():
 
 def load_settings_inline():
 	global SCRIPT_FILE, OUTPUT_F
-	set_file = os.path.join(executable_path(), "UI-settings.json")
+	set_file = os.path.join(os.getcwd(), "UI-settings.json")
 	if os.path.exists(set_file):
 		with open(set_file, 'r', encoding='utf-8') as file:
 			settings = json.loads(file.read())
@@ -80,13 +62,13 @@ def load_settings_inline():
 				OUTPUT_F = settings["output_folder"]
 	else:
 		SCRIPT_FILE = find_GICutscenes()
-		OUTPUT_F = os.path.join(executable_path(), "output")
+		OUTPUT_F = os.path.join(os.getcwd(), "output")
 
 load_settings_inline()
 
 @eel.expose
 def load_settings():
-	set_file = os.path.join(executable_path(), "UI-settings.json")
+	set_file = os.path.join(os.getcwd(), "UI-settings.json")
 	if os.path.exists(set_file):
 		with open(set_file, 'r', encoding='utf-8') as file:
 			settings = json.loads(file.read())
@@ -97,7 +79,7 @@ def load_settings():
 def save_settings(settings):
 	settings['script_file'] = SCRIPT_FILE
 	settings['output_folder'] = OUTPUT_F
-	with open(os.path.join(executable_path(), "UI-settings.json"), 'w', encoding='utf-8') as file:
+	with open(os.path.join(os.getcwd(), "UI-settings.json"), 'w', encoding='utf-8') as file:
 		file.write(json.dumps(settings, indent=4, ensure_ascii=False))
 	return True
 
@@ -105,9 +87,9 @@ def save_settings(settings):
 def delete_settings():
 	global SCRIPT_FILE, OUTPUT_F
 	SCRIPT_FILE = find_GICutscenes()
-	OUTPUT_F = os.path.join(executable_path(), "output")
+	OUTPUT_F = os.path.join(os.getcwd(), "output")
 	
-	set_file = os.path.join(executable_path(), "UI-settings.json")
+	set_file = os.path.join(os.getcwd(), "UI-settings.json")
 	if os.path.exists(set_file):
 		os.remove(set_file)
 		return True
@@ -179,7 +161,7 @@ def start_work(files, args):
 	file_lenth = len(files)
 	send_message_to_ui_output("file_count", [0, file_lenth])
 	# Make folders
-	temp_folder = os.path.join(executable_path(), "Temp")
+	temp_folder = resource_path("Temp")
 	if not os.path.exists(temp_folder):
 		os.mkdir(temp_folder)
 	if not os.path.exists(OUTPUT_F):
