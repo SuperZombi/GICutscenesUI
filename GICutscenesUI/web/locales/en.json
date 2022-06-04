@@ -1,0 +1,27 @@
+{
+	"home": "Home",
+	"settings": "Settings",
+	"select_files": "Select Files",
+	"select_files_dots": "Select Files:",
+
+	"change": "Change",
+	"reset": "Reset",
+	"reset_title": "Delete Settings File",
+	"export": "Export",
+	"export_title": "Export Settings to File",
+	"language": "Language:",
+	"output_folder": "Output Folder:",
+	"merge": "Merge Video and Audio",
+	"clear": "🗑Clear",
+	"start": "START",
+
+	"no_files": "No Files!",
+	"select_script_file": "Select Script File!",
+	"saved": "Saved!",
+	"confirm_delete_settings": "Are you sure you want to Delete all Settings?",
+
+	"copy_files": "Copying Files...",
+	"run_demux": "Converting and Decrypting...",
+	"rename_files": "Renaming Files...",
+	"run_merge": "Merging Video and Audio..."
+}
