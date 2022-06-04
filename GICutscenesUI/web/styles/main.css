@@ -185,6 +185,7 @@ input[type="checkbox"]{
 #output{
 	box-sizing: border-box;
 	width: 100%;
+	resize: vertical;
 }
 #current_work_file{
 	font-family: monospace;
