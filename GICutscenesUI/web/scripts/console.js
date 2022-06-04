@@ -22,10 +22,14 @@ function putMessageInOutput(type, message) {
 		if (message == "finish"){
 			work_status.innerHTML = ""
 			document.getElementById("current_work_file").innerHTML = ""
+			document.getElementById("start").style.filter = "";
+			document.getElementById("start").style.pointerEvents = "auto";
 			BLOCK_START = false;
 		}
 		else if (message == "start"){
 			BLOCK_START = true;
+			document.getElementById("start").style.filter = "grayscale(1)";
+			document.getElementById("start").style.pointerEvents = "none";
 		}
 		else{
 			work_status.innerHTML = LANG(message)
