@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>GICutscenes</title>
+	<script type="text/javascript" src="/eel.js"></script>
+	<link rel="stylesheet" href="styles/main.css">
+	<link rel="stylesheet" href="styles/dark.css">
+	<script src="scripts/language.js" defer></script>
+	<script src="scripts/settings.js" defer></script>
+	<script src="scripts/console.js" defer></script>
+	<script src="scripts/main.js" defer></script>
+</head>
+<body>
+
+	<div class="tab">
+		<button data="home" class="active" onclick="openTab('home')" translation="__home__">Home</button>
+		<button data="settings" onclick="openTab('settings')" translation="__settings__">Settings</button>
+	</div>
+
+
+
+	<div class="tabcontent showed" id="home">
+		<h2 translation="__select_files_dots__">Select Files:</h2>
+		<button id="fileSelector" class="browse" onclick="selectFiles()" translation="__select_files__">Select Files</button>
+		<details id="preview_zone" open>
+			<summary></summary>
+		</details>
+
+		<div id="progress">
+			<progress id="progress_bar"></progress>
+			<span id="current_progress">0/0</span>
+			<span id="current_work"></span>
+			<div id="current_work_file"></div>
+
+			<div id="console_wrapper">
+				<textarea id="output" cols="30" rows="10" readonly></textarea>
+				<button onclick="clearConsole()" translation="__clear__">🗑Clear</button>
+			</div>
+
+			<button onclick="openOutputFolder()"  translation="__open_output_dir__" class="browse" id="open_dir">Open Output Dir</button>
+		</div>
+
+		<button onclick="start()" id="start" translation="__start__">START</button>
+	</div>
+
+
+
+	<div class="tabcontent" id="settings">
+		<h2><code>GICutscenes.exe:</code></h2>
+		<input type="text" readonly class="path" id="script_path">
+		<button onclick="change_script_folder()" class="path_button" translation="__change__">Change</button>
+
+		<hr>
+		<p></p>
+		<div class="version_flex">
+			<div>
+				<button class="settings-button blue" onclick="resetSettings()" title="Delete Settings File"
+				translation="__title:reset_title__ __reset__" 
+				>Reset</button>
+				<button class="settings-button" onclick="exportSettings()" title="Export Settings to File" translation="__title:export_title__ __export__">Export</button>
+			</div>
+			<div>
+				<span translation="__version__">version:</span><code id="version"></code>
+			</div>
+		</div>
+		<p></p>
+
+		<fieldset>
+			<legend translation="__appearance__">Appearance</legend> 
+			<div class="version_flex" style="justify-content:space-evenly;">
+				<div>
+				<h3 translation="__language__" style="display:inline-block;">Language:</h3>
+					<select class="settings_element" name="lang" onchange="getTranslation()" style="margin-left:10px">
+						<option value="en" selected>English</option>
+						<option value="ru">Русский</option>
+					</select>
+				</div>
+				
+				<div>
+				<h3 translation="__theme__" style="display:inline-block;">Theme:</h3>
+					<select class="settings_element" name="theme" onchange="changeTheme()" style="margin-left:10px">
+						<option translation="__light__" value="light" selected>Light</option>
+						<option translation="__dark__" value="dark">Dark</option>
+					</select>
+				</div>
+			</div>
+		</fieldset>
+
+		<h3 translation="__output_folder__">Output Folder:</h3>
+		<input type="text" readonly class="path" id="output_path" class="settings_element">
+		<button onclick="change_output_folder()" class="path_button" translation="__change__">Change</button>
+		<hr>
+
+		<p>
+			<input type="checkbox" id="merge" name="merge" class="settings_element">
+			<span class="info_icon" translation="__title:using_ffmpeg_promt__" title="With using ffmpeg"></span>
+			<label for="merge" translation="__merge__">Merge Video and Audio</label>
+
+			<select class="settings_element" name="audio_index" style="margin-left:10px;" translation="__title:track_index_promt__" title="Track index">
+				<option value="0">Audio 0</option>
+				<option value="1" selected>Audio 1 - English</option>
+				<option value="2">Audio 2</option>
+				<option value="3">Audio 3</option>
+			</select>
+
+		</p>
+	</div>
+
+</body>
+</html>
