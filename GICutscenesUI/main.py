@@ -170,6 +170,7 @@ def start_work(files, args):
 	if not os.path.exists(OUTPUT_F):
 		os.mkdir(OUTPUT_F)
 
+	OLD_DIR = os.getcwd()
 	os.chdir(os.path.dirname(SCRIPT_FILE))
 
 	for i, file in enumerate(files):
@@ -228,6 +229,7 @@ def start_work(files, args):
 	send_message_to_ui_output("file_count", [file_lenth, file_lenth])
 	send_message_to_ui_output("event", "finish")
 	shutil.rmtree(temp_folder)
+	os.chdir(OLD_DIR)
 
 
 eel.init(resource_path("Web"))
