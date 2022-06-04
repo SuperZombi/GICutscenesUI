@@ -9,7 +9,7 @@ User Interface for [Genshin Cutscenes Demuxer](https://github.com/ToaHartor/GI-c
   <summary></summary>
   <img src="github/images/main.png" width="550px">
   <img src="github/images/settings.png" width="550px">
-  <img src="github/images/animation.gif" height="640px">
+  <img src="github/images/animation_low.gif">
 </details>
 
 ## Usage:
