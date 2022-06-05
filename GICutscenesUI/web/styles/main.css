@@ -193,6 +193,7 @@ input[type="checkbox"]{
 #current_work_file{
 	font-family: monospace;
 	color: green;
+	margin-top: 4px;
 }
 
 .version_flex{
