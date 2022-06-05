@@ -1,6 +1,6 @@
-<img src="github/images/icons/UI/ui-1.png" height="250px" align="right">
-
 # GI-Cutscenes UI
+
+<img src="github/images/icons/UI/ui-1.png" height="250px" align="right">
 
 User Interface for [Genshin Cutscenes Demuxer](https://github.com/ToaHartor/GI-cutscenes)
 
