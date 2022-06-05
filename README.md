@@ -1,8 +1,10 @@
+<img src="github/images/icons/UI/ui-1.png" height="250px" align="right">
+
 # GI-Cutscenes UI
 
 User Interface for [Genshin Cutscenes Demuxer](https://github.com/ToaHartor/GI-cutscenes)
 
-<img src="https://shields.io/badge/version-v0.1.0-blue">
+<img src="https://shields.io/badge/version-v0.2.0-blue">
 
 ## Screenshots:
 <details>
