@@ -20,3 +20,7 @@ User Interface for [Genshin Cutscenes Demuxer](https://github.com/ToaHartor/GI-c
 ## Requirements:
 1. [Ffmpeg](https://ffmpeg.org/)
 2. [Eel](https://pypi.org/project/Eel/)
+
+## FAQ
+### 1) I have an error in merging video
+Try to update your ffmpeg to the latest version. Most likely you are using an old version (which is installed by default), which does not support the VP9 codec.
