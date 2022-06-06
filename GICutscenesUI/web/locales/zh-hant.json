@@ -1,0 +1,36 @@
+{
+	"home": "主頁",
+	"settings": "設置",
+	"select_files": "選擇文件",
+	"select_files_dots": "選擇文件:",
+	"version": "版本:",
+
+	"change": "更改",
+	"reset": "重置",
+	"reset_title": "清空設置文件",
+	"export": "保存",
+	"export_title": "導出設置到文件",
+	"language": "語言:",
+	"output_folder": "輸出文件夾:",
+	"merge": "合並視頻和音頻",
+	"clear": "🗑清空",
+	"start": "開始",
+	"appearance": "外觀",
+	"theme": "主題:",
+	"light": "淺色",
+	"dark": "深色",
+
+	"no_files": "無文件!",
+	"select_script_file": "選擇腳本文件!",
+	"saved": "已保存!",
+	"confirm_delete_settings": "確定刪除所有設置嗎?",
+
+	"using_ffmpeg_promt": "使用 ffmpeg",
+	"track_index_promt": "音軌列表",
+
+	"copy_files": "正在復製文件...",
+	"run_demux": "正在轉換和解密...",
+	"rename_files": "正在重命名文件...",
+	"run_merge": "正在合並視頻和音頻...",
+	"open_output_dir": "打開輸出文件夾"
+}
