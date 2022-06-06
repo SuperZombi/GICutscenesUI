@@ -30,3 +30,12 @@
 ## FAQ
 ### 1) I have an error in merging video
 Try to update your ffmpeg to the latest version. Most likely you are using an old version (which is installed by default), which does not support the VP9 codec.
+
+
+<br>
+
+### Help with <a href="translations.md">translation</a>
+
+<hr>
+
+#### <a href="https://www.donationalerts.com/r/super_zombi">Support the project</a> (But now it's better to email me and I'll send you the details)
