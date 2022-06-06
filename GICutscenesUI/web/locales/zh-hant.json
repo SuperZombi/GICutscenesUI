@@ -1,4 +1,7 @@
 {
+	"__root__": {
+		"inherit": "en"
+	},
 	"home": "主頁",
 	"settings": "設置",
 	"select_files": "選擇文件",
