@@ -5,9 +5,10 @@ import sys, os
 import shutil
 import subprocess
 import json
+import re
 
 CONSOLE_DEBUG_MODE = False
-__version__ = '0.1.0'
+__version__ = '0.3.0'
 
 # ---- Required Functions ----
 
@@ -27,7 +28,14 @@ def get_translation(code):
 	tr_file = os.path.join(resource_path("Web"), "locales", code + ".json")
 	if os.path.exists(tr_file):
 		with open(tr_file, 'r', encoding="utf-8") as file:
-			output = json.loads(file.read())
+			lines = file.readlines()
+			string = "".join(filter(lambda x: not "//" in x, lines)) # remove comments
+			
+			# remove coma at the end of json
+			regex = r'''(?<=[}\]"']),(?!\s*[{["'])'''
+			string = re.sub(regex, "", string, 0)
+
+			output = json.loads(string)
 			return output
 	return
 
@@ -93,6 +101,41 @@ def delete_settings():
 		os.remove(set_file)
 		return True
 	return False
+
+
+
+# ---- About Tab Functions ----
+
+@eel.expose
+def get_GICutscenes_ver():
+	if SCRIPT_FILE:
+		process = subprocess.Popen([SCRIPT_FILE, "--version"], stdout=subprocess.PIPE)
+		answer = process.communicate()[0]
+		try:
+			text = answer.decode('utf-8')
+		except UnicodeDecodeError:
+			text = answer.decode(os.device_encoding(0))
+		return text.strip()
+
+@eel.expose
+def get_ffmpeg_ver():
+	def find_ver(text):
+		return text.splitlines()[0].split("ffmpeg version")[-1].strip().split()[0]
+	def find_year(text):
+		match = re.findall(r'\b([1-3][0-9]{3})\b', text)
+		if match is not None:
+			return match
+	try:
+		process = subprocess.Popen(["ffmpeg", "-version"], stdout=subprocess.PIPE)
+		answer = process.communicate()[0]
+		try:
+			text = answer.decode('utf-8')
+		except UnicodeDecodeError:
+			text = answer.decode(os.device_encoding(0))
+		final = {'ver': find_ver(text.strip()), 'year': find_year(text.strip())}
+		return final
+	except: return {}
+
 
 
 # ---- Logger Functions ----
