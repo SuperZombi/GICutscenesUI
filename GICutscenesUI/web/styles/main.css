@@ -196,14 +196,24 @@ input[type="checkbox"]{
 	margin-top: 4px;
 }
 
-.version_flex{
+.flexable{
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 }
-#version{
+.link{
+	color: blue;
+	cursor: alias;
+	vertical-align: top;
+	text-decoration: none;
+}
+.version{
 	margin-left: 5px;
-	background: rgb(0, 150, 255, 0.5);
+	background: rgb(0, 150, 255, 0.5) !important;
+}
+#github{
+	margin-right: 2px;
+	vertical-align: bottom;
 }
 
 #console_wrapper{
@@ -226,3 +236,24 @@ input[type="checkbox"]{
 	font-weight: bold;
 	cursor: help;
 }
+#loading{
+	height: 50px;
+	width: 50px;
+}
+
+.translations{
+	width: 100%;
+}
+table td{
+	padding: 5px;
+}
+.translations tr:nth-child(even) {
+	background: #CCC;
+}
+.translations tr:nth-child(odd) {
+	background: #EBEBEB;
+}
+.translations tr{
+	transition: 0.2s;
+}
+.translations tr:hover{ background: yellow; }
