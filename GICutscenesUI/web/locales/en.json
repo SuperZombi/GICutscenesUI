@@ -4,6 +4,8 @@
 	"select_files": "Select Files",
 	"select_files_dots": "Select Files:",
 	"version": "version:",
+	"about": "About",
+	"translations": "Translations:",
 
 	"change": "Change",
 	"reset": "Reset",
