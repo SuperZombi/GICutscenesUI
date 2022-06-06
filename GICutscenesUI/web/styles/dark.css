@@ -27,3 +27,19 @@
 	background: #181818;
 	color: antiquewhite;
 }
+.dark .link{
+	color: #00C0FF;
+}
+.dark #github{
+	fill: white;
+}
+.dark .translations{
+	color: white;
+}
+.dark .translations tr:nth-child(even) {
+	background: #212529;
+}
+.dark .translations tr:nth-child(odd) {
+	background: #2c3034;
+}
+.dark .translations tr:hover{ background: darkcyan; }
