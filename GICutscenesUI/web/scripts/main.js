@@ -5,6 +5,7 @@ window.onload = async _=>{
 	}
 	let version = await eel.get_version()();
 	document.getElementById("version").innerHTML = version;
+	document.getElementById("info_version").innerHTML = version;
 
 	await load_settings()
 	changeTheme()
@@ -21,12 +22,16 @@ function openTab(tab){
 	document.querySelector(".tab > button.active").classList.remove("active")
 	document.querySelector(`.tab > button[data=${tab}]`).classList.add("active")
 	setTimeout(_=>{window.scrollTo(0, 0)})
+	if (tab == "about"){
+		load_about_info()
+	}
 }
 
 
 async function change_script_folder(){
 	var folder = await eel.ask_script_file()();
 	update_path(folder, document.getElementById("script_path"))
+	allow_reload_info()
 }
 function update_path(path, input){
 	if (path){
