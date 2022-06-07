@@ -26,7 +26,7 @@ def get_version():
 
 @eel.expose
 def get_translation(code):
-	tr_file = os.path.join(resource_path("Web"), "locales", code + ".json")
+	tr_file = os.path.join(resource_path("web"), "locales", code + ".json")
 	if os.path.exists(tr_file):
 		with open(tr_file, 'r', encoding="utf-8") as file:
 			string = json_minify(file.read()) # remove comments
@@ -275,5 +275,5 @@ def start_work(files, args):
 	os.chdir(OLD_DIR)
 
 
-eel.init(resource_path("Web"))
+eel.init(resource_path("web"))
 eel.start("main.html", size=(600, 700))
