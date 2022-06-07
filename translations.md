@@ -2,7 +2,7 @@
 
 The translation engine, written by me, allows you to inherit from other languages.
 
-The engine also ignore comments and non-closed commas (this is forbidden in json by default).
+The engine also ignores comments and non-closed commas (this is forbidden in json by default).
 
 
 ## How can I inherit?
@@ -29,7 +29,7 @@ The most recent (parent) language is the bottom layer. Child languages are writt
 
 
 ## What is it for?
-This allows the program not to break if new phrases are added in new updates.
+This allows the program not to break if new phrases are added in future updates.
 
 If some phrases are not in your language, they will be taken from the parent.
 
