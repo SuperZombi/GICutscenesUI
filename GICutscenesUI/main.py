@@ -5,6 +5,7 @@ import sys, os
 import shutil
 import subprocess
 import json
+from json_minify import json_minify
 import re
 
 CONSOLE_DEBUG_MODE = False
@@ -28,9 +29,8 @@ def get_translation(code):
 	tr_file = os.path.join(resource_path("Web"), "locales", code + ".json")
 	if os.path.exists(tr_file):
 		with open(tr_file, 'r', encoding="utf-8") as file:
-			lines = file.readlines()
-			string = "".join(filter(lambda x: not "//" in x, lines)) # remove comments
-			
+			string = json_minify(file.read()) # remove comments
+
 			# remove coma at the end of json
 			regex = r'''(?<=[}\]"']),(?!\s*[{["'])'''
 			string = re.sub(regex, "", string, 0)
