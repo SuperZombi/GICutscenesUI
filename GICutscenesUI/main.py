@@ -55,7 +55,6 @@ def find_GICutscenes():
 	if result: return result
 
 
-
 # ---- Settings Functions ----
 
 def load_settings_inline():
