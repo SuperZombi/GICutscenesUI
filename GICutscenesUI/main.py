@@ -43,15 +43,16 @@ def get_translation(code):
 # ---- GICutscenes Functions ----
 
 def find_GICutscenes():
-	cur_folder = os.getcwd()
-	files = [f for f in os.listdir(cur_folder) if os.path.isfile(os.path.join(cur_folder, f))]
-	if "GICutscenes.exe" in files:
-		return os.path.join(cur_folder, "GICutscenes.exe")
+	def find_in(folder):
+		files = [f for f in os.listdir(folder) if os.path.isfile(os.path.join(folder, f))]
+		if "GICutscenes.exe" in files:
+			return os.path.join(folder, "GICutscenes.exe")
+	
+	result = find_in(os.getcwd())
+	if result: return result
 
-	cur_folder = os.path.dirname(os.getcwd())
-	files = [f for f in os.listdir(cur_folder) if os.path.isfile(os.path.join(cur_folder, f))]
-	if "GICutscenes.exe" in files:
-		return os.path.join(cur_folder, "GICutscenes.exe")
+	result = find_in(os.path.dirname(os.getcwd()))
+	if result: return result
 
 
 
