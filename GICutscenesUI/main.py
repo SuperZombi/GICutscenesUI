@@ -8,7 +8,6 @@ import json
 from json_minify import json_minify
 import re
 import requests
-from requests_html import HTMLSession
 
 CONSOLE_DEBUG_MODE = False
 __version__ = '0.3.1'
@@ -146,10 +145,15 @@ def parse_releases(relative_path):
 		latest = answer[0]["name"]
 		return latest
 	else:
-		session = HTMLSession()
-		r = session.get(f'https://github.com/{relative_path}/tags')
+		r = requests.get(f'https://github.com/{relative_path}/tags')
+		links = []
+		for line in r.text.split("\n"):
+			match = re.search(r"href=\"(.+)\">", line)
+			if match:
+				links.append(match.group(1))
+
 		pat = re.compile(r'releases\/tag')
-		content = [ s for s in r.html.absolute_links if pat.findall(s) ]
+		content = [ s for s in links if pat.findall(s) ]
 		latest = sorted(content)[-1].split("/")[-1]
 		return latest
 
