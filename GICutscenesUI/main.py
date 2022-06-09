@@ -7,6 +7,7 @@ import subprocess
 import json
 from json_minify import json_minify
 import re
+import requests
 
 CONSOLE_DEBUG_MODE = False
 __version__ = '0.3.1'
@@ -135,6 +136,22 @@ def get_ffmpeg_ver():
 		final = {'ver': find_ver(text.strip()), 'year': find_year(text.strip())}
 		return final
 	except: return {}
+
+@eel.expose
+def get_latest_ui_version():
+	r = requests.get('https://api.github.com/repos/SuperZombi/GICutscenesUI/tags')
+	if r.status_code == 200:
+		answer = r.json()
+		latest = answer[0]["name"]
+		return latest
+
+@eel.expose
+def get_latest_script_version():
+	r = requests.get('https://api.github.com/repos/ToaHartor/GI-cutscenes/tags')
+	if r.status_code == 200:
+		answer = r.json()
+		latest = answer[0]["name"]
+		return latest
 
 
 
