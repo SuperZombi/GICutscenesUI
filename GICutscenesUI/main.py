@@ -8,6 +8,7 @@ import json
 from json_minify import json_minify
 import re
 import requests
+from requests_html import HTMLSession
 
 CONSOLE_DEBUG_MODE = False
 __version__ = '0.3.1'
@@ -137,21 +138,28 @@ def get_ffmpeg_ver():
 		return final
 	except: return {}
 
-@eel.expose
-def get_latest_ui_version():
-	r = requests.get('https://api.github.com/repos/SuperZombi/GICutscenesUI/tags')
+
+def parse_releases(relative_path):
+	r = requests.get(f'https://api.github.com/repos/{relative_path}/tags')
 	if r.status_code == 200:
 		answer = r.json()
 		latest = answer[0]["name"]
+		return latest
+	else:
+		session = HTMLSession()
+		r = session.get(f'https://github.com/{relative_path}/tags')
+		pat = re.compile(r'releases\/tag')
+		content = [ s for s in r.html.absolute_links if pat.findall(s) ]
+		latest = sorted(content)[-1].split("/")[-1]
 		return latest
 
 @eel.expose
+def get_latest_ui_version():
+	return parse_releases('SuperZombi/GICutscenesUI')
+
+@eel.expose
 def get_latest_script_version():
-	r = requests.get('https://api.github.com/repos/ToaHartor/GI-cutscenes/tags')
-	if r.status_code == 200:
-		answer = r.json()
-		latest = answer[0]["name"]
-		return latest
+	return parse_releases('ToaHartor/GI-cutscenes')
 
 
 
