@@ -15,6 +15,7 @@ window.onload = async _=>{
 	document.getElementById("info_version").innerHTML = APP_VERSION;
 
 	let folder = await eel.get_script_file()();
+	update_path(folder, document.getElementById("script_path"))
 	get_output_folder()
 }
 
