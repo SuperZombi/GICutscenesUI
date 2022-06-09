@@ -211,6 +211,14 @@ input[type="checkbox"]{
 	margin-left: 5px;
 	background: rgb(0, 150, 255, 0.5) !important;
 }
+.update{
+	background: rgb(0, 255, 150, 0.5) !important;
+}
+.arrow:after{
+	content: '→';
+	display: inline-block;
+	margin: 0 5px 0 5px;
+}
 #github{
 	margin-right: 2px;
 	vertical-align: bottom;
