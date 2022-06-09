@@ -1,11 +1,12 @@
+var APP_VERSION;
 window.onload = async _=>{
 	let tab_now = window.location.hash.split("#").at(-1)
 	if (tab_now){
 		openTab(tab_now)
 	}
-	let version = await eel.get_version()();
-	document.getElementById("version").innerHTML = version;
-	document.getElementById("info_version").innerHTML = version;
+	APP_VERSION = await eel.get_version()();
+	document.getElementById("version").innerHTML = APP_VERSION;
+	document.getElementById("info_version").innerHTML = APP_VERSION;
 
 	await load_settings()
 	changeTheme()
