@@ -9,7 +9,7 @@ from json_minify import json_minify
 import re
 
 CONSOLE_DEBUG_MODE = False
-__version__ = '0.3.0'
+__version__ = '0.3.1'
 
 # ---- Required Functions ----
 
@@ -144,12 +144,8 @@ def send_message_to_ui_output(type_, message):
 	eel.putMessageInOutput(type_, message)()
 
 def log_subprocess_output(pipe):
-	for line in iter(pipe.readline, b''):
-		try:
-			text = line.decode('utf-8')
-		except UnicodeDecodeError:
-			text = line.decode(os.device_encoding(0))
-		send_message_to_ui_output("console", text.strip())
+	for line in pipe:
+		send_message_to_ui_output("console", line.strip())
 
 
 # ---- Explorer Functions ----
@@ -226,7 +222,7 @@ def start_work(files, args):
 		if CONSOLE_DEBUG_MODE:
 			subprocess.call([SCRIPT_FILE, 'batchDemux', temp_folder, '--output', OUTPUT_F])
 		else:
-			process = subprocess.Popen([SCRIPT_FILE, 'batchDemux', temp_folder, '--output', OUTPUT_F], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+			process = subprocess.Popen([SCRIPT_FILE, 'batchDemux', temp_folder, '--output', OUTPUT_F], encoding=os.device_encoding(0), universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 			with process.stdout:
 				log_subprocess_output(process.stdout)
 
@@ -263,7 +259,12 @@ def start_work(files, args):
 				os.remove(output_file)
 
 			send_message_to_ui_output("console", "Working ffmpeg...")
-			subprocess.call(['ffmpeg', '-hide_banner', '-i', new_file_name, '-i', audio_file, output_file])
+			if CONSOLE_DEBUG_MODE:
+				subprocess.call(['ffmpeg', '-hide_banner', '-i', new_file_name, '-i', audio_file, output_file])
+			else:
+				process = subprocess.Popen(['ffmpeg', '-hide_banner', '-i', new_file_name, '-i', audio_file, output_file], encoding='utf-8', universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+				with process.stderr:
+					log_subprocess_output(process.stderr)
 			send_message_to_ui_output("console", "Merging complete!")
 
 		if i != file_lenth - 1:
