@@ -34,5 +34,7 @@
 	"run_demux": "Converting and Decrypting...",
 	"rename_files": "Renaming Files...",
 	"run_merge": "Merging Video and Audio...",
-	"open_output_dir": "Open Output Folder"
+	"open_output_dir": "Open Output Folder",
+
+	"new_update": "New update!"
 }
