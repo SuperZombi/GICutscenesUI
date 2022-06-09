@@ -29,7 +29,7 @@ async function load_about_info(){
 				document.getElementById("info_version").parentNode.appendChild(el)
 			}
 		}
-		if (latest_script_ver){
+		if (latest_script_ver && script_ver){
 			if ( is_this_new_ver(script_ver, latest_script_ver) ){
 				let el = document.createElement('code')
 				el.className = "update"
