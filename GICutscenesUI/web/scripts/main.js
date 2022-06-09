@@ -1,18 +1,20 @@
 var APP_VERSION;
 window.onload = async _=>{
+	getTranslation()
+
 	let tab_now = window.location.hash.split("#").at(-1)
 	if (tab_now){
 		openTab(tab_now)
 	}
+
+	await load_settings()
+	changeTheme()
+
 	APP_VERSION = await eel.get_version()();
 	document.getElementById("version").innerHTML = APP_VERSION;
 	document.getElementById("info_version").innerHTML = APP_VERSION;
 
-	await load_settings()
-	changeTheme()
 	let folder = await eel.get_script_file()();
-	update_path(folder, document.getElementById("script_path"))
-	getTranslation()
 	get_output_folder()
 }
 
