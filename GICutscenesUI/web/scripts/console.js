@@ -5,12 +5,22 @@ function clearConsole(){
 eel.expose(putMessageInOutput);
 function putMessageInOutput(type, message) {
 	if (type == "console"){
-		const outputNode = document.querySelector('#output');
-		outputNode.value += message;
-		if (!message.endsWith('\n')) {
-			outputNode.value += '\n';
+		if (message){
+			const outputNode = document.querySelector('#output');
+
+			if (message.includes("bitrate")){
+				var last_line = outputNode.value.split('\n').filter(n=>n).at(-1);
+				if (last_line.includes("bitrate")){
+					outputNode.value = outputNode.value.substring(0, outputNode.value.lastIndexOf(last_line))
+				}
+			}
+			
+			outputNode.value += message;
+			if (!message.endsWith('\n')) {
+				outputNode.value += '\n';
+			}
+			outputNode.scrollTo(0, outputNode.scrollHeight);
 		}
-		outputNode.scrollTo(0, outputNode.scrollHeight);		
 	}
 	else if (type == "file_count"){
 		document.getElementById("progress_bar").value = message[0]
