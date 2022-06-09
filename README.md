@@ -26,8 +26,7 @@
 ## Requirements:
 1. [Ffmpeg](https://ffmpeg.org/)
 2. [Eel](https://pypi.org/project/Eel/)
-3. [Requests-HTML](https://pypi.org/project/requests-html/)
-4. [JSON-minify](https://pypi.org/project/JSON_minify/)
+3. [JSON-minify](https://pypi.org/project/JSON_minify/)
 
 ## FAQ
 ### 1) I have an error in merging video
