@@ -7,6 +7,8 @@
 	"select_files": "选择文件",
 	"select_files_dots": "选择文件:",
 	"version": "版本:",
+	"about": "关于",
+	"translations": "翻译人员:",
 
 	"change": "更改",
 	"reset": "重置",
@@ -35,5 +37,7 @@
 	"run_demux": "正在转换和解密...",
 	"rename_files": "正在重命名文件...",
 	"run_merge": "正在合并视频和音频...",
-	"open_output_dir": "打开输出文件夹"
+	"open_output_dir": "打开输出文件夹",
+
+	"new_update": "新的版本可用!"
 }
