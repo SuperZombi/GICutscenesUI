@@ -29,8 +29,8 @@ async function load_about_info(){
 				el.title = LANG("new_update")
 				el.setAttribute("translation", "__title:new_update__")
 				el.innerHTML = latest_ui_ver
-				document.getElementById("info_version").parentNode.innerHTML += "<a class='arrow'></a>"
-				document.getElementById("info_version").parentNode.appendChild(el)
+				document.getElementById("version").parentNode.innerHTML += "<a class='arrow'></a>"
+				document.getElementById("version").parentNode.appendChild(el)
 			}
 		}
 		if (latest_script_ver && script_ver){
