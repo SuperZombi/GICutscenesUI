@@ -55,17 +55,14 @@
 
 		<hr>
 		<p></p>
-		<div class="flexable">
-			<div>
-				<button class="settings-button blue" onclick="resetSettings()" title="Delete Settings File"
-				translation="__title:reset_title__ __reset__" 
-				>Reset</button>
-				<button class="settings-button" onclick="exportSettings()" title="Export Settings to File" translation="__title:export_title__ __export__">Export</button>
-			</div>
-			<div>
-				<span translation="__version__">version:</span><code id="version" class="version"></code>
-			</div>
+
+		<div>
+			<button class="settings-button blue" onclick="resetSettings()" title="Delete Settings File"
+			translation="__title:reset_title__ __reset__" 
+			>Reset</button>
+			<button class="settings-button" onclick="exportSettings()" title="Export Settings to File" translation="__title:save_title__ __save__">Save</button>
 		</div>
+
 		<p></p>
 
 		<fieldset>
@@ -117,7 +114,7 @@
 	<div class="tabcontent" id="about">
 		<h2 align="center">Genshin Impact Cutscenes</h2>
 		<div style="display:flex;justify-content:center;">
-			<span translation="__version__">version:</span><code id="info_version" class="version"></code>
+			<span translation="__version__">version:</span><code id="version" class="version"></code>
 		</div>
 		
 		<p align="center">
