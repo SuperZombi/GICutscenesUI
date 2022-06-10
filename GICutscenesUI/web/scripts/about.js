@@ -1,7 +1,11 @@
+var APP_VERSION;
 var info_loaded = false;
 async function load_about_info(){
 	if (!info_loaded){
 		info_loaded = true;
+		APP_VERSION = await eel.get_version()();
+		document.getElementById("version").innerHTML = APP_VERSION;
+
 		let script_ver = await eel.get_GICutscenes_ver()();
 		let ffmpeg_ver = await eel.get_ffmpeg_ver()();
 		let latest_ui_ver = await eel.get_latest_ui_version()();
