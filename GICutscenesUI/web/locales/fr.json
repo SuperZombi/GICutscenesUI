@@ -1,0 +1,43 @@
+{
+	"__root__": {
+		"inherit": "en"
+	},
+	"home": "Menu principal",
+	"settings": "Paramètres",
+	"select_files": "Choix des fichiers",
+	"select_files_dots": "Choix des fichiers:",
+	"version": "version:",
+	"about": "À propos",
+	"translations": "Traductions:",
+
+	"change": "Modifier",
+	"reset": "Réinitialiser",
+	"reset_title": "Supprimer le fichier de paramètres", 
+	"save": "Enregistrer",
+	"save_title": "Enregistrer le fichier de paramètres",
+	"language": "Langue:",
+	"output_folder": "Dossier de sortie:",
+	"merge": "Fusionner la video et l'audio",
+	"clear": "🗑Effacer",
+	"start": "DÉMARRER",
+	"appearance": "Apparence",
+	"theme": "Thème:",
+	"light": "Clair",
+	"dark": "Sombre",
+
+	"no_files": "Aucun fichier choisi!",
+	"select_script_file": "Choisissez le script!",
+	"saved": "Enregistré!",
+	"confirm_delete_settings": "Êtes-vous sûr de vouloir supprimer vos paramètres?",
+
+	"using_ffmpeg_promt": "Utilise ffmpeg",
+	"track_index_promt": "Indice de piste",
+
+	"copy_files": "Copie des fichiers...",
+	"run_demux": "Conversion et Déchiffrement...",
+	"rename_files": "Renommage des fichiers...",
+	"run_merge": "Fusion des pistes video et audio...",
+	"open_output_dir": "Ouvrir le dossier de sortie",
+
+	"new_update": "Mise à jour disponible!"
+}
