@@ -10,7 +10,7 @@ import re
 import requests
 
 CONSOLE_DEBUG_MODE = False
-__version__ = '0.3.3'
+__version__ = '0.3.4'
 
 # ---- Required Functions ----
 
