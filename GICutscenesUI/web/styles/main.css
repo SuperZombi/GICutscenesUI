@@ -213,6 +213,7 @@ input[type="checkbox"]{
 }
 .update{
 	background: rgb(0, 255, 150, 0.5) !important;
+	cursor: help;
 }
 .arrow:after{
 	content: '→';
