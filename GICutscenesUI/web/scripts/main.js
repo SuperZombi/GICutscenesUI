@@ -1,4 +1,4 @@
-window.onload = async _=>{
+(async _=>{
 	await load_settings()
 	changeTheme()
 	getTranslation()
@@ -11,7 +11,7 @@ window.onload = async _=>{
 	let folder = await eel.get_script_file()();
 	update_path(folder, document.getElementById("script_path"))
 	get_output_folder()
-}
+})()
 
 function openTab(tab){
 	window.location.hash = tab
