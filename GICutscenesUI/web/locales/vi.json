@@ -1,0 +1,40 @@
+{
+	"home": "Trang Chủ",
+	"settings": "Cài Đặt",
+	"select_files": "Chọn File",
+	"select_files_dots": "Chọn File:",
+	"version": "phiên bản:",
+	"about": "Về ứng dụng",
+	"translations": "Phiên dịch:",
+
+	"change": "Thay đổi",
+	"reset": "Đặt lại",
+	"reset_title": "Xoá file cài đặt",
+	"save": "Lưu",
+	"save_title": "Lưu cài đặt vào file",
+	"language": "Ngôn ngữ:",
+	"output_folder": "Thư mục đầu ra:",
+	"merge": "Ghép video và âm thanh",
+	"clear": "🗑Xoá",
+	"start": "BẮT ĐẦU",
+	"appearance": "Giao diện",
+	"theme": "Chủ đề:",
+	"light": "Sáng",
+	"dark": "Tối",
+
+	"no_files": "Không có file!",
+	"select_script_file": "Chọn file script!",
+	"saved": "Đã lưu!",
+	"confirm_delete_settings": "Bạn có muốn xoá hết tất cả cài đặt?",
+
+	"using_ffmpeg_promt": "Sử dụng FFMPEG",
+	"track_index_promt": "Track index",
+
+	"copy_files": "Sao chép file...",
+	"run_demux": "Đang giải mã và chuyển đổi...",
+	"rename_files": "Đang đổi tên file...",
+	"run_merge": "Ghép video và âm thanh...",
+	"open_output_dir": "Mở thư mục đầu ra",
+
+	"new_update": "Cập nhật mới!"
+}
