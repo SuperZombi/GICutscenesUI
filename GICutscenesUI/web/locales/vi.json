@@ -1,4 +1,7 @@
 {
+	"__root__": {
+		"inherit": "en"
+	},
 	"home": "Trang Chủ",
 	"settings": "Cài Đặt",
 	"select_files": "Chọn File",
