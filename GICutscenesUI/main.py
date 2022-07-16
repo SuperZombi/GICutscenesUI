@@ -10,7 +10,7 @@ import re
 import requests
 
 CONSOLE_DEBUG_MODE = False
-__version__ = '0.3.5'
+__version__ = '0.4.0'
 
 # ---- Required Functions ----
 
@@ -306,4 +306,11 @@ def start_work(files, args):
 
 
 eel.init(resource_path("web"))
-eel.start("main.html", size=(600, 700))
+
+browsers = ['chrome', 'edge', 'default']
+for browser in browsers:
+	try:
+		eel.start("main.html", size=(600, 700), mode=browser)
+		break
+	except Exception:
+		print(f"Failed to launch the app using {browser.title()} browser")
