@@ -324,6 +324,17 @@ def start_work(files, args):
 					log_subprocess_output(process.stderr)
 			send_message_to_ui_output("console", "Merging complete!")
 
+			if args['delete_after_merge']:
+				send_message_to_ui_output("console", "Removing trash...")
+				files_to_remove = [
+					old_file_name + ".m2v",
+					*[f"{old_file_name}_{i}.wav" for i in [0, 1, 2, 3]]
+				]
+				files_to_remove = list(map(lambda x: os.path.join(OUTPUT_F, x),files_to_remove))
+				for f in files_to_remove:
+					os.remove(f)
+				send_message_to_ui_output("console", "OK")
+
 		if i != file_lenth - 1:
 			send_message_to_ui_output("console", "\n")
 
