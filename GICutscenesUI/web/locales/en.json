@@ -15,6 +15,7 @@
 	"language": "Language:",
 	"output_folder": "Output Folder:",
 	"merge": "Merge Video and Audio",
+	"delete_after_merge": "Delete unnecessary files after merging",
 	"clear": "🗑Clear",
 	"start": "START",
 	"appearance": "Appearance",
