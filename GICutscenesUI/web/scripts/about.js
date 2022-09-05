@@ -8,8 +8,6 @@ async function load_about_info(){
 
 		let script_ver = await eel.get_GICutscenes_ver()();
 		let ffmpeg_ver = await eel.get_ffmpeg_ver()();
-		let latest_ui_ver = await eel.get_latest_ui_version()();
-		let latest_script_ver = await eel.get_latest_script_version()();
 
 		if (script_ver){
 			document.getElementById("script_ver").innerHTML = script_ver
@@ -21,6 +19,9 @@ async function load_about_info(){
 				document.getElementById("ffmpeg_year").innerHTML = ffmpeg_ver.year
 			}
 		}
+
+		let latest_ui_ver = await eel.get_latest_ui_version()();
+		let latest_script_ver = await eel.get_latest_script_version()();
 
 		if (latest_ui_ver){
 			if ( is_this_new_ver(APP_VERSION, latest_ui_ver) ){
@@ -44,10 +45,46 @@ async function load_about_info(){
 				document.getElementById("script_ver").parentNode.appendChild(el)
 			}
 		}
+
+		await load_version_file();
 		
 		document.getElementById("loading").style.display = "none"
 	}
 }
+
+async function load_version_file(){
+	let compare_version_files = await eel.compare_version_files()();
+
+	if (compare_version_files["success"]){
+		document.getElementById("compare_ver_files_line").style.display = "table-row"
+		if (compare_version_files["status"]){
+			document.getElementById("ver_file_status").innerHTML = "OK"
+			document.getElementById("ver_file_status").classList.remove("update")
+			document.getElementById("ver_file_status").removeAttribute("translation")
+			let button = document.getElementById("ver_file_status").parentNode.querySelector("button")
+			if (button){ button.remove() }
+		}
+		else{
+			document.getElementById("ver_file_status").setAttribute("translation", "__new_update__")
+			document.getElementById("ver_file_status").classList.add("update")
+			document.getElementById("ver_file_status").innerHTML = LANG("new_update")
+			let button = document.createElement("button")
+			button.classList.add("path_button")
+			button.style.marginLeft = "5px"
+			button.innerHTML = LANG("update")
+			button.setAttribute("translation", "__update__")
+			button.onclick = async () => {
+				document.getElementById("loading").style.display = "block";
+				await eel.download_latest_version_file()();
+				await load_version_file();
+				document.getElementById("loading").style.display = "none";
+			}
+			document.getElementById("ver_file_status").parentNode.appendChild(button)
+		}
+	}
+}
+
+
 function allow_reload_info(){
 	info_loaded = false;
 	document.getElementById("loading").style.display = "block"
