@@ -43,3 +43,7 @@
 	background: #2c3034;
 }
 .dark .translations tr:hover{ background: darkcyan; }
+
+.dark .link code{
+	background: #505050;
+}
