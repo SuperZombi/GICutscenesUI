@@ -36,5 +36,6 @@
 	"run_merge": "Merging Video and Audio...",
 	"open_output_dir": "Open Output Folder",
 
-	"new_update": "New update!"
+	"new_update": "New update!",
+	"update": "Update"
 }
