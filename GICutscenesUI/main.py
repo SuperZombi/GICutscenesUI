@@ -10,7 +10,7 @@ import re
 import requests
 
 CONSOLE_DEBUG_MODE = False
-__version__ = '0.4.1'
+__version__ = '0.4.2'
 
 # ---- Required Functions ----
 
@@ -165,6 +165,34 @@ def get_latest_ui_version():
 def get_latest_script_version():
 	return parse_releases('ToaHartor/GI-cutscenes')
 
+@eel.expose
+def compare_version_files():
+	if SCRIPT_FILE:
+		local_ver_file = os.path.join(
+			os.path.dirname(SCRIPT_FILE),
+			"versions.json"
+		)
+		if os.path.exists(local_ver_file):
+			with open(local_ver_file, 'r') as file:
+				LOCAL = file.read()
+
+			try:
+				r = requests.get("https://raw.githubusercontent.com/ToaHartor/GI-cutscenes/main/versions.json")
+				GLOBAL = r.text
+
+				if json.loads(LOCAL) == json.loads(GLOBAL):
+					return {"success": True, "status": True}
+				else:
+					return {"success": True, "status": False}
+			except: None
+	return {"success": False}
+
+@eel.expose
+def download_latest_version_file():
+	r = requests.get("https://raw.githubusercontent.com/ToaHartor/GI-cutscenes/main/versions.json")
+	local_ver_file = os.path.join(os.path.dirname(SCRIPT_FILE), "versions.json")
+	with open(local_ver_file, 'w') as file:
+		file.write(r.text)
 
 
 # ---- Logger Functions ----
