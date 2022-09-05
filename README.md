@@ -7,7 +7,7 @@
     <strong> User Interface for <a href="https://github.com/ToaHartor/GI-cutscenes">Genshin Cutscenes Demuxer</a></strong>
 </p>
 <p align="center">
-    <img src="https://shields.io/badge/version-v0.4.0-blue">
+    <img src="https://shields.io/badge/version-v0.4.2-blue">
 </p>
 
 ## Screenshots:
