@@ -18,6 +18,7 @@
 	"language": "Bahasa:",
 	"output_folder": "Folder Akhir:",
 	"merge": "Satukan Video dan Audio",
+        "delete_after_merge": "Hapus berkas tidak penting setelah penggabungan",
 	"clear": "🗑Bersihkan",
 	"start": "Mulai",
 	"appearance": "Tampilan",
@@ -39,5 +40,6 @@
 	"run_merge": "Menyatukan Video dan Audio...",
 	"open_output_dir": "Buka Folder Akhir",
 
-	"new_update": "Pembaruan Baru!"
+	"new_update": "Pembaruan Baru!",
+        "update": "Perbarui"
 }
