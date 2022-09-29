@@ -50,10 +50,26 @@ async function selectFiles(){
 	}
 }
 function updatePreview(files){
+	removeIcons_and_color()
+	let preview = document.getElementById("preview_zone")
+	files.forEach(e=>{
+		if (!preview.querySelector(`div[path='${e}']`)){
+			preview.innerHTML += `<div path='${e}'>${e.replace(/^.*[\\\/]/, '')}</div>`
+		}
+	})
+	document.getElementById("fileCleaner").style.display = "inline-block"
+}
+function clearFiles(){
 	let preview = document.getElementById("preview_zone")
 	preview.innerHTML = '<summary></summary>'
-	files.forEach(e=>{
-		preview.innerHTML += `<div path='${e}'>${e.replace(/^.*[\\\/]/, '')}</div>`
+	document.getElementById("fileCleaner").style.display = "none"
+}
+
+function removeIcons_and_color(){
+	Array.from(document.getElementById("preview_zone").getElementsByTagName("div")).forEach(e=>{
+		e.className = ""
+		let icon = e.querySelector(".icon")
+		if (icon){icon.remove()}
 	})
 }
 
@@ -71,6 +87,8 @@ async function start(){
 		})
 
 		if (files.length > 0){
+			clearConsole()
+			removeIcons_and_color()
 			if (document.getElementById("script_path").value){
 				// MAIN CALL
 				let settings = parseSettings()
@@ -89,4 +107,9 @@ async function start(){
 			alert(LANG("no_files"))
 		}
 	}
+}
+
+async function stop(){
+	document.getElementById("stop").disabled = true;
+	eel.stop_work()();
 }

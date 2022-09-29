@@ -68,6 +68,17 @@ label{
 	border-color: green;
 }
 
+#fileCleaner{
+	border-color: darkred;
+}
+#fileCleaner:hover{
+	border-color: red;
+	padding: 8px 30px;
+}
+#fileCleaner:active{
+	color: red;
+}
+
 #preview_zone{
 	margin-top: 10px;
 	margin-left: 10px;
@@ -76,6 +87,19 @@ label{
 #preview_zone summary{
 	cursor: pointer;
 	margin-bottom: 10px;
+}
+
+#preview_zone .icon{
+	color: black;
+}
+#preview_zone .ok{
+	color: #00c200;
+}
+#preview_zone .now{
+	color: #0075ff;
+}
+#preview_zone .error{
+	color: red;
 }
 
 .path{
@@ -108,12 +132,13 @@ label{
 	background: #1c79c7;
 }
 
-#start{
+#start_area{
 	position: fixed;
 	right: 10px;
 	bottom: 14px;
+}
+#start_area > * {
 	font-size: 18pt;
-
 	background-color: #1CB0F6;
 	border: solid transparent;
 	border-radius: 16px;
@@ -129,17 +154,28 @@ label{
 	box-shadow: 0 4px 0 #1899D6;
 	text-transform: uppercase;
 }
-#start:hover {
+#start_area > *:hover {
 	filter: brightness(1.1);
 	-webkit-filter: brightness(1.1);
 }
-#start:active {
-	bottom: 10px;
+#start_area > *:active {
 	box-shadow: 0 0px 0 #1899D6;
+	transform: translateY(4px);
 }
-#start:disabled {
+#start_area > *:disabled {
 	filter: grayscale(1);
 	pointer-events: none;
+}
+
+#stop{
+	background: red;
+	box-shadow: 0 4px 0 darkred;
+}
+#stop:active {
+	box-shadow: 0 0px 0 darkred;
+}
+#stop:disabled{
+	filter: grayscale(0.8);
 }
 
 .settings-button {
@@ -189,11 +225,6 @@ input[type="checkbox"]{
 	box-sizing: border-box;
 	width: 100%;
 	resize: vertical;
-}
-#current_work_file{
-	font-family: monospace;
-	color: green;
-	margin-top: 4px;
 }
 
 .flexable{

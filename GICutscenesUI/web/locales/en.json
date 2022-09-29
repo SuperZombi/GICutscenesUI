@@ -1,8 +1,9 @@
 {
 	"home": "Home",
 	"settings": "Settings",
-	"select_files": "Select Files",
+	"select_files": "Add Files",
 	"select_files_dots": "Select Files:",
+	"clear_files": "Clear",
 	"version": "version:",
 	"about": "About",
 	"translations": "Translations:",
@@ -18,6 +19,7 @@
 	"delete_after_merge": "Delete unnecessary files after merging",
 	"clear": "🗑Clear",
 	"start": "START",
+	"stop": "STOP",
 	"appearance": "Appearance",
 	"theme": "Theme:",
 	"light": "Light",
@@ -36,6 +38,7 @@
 	"rename_files": "Renaming Files...",
 	"run_merge": "Merging Video and Audio...",
 	"open_output_dir": "Open Output Folder",
+	"stopped": "Stopped",
 
 	"new_update": "New update!",
 	"update": "Update"

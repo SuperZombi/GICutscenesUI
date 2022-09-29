@@ -24,6 +24,7 @@
 	<div class="tabcontent showed" id="home">
 		<h2 translation="__select_files_dots__">Select Files:</h2>
 		<button id="fileSelector" class="browse" onclick="selectFiles()" translation="__select_files__">Select Files</button>
+		<button id="fileCleaner" class="browse" onclick="clearFiles()" translation="__clear_files__" style="display:none;">Clear</button>
 		<details id="preview_zone" open>
 			<summary></summary>
 		</details>
@@ -33,7 +34,6 @@
 			<span id="current_progress">0/0</span>
 			<span id="current_work"></span>
 
-			<div id="current_work_file"></div>
 			<progress id="ffmpeg_progress" min="0" max="100" value="0" style="display:none"></progress>
 			<span id="ffmpeg_progress_text" style="display:none; font-size: 0.8em;">0%</span>
 
@@ -45,7 +45,10 @@
 			<button onclick="openOutputFolder()"  translation="__open_output_dir__" class="browse" id="open_dir">Open Output Dir</button>
 		</div>
 
-		<button onclick="start()" id="start" translation="__start__">START</button>
+		<div id="start_area">
+			<button onclick="stop()" id="stop" translation="__stop__" style="display:none;">STOP</button>
+			<button onclick="start()" id="start" translation="__start__">START</button>
+		</div>
 	</div>
 
 

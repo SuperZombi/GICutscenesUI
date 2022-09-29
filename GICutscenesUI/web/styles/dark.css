@@ -20,9 +20,6 @@
 .dark .browse{
 	color: white;
 }
-.dark #current_work_file{
-	color: lightgreen;
-}
 .dark #output{
 	background: #181818;
 	color: antiquewhite;
@@ -46,4 +43,14 @@
 
 .dark .link code{
 	background: #505050;
+}
+
+.dark #preview_zone .icon{
+	color: white;
+}
+.dark #preview_zone .ok{
+	color: lime;
+}
+.dark #preview_zone .now{
+	color: yellow;
 }

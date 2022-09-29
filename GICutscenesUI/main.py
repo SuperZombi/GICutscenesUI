@@ -10,7 +10,7 @@ import re
 import requests
 
 CONSOLE_DEBUG_MODE = False
-__version__ = '0.4.2'
+__version__ = '0.4.3'
 
 # ---- Required Functions ----
 
@@ -200,8 +200,11 @@ def download_latest_version_file():
 def send_message_to_ui_output(type_, message):
 	eel.putMessageInOutput(type_, message)()
 
-def log_subprocess_output(pipe):
+def log_subprocess_output(pipe, process=None):
 	for line in pipe:
+		if process:
+			if STOPED_BY_USER:
+				process.kill()
 		send_message_to_ui_output("console", line.strip())
 
 
@@ -212,7 +215,7 @@ def ask_files():
 	root = Tk()
 	root.withdraw()
 	root.wm_attributes('-topmost', 1)
-	files = askopenfilenames(parent=root)
+	files = askopenfilenames(parent=root, filetypes=[("Genshin Impact Cutscene", "*.usm"), ("All files", "*.*")])
 	return files
 
 
@@ -253,9 +256,16 @@ def open_output_folder():
 
 
 # ---- MAIN Functions ----
+STOPED_BY_USER = None
+@eel.expose
+def stop_work():
+	global STOPED_BY_USER
+	STOPED_BY_USER = True
 
 @eel.expose
 def start_work(files, args):
+	global STOPED_BY_USER
+	STOPED_BY_USER = False
 	send_message_to_ui_output("event", "start")
 	file_lenth = len(files)
 	send_message_to_ui_output("file_count", [0, file_lenth])
@@ -271,75 +281,92 @@ def start_work(files, args):
 
 	for i, file in enumerate(files):
 		send_message_to_ui_output("file_count", [i, file_lenth])
-		send_message_to_ui_output("event", "copy_files")
-		send_message_to_ui_output("work_file", file)
-		# MAIN CALL
-		shutil.copyfile(file, os.path.join(temp_folder, os.path.basename(file)))
-		send_message_to_ui_output("event", "run_demux")
-		if CONSOLE_DEBUG_MODE:
-			subprocess.call([SCRIPT_FILE, 'batchDemux', temp_folder, '--output', OUTPUT_F])
+		if STOPED_BY_USER: break	
 		else:
-			process = subprocess.Popen([SCRIPT_FILE, 'batchDemux', temp_folder, '--output', OUTPUT_F], encoding=os.device_encoding(0), universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-			with process.stdout:
-				log_subprocess_output(process.stdout)
-
-		os.remove(os.path.join(temp_folder, os.path.basename(file)))
-
-		send_message_to_ui_output("event", "rename_files")
-
-		# Rename to m2v
-		old_file_name = os.path.splitext(os.path.basename(file))[0]
-		file_name = str(old_file_name) + ".ivf"
-		new_file_name = str(old_file_name) + ".m2v"
-		file_name = os.path.join(OUTPUT_F, file_name)
-		new_file_name = os.path.join(OUTPUT_F, new_file_name)
-		try:
-			os.rename(file_name, new_file_name)
-		except: None
-
-		# Delete hca encoded Audio (cuz wav files decoded)
-		for index in [0, 1, 2, 3]:
-			f = str(old_file_name) + "_" + str(index) + ".hca"
-			f = os.path.join(OUTPUT_F, f)
-			if os.path.exists(f):
-				os.remove(f)
-
-		# Merge Video and Audio
-		if args['merge']:
-			send_message_to_ui_output("event", "run_merge")
-			audio_index = int(args['audio_index'])
-			audio_file = os.path.join(OUTPUT_F , str(old_file_name) + "_" + str(audio_index) + ".wav")
-			output_file = os.path.join(OUTPUT_F, str(old_file_name) + ".mp4")
-			send_message_to_ui_output("console", "\nStarting ffmpeg")
-			if os.path.exists(output_file):
-				send_message_to_ui_output("console", f'File {output_file} already exists.')
-				os.remove(output_file)
-
-			send_message_to_ui_output("console", "Working ffmpeg...")
+			send_message_to_ui_output("event", "copy_files")
+			send_message_to_ui_output("work_file", file)
+			# MAIN CALL
+			shutil.copyfile(file, os.path.join(temp_folder, os.path.basename(file)))
+			send_message_to_ui_output("event", "run_demux")
+			p_status = 0
 			if CONSOLE_DEBUG_MODE:
-				subprocess.call(['ffmpeg', '-hide_banner', '-i', new_file_name, '-i', audio_file, output_file])
+				subprocess.call([SCRIPT_FILE, 'batchDemux', temp_folder, '--output', OUTPUT_F])
 			else:
-				process = subprocess.Popen(['ffmpeg', '-hide_banner', '-i', new_file_name, '-i', audio_file, output_file], encoding='utf-8', universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-				with process.stderr:
-					log_subprocess_output(process.stderr)
-			send_message_to_ui_output("console", "Merging complete!")
+				process = subprocess.Popen([SCRIPT_FILE, 'batchDemux', temp_folder, '--output', OUTPUT_F], encoding=os.device_encoding(0), universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+				with process.stdout:
+					log_subprocess_output(process.stdout)
+				p_status = process.wait()
 
-			if args['delete_after_merge']:
-				send_message_to_ui_output("console", "Removing trash...")
-				files_to_remove = [
-					old_file_name + ".m2v",
-					*[f"{old_file_name}_{i}.wav" for i in [0, 1, 2, 3]]
-				]
-				files_to_remove = list(map(lambda x: os.path.join(OUTPUT_F, x),files_to_remove))
-				for f in files_to_remove:
-					os.remove(f)
-				send_message_to_ui_output("console", "OK")
+			os.remove(os.path.join(temp_folder, os.path.basename(file)))
+			if p_status != 0:
+				send_message_to_ui_output("event", "error")
+			else:
+				send_message_to_ui_output("event", "rename_files")
 
-		if i != file_lenth - 1:
-			send_message_to_ui_output("console", "\n")
+				# Rename to m2v
+				old_file_name = os.path.splitext(os.path.basename(file))[0]
+				file_name = str(old_file_name) + ".ivf"
+				new_file_name = str(old_file_name) + ".m2v"
+				file_name = os.path.join(OUTPUT_F, file_name)
+				new_file_name = os.path.join(OUTPUT_F, new_file_name)
+				try:
+					os.rename(file_name, new_file_name)
+				except: None
 
-	send_message_to_ui_output("file_count", [file_lenth, file_lenth])
+				# Delete hca encoded Audio (cuz wav files decoded)
+				for index in [0, 1, 2, 3]:
+					f = str(old_file_name) + "_" + str(index) + ".hca"
+					f = os.path.join(OUTPUT_F, f)
+					if os.path.exists(f):
+						os.remove(f)
+
+				# Merge Video and Audio
+				if args['merge']:
+					send_message_to_ui_output("event", "run_merge")
+					audio_index = int(args['audio_index'])
+					audio_file = os.path.join(OUTPUT_F , str(old_file_name) + "_" + str(audio_index) + ".wav")
+					output_file = os.path.join(OUTPUT_F, str(old_file_name) + ".mp4")
+					send_message_to_ui_output("console", "\nStarting ffmpeg")
+					if os.path.exists(output_file):
+						send_message_to_ui_output("console", f'File {output_file} already exists.')
+						os.remove(output_file)
+
+					send_message_to_ui_output("console", "Working ffmpeg...")
+					p_status = 0
+					if CONSOLE_DEBUG_MODE:
+						subprocess.call(['ffmpeg', '-hide_banner', '-i', new_file_name, '-i', audio_file, output_file])
+					else:
+						process = subprocess.Popen(['ffmpeg', '-hide_banner', '-i', new_file_name, '-i', audio_file, output_file], encoding='utf-8', universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+						with process.stderr:
+							log_subprocess_output(process.stderr, process)
+						p_status = process.wait()
+
+					if p_status != 0:
+						if os.path.exists(output_file): os.remove(output_file)
+					else:
+						send_message_to_ui_output("console", "Merging complete!")
+						if args['delete_after_merge']:
+							send_message_to_ui_output("console", "Removing trash...")
+							files_to_remove = [
+								old_file_name + ".m2v",
+								*[f"{old_file_name}_{i}.wav" for i in [0, 1, 2, 3]]
+							]
+							files_to_remove = list(map(lambda x: os.path.join(OUTPUT_F, x),files_to_remove))
+							for f in files_to_remove:
+								os.remove(f)
+							send_message_to_ui_output("console", "OK")
+
+				if i != file_lenth - 1:
+					send_message_to_ui_output("console", "\n")
+
+				send_message_to_ui_output("event", "ok")
+
 	send_message_to_ui_output("event", "finish")
+	if STOPED_BY_USER:
+		send_message_to_ui_output("console", "\nStoped by user")
+		send_message_to_ui_output("event", "stoped")
+	else:
+		send_message_to_ui_output("file_count", [file_lenth, file_lenth])
 	shutil.rmtree(temp_folder)
 	os.chdir(OLD_DIR)
 

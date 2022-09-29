@@ -54,9 +54,11 @@ function putMessageInOutput(type, message) {
 		var work_status = document.getElementById("current_work")
 		if (message == "finish"){
 			work_status.innerHTML = ""
-			document.getElementById("current_work_file").innerHTML = ""
+			document.getElementById("fileSelector").style.display = "inline-block"
+			document.getElementById("fileCleaner").style.display = "inline-block"
 			document.getElementById("open_dir").style.display = "block"
 			document.getElementById("start").disabled = false;
+			document.getElementById("stop").style.display = "none";
 
 			document.getElementById("ffmpeg_progress").style.display = "none"
 			document.getElementById("ffmpeg_progress_text").style.display = "none"
@@ -65,25 +67,70 @@ function putMessageInOutput(type, message) {
 		else if (message == "start"){
 			BLOCK_START = true;
 			document.getElementById("start").disabled = true;
+			document.getElementById("stop").disabled = false;
+			document.getElementById("stop").style.display = "inline-block";
+			document.getElementById("fileSelector").style.display = "none"
+			document.getElementById("fileCleaner").style.display = "none"
 		}
 		else if (message == "run_merge"){
 			document.getElementById("ffmpeg_progress").style.display = "inline-block"
 			document.getElementById("ffmpeg_progress_text").style.display = "inline-block"
 			work_status.innerHTML = LANG(message)
 		}
+		else if (message == "ok" || message == "error" || message == "stoped"){
+			file_status_in_list(message)
+			if (message == "stoped"){
+				work_status.innerHTML = LANG("Stopped")
+			}
+		}
 		else{
 			work_status.innerHTML = LANG(message)
 		}
 	}
 	else if (type == "work_file"){
-		document.getElementById("current_work_file").innerHTML = message.replace(/^.*[\\\/]/, '')
 		document.getElementById("ffmpeg_progress").style.display = "none"
 		document.getElementById("ffmpeg_progress_text").style.display = "none"
 		document.getElementById("ffmpeg_progress").value = 0
 		document.getElementById("ffmpeg_progress_text").innerHTML = "0%"
+		file_status_in_list()
 	}
 	else{
 		console.log(message)
+	}
+}
+
+function file_status_in_list(status="now"){
+	let index = document.getElementById("progress_bar").value
+	let element = document.querySelectorAll("#preview_zone > div")[index]
+
+	function add_icon(element, text){
+		let el = element.querySelector(".icon");
+		if (!el){
+			el = document.createElement("span");
+			el.className = "icon"
+			el.style.display = "inline-block"
+			el.style.textAlign = "center"
+			el.style.width = "25px"
+			element.prepend(el);
+		}
+		el.innerHTML = text;
+	}
+
+	if (status == "ok"){
+		element.className = "ok"
+		add_icon(element, "✓")
+	}
+	else if (status == "now"){
+		element.className = "now"
+		add_icon(element, "➤")
+	}
+	else if (status == "error"){
+		element.className = "error"
+		add_icon(element, "❌")
+	}
+	else if (status == "stoped"){
+		element.className = "now"
+		add_icon(element, "🛑")
 	}
 }
 
