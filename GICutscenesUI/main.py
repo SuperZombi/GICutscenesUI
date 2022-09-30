@@ -10,7 +10,7 @@ import re
 import requests
 
 CONSOLE_DEBUG_MODE = False
-__version__ = '0.4.3'
+__version__ = '0.4.3.1'
 
 # ---- Required Functions ----
 
@@ -280,9 +280,9 @@ def start_work(files, args):
 	os.chdir(os.path.dirname(SCRIPT_FILE))
 
 	for i, file in enumerate(files):
-		send_message_to_ui_output("file_count", [i, file_lenth])
-		if STOPED_BY_USER: break	
+		if STOPED_BY_USER: break
 		else:
+			send_message_to_ui_output("file_count", [i, file_lenth])
 			send_message_to_ui_output("event", "copy_files")
 			send_message_to_ui_output("work_file", file)
 			# MAIN CALL
@@ -322,39 +322,43 @@ def start_work(files, args):
 
 				# Merge Video and Audio
 				if args['merge']:
-					send_message_to_ui_output("event", "run_merge")
-					audio_index = int(args['audio_index'])
-					audio_file = os.path.join(OUTPUT_F , str(old_file_name) + "_" + str(audio_index) + ".wav")
-					output_file = os.path.join(OUTPUT_F, str(old_file_name) + ".mp4")
-					send_message_to_ui_output("console", "\nStarting ffmpeg")
-					if os.path.exists(output_file):
-						send_message_to_ui_output("console", f'File {output_file} already exists.')
-						os.remove(output_file)
-
-					send_message_to_ui_output("console", "Working ffmpeg...")
-					p_status = 0
-					if CONSOLE_DEBUG_MODE:
-						subprocess.call(['ffmpeg', '-hide_banner', '-i', new_file_name, '-i', audio_file, output_file])
+					if STOPED_BY_USER: break
 					else:
-						process = subprocess.Popen(['ffmpeg', '-hide_banner', '-i', new_file_name, '-i', audio_file, output_file], encoding='utf-8', universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-						with process.stderr:
-							log_subprocess_output(process.stderr, process)
-						p_status = process.wait()
+						send_message_to_ui_output("event", "run_merge")
+						audio_index = int(args['audio_index'])
+						audio_file = os.path.join(OUTPUT_F , str(old_file_name) + "_" + str(audio_index) + ".wav")
+						output_file = os.path.join(OUTPUT_F, str(old_file_name) + ".mp4")
+						send_message_to_ui_output("console", "\nStarting ffmpeg")
+						if os.path.exists(output_file):
+							send_message_to_ui_output("console", f'File {output_file} already exists.')
+							os.remove(output_file)
 
-					if p_status != 0:
-						if os.path.exists(output_file): os.remove(output_file)
-					else:
-						send_message_to_ui_output("console", "Merging complete!")
-						if args['delete_after_merge']:
-							send_message_to_ui_output("console", "Removing trash...")
-							files_to_remove = [
-								old_file_name + ".m2v",
-								*[f"{old_file_name}_{i}.wav" for i in [0, 1, 2, 3]]
-							]
-							files_to_remove = list(map(lambda x: os.path.join(OUTPUT_F, x),files_to_remove))
-							for f in files_to_remove:
-								os.remove(f)
-							send_message_to_ui_output("console", "OK")
+						send_message_to_ui_output("console", "Working ffmpeg...")
+						p_status = 0
+						if CONSOLE_DEBUG_MODE:
+							subprocess.call(['ffmpeg', '-hide_banner', '-i', new_file_name, '-i', audio_file, output_file])
+						else:
+							process = subprocess.Popen(['ffmpeg', '-hide_banner', '-i', new_file_name, '-i', audio_file, output_file], encoding='utf-8', universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+							with process.stderr:
+								log_subprocess_output(process.stderr, process)
+							p_status = process.wait()
+
+						if p_status != 0:
+							if os.path.exists(output_file): os.remove(output_file)
+							send_message_to_ui_output("event", "error")
+							continue
+						else:
+							send_message_to_ui_output("console", "Merging complete!")
+							if args['delete_after_merge']:
+								send_message_to_ui_output("console", "Removing trash...")
+								files_to_remove = [
+									old_file_name + ".m2v",
+									*[f"{old_file_name}_{i}.wav" for i in [0, 1, 2, 3]]
+								]
+								files_to_remove = list(map(lambda x: os.path.join(OUTPUT_F, x),files_to_remove))
+								for f in files_to_remove:
+									os.remove(f)
+								send_message_to_ui_output("console", "OK")
 
 				if i != file_lenth - 1:
 					send_message_to_ui_output("console", "\n")
