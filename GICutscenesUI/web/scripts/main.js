@@ -29,7 +29,10 @@ function openTab(tab){
 async function change_script_folder(){
 	var folder = await eel.ask_script_file()();
 	update_path(folder, document.getElementById("script_path"))
-	allow_reload_info()
+	
+	if (document.getElementById("script_path").value != folder){
+		allow_reload_info()
+	}
 }
 function update_path(path, input){
 	if (path){
