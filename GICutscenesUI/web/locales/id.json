@@ -6,7 +6,7 @@
 	"settings": "Pengaturan",
 	"select_files": "Tambahkan Berkas",
 	"select_files_dots": "Pilih Berkas:",
-        "clear_files": "Bersihkan",
+	"clear_files": "Bersihkan",
 	"version": "Versi:",
 	"about": "Tentang",
 	"translations": "Terjemahan:",
@@ -19,10 +19,10 @@
 	"language": "Bahasa:",
 	"output_folder": "Folder Akhir:",
 	"merge": "Gabungkan Video dan Audio",
-        "delete_after_merge": "Hapus berkas tidak penting setelah penggabungan",
+	"delete_after_merge": "Hapus berkas tidak penting setelah penggabungan",
 	"clear": "🗑Bersihkan",
 	"start": "Mulai",
-        "stop": "BERHENTI",
+	"stop": "BERHENTI",
 	"appearance": "Tampilan",
 	"theme": "Tema:",
 	"light": "Terang",
@@ -41,8 +41,8 @@
 	"rename_files": "Menamai Berkas...",
 	"run_merge": "Menggabungkan Video dan Audio...",
 	"open_output_dir": "Buka Folder Akhir",
-        "stopped": "Terhenti",
+	"stopped": "Terhenti",
 
 	"new_update": "Pembaruan Baru!",
-        "update": "Perbarui"
+	"update": "Perbarui"
 }
