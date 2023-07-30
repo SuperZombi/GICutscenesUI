@@ -9,6 +9,10 @@
 <p align="center">
     <img src="https://shields.io/badge/version-v0.4.3.1-blue">
 </p>
+<hr>
+<p align="right">
+    <a href="#donate">💲Support the Project</a>
+</p>
 
 ## Screenshots:
 <details>
@@ -39,4 +43,24 @@ Try to update your ffmpeg to the latest version. Most likely you are using an ol
 
 <hr>
 
-#### <a href="https://www.donationalerts.com/r/super_zombi">Support the project</a> (But now it's better to email me and I'll send you the details)
+#### 💲Donate
+<table>
+  <tr>
+    <td>
+       <img width="18px" src="https://www.google.com/s2/favicons?domain=https://donatello.to&sz=256">
+    </td>
+    <td>
+      <a href="https://donatello.to/super_zombi">Donatello</a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+       <img width="18px" src="https://www.google.com/s2/favicons?domain=https://www.donationalerts.com&sz=256">
+    </td>
+    <td>
+      <a href="https://www.donationalerts.com/r/super_zombi">Donation Alerts</a>
+    </td>
+  </tr>
+</table>
+
+(But now it's better to email me and I'll send you the details)
