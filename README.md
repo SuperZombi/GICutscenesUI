@@ -10,8 +10,8 @@
     <img src="https://shields.io/badge/version-v0.4.3.1-blue">
 </p>
 <hr>
-<p align="right">
-    <a href="#donate">💲Support the Project</a>
+<p align="center">
+    <i><a href="#donate">💲Support the Project</a></i>
 </p>
 
 ## Screenshots:
