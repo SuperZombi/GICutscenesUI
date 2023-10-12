@@ -23,19 +23,21 @@
 </details>
 
 ## Usage:
-1. Download [GI-cutscenes](https://github.com/ToaHartor/GI-cutscenes)
-2. Download UI from [Releases](https://github.com/SuperZombi/GICutscenesUI/releases) or click ```Download ZIP```
-3. Start ```GICutscenesUI.exe```
-
-## Requirements:
-1. [Ffmpeg](https://ffmpeg.org/)
-2. [Eel](https://pypi.org/project/Eel/)
-3. [JSON-minify](https://pypi.org/project/JSON_minify/)
-
+1. Download [FFMPEG](https://github.com/BtbN/FFmpeg-Builds/releases)
+2. Download [GI-cutscenes](https://github.com/ToaHartor/GI-cutscenes)
+3. Download GUI from [Releases](https://github.com/SuperZombi/GICutscenesUI/releases)
+4. Start ```GICutscenesUI.exe```
+   
 ## FAQ
-### 1) I have an error in merging video
-Try to update your ffmpeg to the latest version. Most likely you are using an old version (which is installed by default), which does not support the VP9 codec.
 
+### How to install FFMPEG?
+Download ffmpeg (I recommend downloading the `gpl` version). Unpack the contents of the `bin` folder into the program folder.
+
+### Where are the game files with cutscenes?
+`[Game directory]\Genshin Impact game\GenshinImpact_Data\StreamingAssets\VideoAssets\StandaloneWindows64`
+
+### I have an error in merging video
+Try to update your ffmpeg to the latest version. Most likely you are using an old version (which is installed by default), which does not support the VP9 codec.
 
 <br>
 
