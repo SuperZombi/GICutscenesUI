@@ -26,15 +26,16 @@ function putMessageInOutput(type, message) {
 			if (message.includes("time")){
 				message.replace(/\.*time=(.*?) /g, (match, contents)=>{
 					let current_dur = durationToSeconds(contents.trim())
-					let current_percents = current_dur * 100 / maxDuration;
-					let percents_rounded = Math.min(
-													Math.max(0, 
-														Math.round(current_percents)
-													)
-												, 100)
-
-					document.getElementById("ffmpeg_progress").value = percents_rounded
-					document.getElementById("ffmpeg_progress_text").innerHTML = percents_rounded + "%"
+					if (current_dur){
+						let current_percents = current_dur * 100 / maxDuration;
+						let percents_rounded = Math.min(
+														Math.max(0, 
+															Math.round(current_percents)
+														)
+													, 100)
+						document.getElementById("ffmpeg_progress").value = percents_rounded
+						document.getElementById("ffmpeg_progress_text").innerHTML = percents_rounded + "%"
+					}
 				})
 			}
 			
