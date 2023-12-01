@@ -14,7 +14,7 @@ __version__ = '0.4.4'
 
 # ---- Required Functions ----
 
-def resource_path(relative_path):
+def resource_path(relative_path=""):
 	""" Get absolute path to resource, works for dev and for PyInstaller """
 	base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
 	return os.path.join(base_path, relative_path)
@@ -22,6 +22,12 @@ def resource_path(relative_path):
 @eel.expose
 def get_version():
 	return __version__
+
+# ----- subprocess settings -----
+startupinfo = None
+if os.name == 'nt':
+    startupinfo = subprocess.STARTUPINFO()
+    startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
 
 # ---- Locales ----
 
@@ -41,13 +47,13 @@ def get_translation(code):
 	return
 
 
-# ---- GICutscenes Functions ----
+# ---- EXE Functions ----
 
-def find_GICutscenes():
+def find_script(script_name):
 	def find_in(folder):
 		files = [f for f in os.listdir(folder) if os.path.isfile(os.path.join(folder, f))]
-		if "GICutscenes.exe" in files:
-			return os.path.join(folder, "GICutscenes.exe")
+		if script_name in files:
+			return os.path.join(folder, script_name)
 	
 	result = find_in(os.getcwd())
 	if result: return result
@@ -55,12 +61,16 @@ def find_GICutscenes():
 	result = find_in(os.path.dirname(os.getcwd()))
 	if result: return result
 
+	result = find_in(resource_path())
+	if result: return result
+
 
 # ---- Settings Functions ----
 
 def load_settings_inline():
-	global SCRIPT_FILE, OUTPUT_F
+	global SCRIPT_FILE, OUTPUT_F, FFMPEG
 	set_file = os.path.join(os.getcwd(), "UI-settings.json")
+	settings = {}
 	if os.path.exists(set_file):
 		with open(set_file, 'r', encoding='utf-8') as file:
 			settings = json.loads(file.read())
@@ -68,9 +78,12 @@ def load_settings_inline():
 				SCRIPT_FILE = settings["script_file"]
 			if "output_folder" in settings.keys():
 				OUTPUT_F = settings["output_folder"]
-	else:
-		SCRIPT_FILE = find_GICutscenes()
-		OUTPUT_F = os.path.join(os.getcwd(), "output")
+			if "FFMPEG" in settings.keys():
+				FFMPEG = settings["FFMPEG"]
+
+	SCRIPT_FILE = settings.get("script_file") or find_script("GICutscenes.exe")
+	OUTPUT_F = settings.get("output_folder") or os.path.join(os.getcwd(), "output")
+	FFMPEG = settings.get("FFMPEG") or find_script("ffmpeg.exe") or "ffmpeg"
 
 load_settings_inline()
 
@@ -85,17 +98,22 @@ def load_settings():
 
 @eel.expose
 def save_settings(settings):
-	settings['script_file'] = SCRIPT_FILE
 	settings['output_folder'] = OUTPUT_F
+	if not ('Temp' in SCRIPT_FILE):
+		settings['script_file'] = SCRIPT_FILE
+	if not ('Temp' in FFMPEG):
+		settings['FFMPEG'] = FFMPEG
+
 	with open(os.path.join(os.getcwd(), "UI-settings.json"), 'w', encoding='utf-8') as file:
 		file.write(json.dumps(settings, indent=4, ensure_ascii=False))
 	return True
 
 @eel.expose
 def delete_settings():
-	global SCRIPT_FILE, OUTPUT_F
-	SCRIPT_FILE = find_GICutscenes()
+	global SCRIPT_FILE, OUTPUT_F, FFMPEG
+	SCRIPT_FILE = find_script("GICutscenes.exe")
 	OUTPUT_F = os.path.join(os.getcwd(), "output")
+	FFMPEG = find_script("ffmpeg.exe") or "ffmpeg"
 	
 	set_file = os.path.join(os.getcwd(), "UI-settings.json")
 	if os.path.exists(set_file):
@@ -110,7 +128,7 @@ def delete_settings():
 @eel.expose
 def get_GICutscenes_ver():
 	if SCRIPT_FILE:
-		process = subprocess.Popen([SCRIPT_FILE, "--version"], stdout=subprocess.PIPE)
+		process = subprocess.Popen([SCRIPT_FILE, "--version"], stdout=subprocess.PIPE, startupinfo=startupinfo)
 		answer = process.communicate()[0]
 		try:
 			text = answer.decode('utf-8')
@@ -127,7 +145,7 @@ def get_ffmpeg_ver():
 		if match is not None:
 			return match
 	try:
-		process = subprocess.Popen(["ffmpeg", "-version"], stdout=subprocess.PIPE)
+		process = subprocess.Popen([FFMPEG, "-version"], stdout=subprocess.PIPE, startupinfo=startupinfo)
 		answer = process.communicate()[0]
 		try:
 			text = answer.decode('utf-8')
@@ -292,7 +310,7 @@ def start_work(files, args):
 			if CONSOLE_DEBUG_MODE:
 				subprocess.call([SCRIPT_FILE, 'batchDemux', temp_folder, '--output', OUTPUT_F])
 			else:
-				process = subprocess.Popen([SCRIPT_FILE, 'batchDemux', temp_folder, '--output', OUTPUT_F], encoding=os.device_encoding(0), universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+				process = subprocess.Popen([SCRIPT_FILE, 'batchDemux', temp_folder, '--output', OUTPUT_F], encoding=os.device_encoding(0), universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, startupinfo=startupinfo)
 				with process.stdout:
 					log_subprocess_output(process.stdout)
 				p_status = process.wait()
@@ -336,9 +354,9 @@ def start_work(files, args):
 						send_message_to_ui_output("console", "Working ffmpeg...")
 						p_status = 0
 						if CONSOLE_DEBUG_MODE:
-							subprocess.call(['ffmpeg', '-hide_banner', '-i', new_file_name, '-i', audio_file, output_file])
+							subprocess.call([FFMPEG, '-hide_banner', '-i', new_file_name, '-i', audio_file, output_file])
 						else:
-							process = subprocess.Popen(['ffmpeg', '-hide_banner', '-i', new_file_name, '-i', audio_file, output_file], encoding='utf-8', universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+							process = subprocess.Popen([FFMPEG, '-hide_banner', '-i', new_file_name, '-i', audio_file, output_file], encoding='utf-8', universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, startupinfo=startupinfo)
 							with process.stderr:
 								log_subprocess_output(process.stderr, process)
 							p_status = process.wait()
