@@ -39,6 +39,12 @@ Download ffmpeg (I recommend downloading the `gpl` version). Unpack the contents
 ### I have an error in merging video
 Try to update your ffmpeg to the latest version. Most likely you are using an old version (which is installed by default), which does not support the VP9 codec.
 
+### I have an error in merging video
+Try to update your ffmpeg to the latest version. Most likely you are using an old version (which is installed by default), which does not support the VP9 codec.
+
+### How to Increase FFMPEG version?
+If you want to use a newer version of ffmpeg, add the `ffmpeg.exe` file next to the exe file you are running.
+
 <br>
 
 ### Help with <a href="translations.md">translation</a>
