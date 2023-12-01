@@ -10,7 +10,7 @@ import re
 import requests
 
 CONSOLE_DEBUG_MODE = False
-__version__ = '0.4.4'
+__version__ = '0.5.0'
 
 # ---- Required Functions ----
 
@@ -22,12 +22,6 @@ def resource_path(relative_path=""):
 @eel.expose
 def get_version():
 	return __version__
-
-# ----- subprocess settings -----
-startupinfo = None
-if os.name == 'nt':
-    startupinfo = subprocess.STARTUPINFO()
-    startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
 
 # ---- Locales ----
 
@@ -128,7 +122,7 @@ def delete_settings():
 @eel.expose
 def get_GICutscenes_ver():
 	if SCRIPT_FILE:
-		process = subprocess.Popen([SCRIPT_FILE, "--version"], stdout=subprocess.PIPE, startupinfo=startupinfo)
+		process = subprocess.Popen([SCRIPT_FILE, "--version"], stdout=subprocess.PIPE, creationflags=subprocess.CREATE_NO_WINDOW)
 		answer = process.communicate()[0]
 		try:
 			text = answer.decode('utf-8')
@@ -145,7 +139,7 @@ def get_ffmpeg_ver():
 		if match is not None:
 			return match
 	try:
-		process = subprocess.Popen([FFMPEG, "-version"], stdout=subprocess.PIPE, startupinfo=startupinfo)
+		process = subprocess.Popen([FFMPEG, "-version"], stdout=subprocess.PIPE, creationflags=subprocess.CREATE_NO_WINDOW)
 		answer = process.communicate()[0]
 		try:
 			text = answer.decode('utf-8')
@@ -269,7 +263,7 @@ def ask_output_folder():
 
 @eel.expose
 def open_output_folder():
-	os.system(f'explorer "{OUTPUT_F}"')
+	subprocess.run(['explorer', OUTPUT_F], creationflags=subprocess.CREATE_NO_WINDOW)
 
 
 
@@ -310,7 +304,7 @@ def start_work(files, args):
 			if CONSOLE_DEBUG_MODE:
 				subprocess.call([SCRIPT_FILE, 'batchDemux', temp_folder, '--output', OUTPUT_F])
 			else:
-				process = subprocess.Popen([SCRIPT_FILE, 'batchDemux', temp_folder, '--output', OUTPUT_F], encoding=os.device_encoding(0), universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, startupinfo=startupinfo)
+				process = subprocess.Popen([SCRIPT_FILE, 'batchDemux', temp_folder, '--output', OUTPUT_F], encoding=os.device_encoding(0), universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, creationflags=subprocess.CREATE_NO_WINDOW)
 				with process.stdout:
 					log_subprocess_output(process.stdout)
 				p_status = process.wait()
@@ -356,7 +350,7 @@ def start_work(files, args):
 						if CONSOLE_DEBUG_MODE:
 							subprocess.call([FFMPEG, '-hide_banner', '-i', new_file_name, '-i', audio_file, output_file])
 						else:
-							process = subprocess.Popen([FFMPEG, '-hide_banner', '-i', new_file_name, '-i', audio_file, output_file], encoding='utf-8', universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, startupinfo=startupinfo)
+							process = subprocess.Popen([FFMPEG, '-hide_banner', '-i', new_file_name, '-i', audio_file, '-b:v', '10M', '-b:a', '192K', output_file], encoding='utf-8', universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, creationflags=subprocess.CREATE_NO_WINDOW)
 							with process.stderr:
 								log_subprocess_output(process.stderr, process)
 							p_status = process.wait()
