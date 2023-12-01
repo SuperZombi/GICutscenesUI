@@ -23,8 +23,8 @@
 </details>
 
 ## Usage:
-1. Download [FFMPEG](https://github.com/BtbN/FFmpeg-Builds/releases)
-2. Download [GI-cutscenes](https://github.com/ToaHartor/GI-cutscenes/releases)
+1. ~Download [FFMPEG](https://github.com/BtbN/FFmpeg-Builds/releases)~
+2. ~Download [GI-cutscenes](https://github.com/ToaHartor/GI-cutscenes/releases)~
 3. Download GUI from [Releases](https://github.com/SuperZombi/GICutscenesUI/releases)
 4. Start ```GICutscenesUI.exe```
    
