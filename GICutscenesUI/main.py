@@ -10,7 +10,7 @@ import re
 import requests
 
 CONSOLE_DEBUG_MODE = False
-__version__ = '0.5.0'
+__version__ = '0.5.1'
 
 # ---- Required Functions ----
 
@@ -29,7 +29,7 @@ def get_version():
 def get_translation(code):
 	tr_file = os.path.join(resource_path("web"), "locales", code + ".json")
 	if os.path.exists(tr_file):
-		with open(tr_file, 'r', encoding="utf-8") as file:
+		with open(tr_file, 'r', encoding="utf-8-sig") as file:
 			string = json_minify(file.read()) # remove comments
 
 			# remove coma at the end of json
