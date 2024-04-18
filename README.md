@@ -7,7 +7,7 @@
     <strong> User Interface for <a href="https://github.com/ToaHartor/GI-cutscenes">Genshin Cutscenes Demuxer</a></strong>
 </p>
 <p align="center">
-    <img src="https://shields.io/badge/version-v0.5.1-blue"></br>
+    <img src="https://shields.io/badge/version-v0.5.2-blue"></br>
     <a href="#donate"><img src="https://shields.io/badge/💲-Support_the_Project-2ea043"></a>
 </p>
 
@@ -20,27 +20,22 @@
 </details>
 
 ## Usage:
-1. ~Download [FFMPEG](https://github.com/BtbN/FFmpeg-Builds/releases)~
-2. ~Download [GI-cutscenes](https://github.com/ToaHartor/GI-cutscenes/releases)~
-3. Download GUI from [Releases](https://github.com/SuperZombi/GICutscenesUI/releases)
-4. Start ```GICutscenesUI.exe```
-   
-## FAQ
+1. Download archive from [Releases](https://github.com/SuperZombi/GICutscenesUI/releases/latest)
+2. Unzip it to a convenient location.
+3. Start ```GICutscenesUI.exe```
 
-### How to install FFMPEG?
-Download ffmpeg (I recommend downloading the `gpl` version). Unpack the contents of the `bin` folder into the program folder.
+## FAQ
 
 ### Where are the game files with cutscenes?
 `[Game directory]\Genshin Impact game\GenshinImpact_Data\StreamingAssets\VideoAssets\StandaloneWindows64`
 
-### I have an error in merging video
-Try to update your ffmpeg to the latest version. Most likely you are using an old version (which is installed by default), which does not support the VP9 codec.
+### I have an error when demuxing files
+Try to update your [GI-cutscenes script](https://github.com/ToaHartor/GI-cutscenes/releases) to the latest version.<br>
+Specify the path to the `GI-cutscenes.exe` in the settings.
 
 ### I have an error in merging video
-Try to update your ffmpeg to the latest version. Most likely you are using an old version (which is installed by default), which does not support the VP9 codec.
-
-### How to Increase FFMPEG version?
-If you want to use a newer version of ffmpeg, add the `ffmpeg.exe` file next to the exe file you are running.
+Try to update your [ffmpeg](https://github.com/BtbN/FFmpeg-Builds/releases) to the latest version.<br>
+Add the `ffmpeg.exe` file next to the exe file you are running.
 
 <br>
 
@@ -67,5 +62,3 @@ If you want to use a newer version of ffmpeg, add the `ffmpeg.exe` file next to 
     </td>
   </tr>
 </table>
-
-(But now it's better to email me and I'll send you the details)

@@ -41,5 +41,10 @@
 	"stopped": "Stopped",
 
 	"new_update": "New update!",
-	"update": "Update"
+	"update": "Update",
+
+	"donate_title": "Enjoying this free program?",
+	"donate_description": "Consider supporting development with a small donation!",
+	"donate_thanks": "Thank you for your support!",
+	"donate_button": "Donate"
 }

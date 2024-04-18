@@ -142,7 +142,7 @@ label{
 	background-color: #1CB0F6;
 	border: solid transparent;
 	border-radius: 16px;
-	color: #FFFFFF;
+	color: #fff;
 	cursor: pointer;
 	display: inline-block;
 	font-weight: 700;
@@ -288,12 +288,66 @@ table td{
 	padding: 5px;
 }
 .translations tr:nth-child(even) {
-	background: #CCC;
+	background: #ccc;
 }
 .translations tr:nth-child(odd) {
-	background: #EBEBEB;
+	background: #ebebeb;
 }
 .translations tr{
 	transition: 0.2s;
 }
 .translations tr:hover{ background: yellow; }
+
+
+.popup{
+	display: none;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+.popup.show{
+	display: block;
+}
+.popup > div{
+	background: rgb(240, 250, 255, 0.85);
+	margin: 15% auto;
+	padding: 20px;
+	width: 70%;
+	border-radius: 16px;
+	box-sizing: border-box;
+	text-align: center;
+}
+.popup > div svg{
+	fill: rgb(0, 235, 0);
+	height: 160px;
+	display: block;
+	margin: auto;
+}
+
+.popup button {
+	--glow-color: rgb(0, 235, 0);
+	--btn-color: aliceblue;
+	cursor: pointer;
+	border: .25em solid var(--glow-color);
+	padding: 1em 3em;
+	color: var(--glow-color);
+	font-size: 16px;
+	font-weight: bold;
+	background-color: var(--btn-color);
+	border-radius: 1em;
+	outline: none;
+	box-shadow: 0 0 1em .1em var(--glow-color),
+				inset 0 0 .5em 0 var(--glow-color);
+	transition: all 0.3s;
+	user-select: none;
+}
+.popup button:hover {
+	color: var(--btn-color);
+	background-color: var(--glow-color);
+	box-shadow: 0 0 2em .3em var(--glow-color);
+}

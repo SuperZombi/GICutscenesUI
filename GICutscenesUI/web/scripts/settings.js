@@ -59,3 +59,25 @@ function changeTheme(){
 		document.body.classList.remove('dark')
 	}
 }
+
+function donationPopup(){
+	function checkLastNotificationTime(){
+		let currentTime = Math.floor(Date.now() / 1000);
+		let lastNotificationTime = localStorage.getItem('lastNotificationTime');
+		if (!lastNotificationTime || (currentTime - lastNotificationTime > 12*60*60)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	if (checkLastNotificationTime()){
+		setTimeout(_=>{
+			document.querySelector("#donate-popup").classList.add("show")
+			document.querySelector("#donate-popup button").onclick = _=>{
+				document.querySelector("#donate-popup").classList.remove("show")
+			}
+			var currentTime = Math.floor(Date.now() / 1000);
+			localStorage.setItem('lastNotificationTime', currentTime);
+		}, 60*1000)
+	}
+}

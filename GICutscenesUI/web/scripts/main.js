@@ -11,6 +11,7 @@
 	let folder = await eel.get_script_file()();
 	update_path(folder, document.getElementById("script_path"))
 	get_output_folder()
+	donationPopup()
 })()
 
 function openTab(tab){

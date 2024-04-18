@@ -54,3 +54,14 @@
 .dark #preview_zone .now{
 	color: yellow;
 }
+
+.dark .popup > div{
+	background: rgba(0, 0, 0, 0.75);
+	color: white;
+}
+.dark .popup > div svg{
+	fill: lime;
+}
+.dark .popup button {
+	--btn-color: rgba(0, 0, 0, 0.75);
+}
