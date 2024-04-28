@@ -10,7 +10,7 @@ import re
 import requests
 
 CONSOLE_DEBUG_MODE = False
-__version__ = '0.5.2'
+__version__ = '0.6.0'
 
 # ---- Required Functions ----
 
@@ -52,11 +52,11 @@ def find_script(script_name):
 	result = find_in(os.getcwd())
 	if result: return result
 
-	result = find_in(os.path.dirname(os.getcwd()))
-	if result: return result
-
 	result = find_in(resource_path())
 	if result: return result
+
+def file_in_temp(file):
+	return os.path.dirname(file) == os.path.dirname(resource_path(os.path.basename(file)))
 
 
 # ---- Settings Functions ----
@@ -79,6 +79,14 @@ def load_settings_inline():
 	OUTPUT_F = settings.get("output_folder") or os.path.join(os.getcwd(), "output")
 	FFMPEG = settings.get("FFMPEG") or find_script("ffmpeg.exe") or "ffmpeg"
 
+	if os.path.exists(os.path.join(os.getcwd(), "versions.json")) and file_in_temp(SCRIPT_FILE):
+		local_ver_file = os.path.join(os.getcwd(), "versions.json")
+		temp_ver_file = os.path.join(os.path.dirname(SCRIPT_FILE), "versions.json")
+		with open(local_ver_file, 'r') as orig_file:
+			data = orig_file.read()
+		with open(temp_ver_file, 'w') as temp_file:
+			temp_file.write(data)
+
 load_settings_inline()
 
 @eel.expose
@@ -93,9 +101,9 @@ def load_settings():
 @eel.expose
 def save_settings(settings):
 	settings['output_folder'] = OUTPUT_F
-	if not ('Temp' in SCRIPT_FILE):
+	if not file_in_temp(SCRIPT_FILE):
 		settings['script_file'] = SCRIPT_FILE
-	if not ('Temp' in FFMPEG):
+	if not file_in_temp(FFMPEG):
 		settings['FFMPEG'] = FFMPEG
 
 	with open(os.path.join(os.getcwd(), "UI-settings.json"), 'w', encoding='utf-8') as file:
@@ -205,6 +213,11 @@ def download_latest_version_file():
 	local_ver_file = os.path.join(os.path.dirname(SCRIPT_FILE), "versions.json")
 	with open(local_ver_file, 'w') as file:
 		file.write(r.text)
+
+	if file_in_temp(SCRIPT_FILE):
+		local_ver_file = os.path.join(os.getcwd(), "versions.json")
+		with open(local_ver_file, 'w') as file:
+			file.write(r.text)
 
 
 # ---- Logger Functions ----
@@ -347,10 +360,11 @@ def start_work(files, args):
 
 						send_message_to_ui_output("console", "Working ffmpeg...")
 						p_status = 0
+						bitrate = int(args['video_quality']) * 1000
 						if CONSOLE_DEBUG_MODE:
-							subprocess.call([FFMPEG, '-hide_banner', '-i', new_file_name, '-i', audio_file, output_file])
+							subprocess.call([FFMPEG, '-hide_banner', '-i', new_file_name, '-i', audio_file, '-b:v', str(bitrate), '-b:a', '192K', output_file])
 						else:
-							process = subprocess.Popen([FFMPEG, '-hide_banner', '-i', new_file_name, '-i', audio_file, '-b:v', '10M', '-b:a', '192K', output_file], encoding='utf-8', universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, creationflags=subprocess.CREATE_NO_WINDOW)
+							process = subprocess.Popen([FFMPEG, '-hide_banner', '-i', new_file_name, '-i', audio_file, '-b:v', str(bitrate), '-b:a', '192K', output_file], encoding='utf-8', universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, creationflags=subprocess.CREATE_NO_WINDOW)
 							with process.stderr:
 								log_subprocess_output(process.stderr, process)
 							p_status = process.wait()

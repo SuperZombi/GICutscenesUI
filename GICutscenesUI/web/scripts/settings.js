@@ -8,7 +8,8 @@ async function load_settings(){
 			}
 			else{
 				el.value = settings[key]
-			}		
+			}
+			el.dispatchEvent(new Event("change"))
 		}
 	})
 }

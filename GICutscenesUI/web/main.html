@@ -102,24 +102,42 @@
 		<h3 translation="__output_folder__">Output Folder:</h3>
 		<input type="text" readonly class="path" id="output_path" class="settings_element">
 		<button onclick="change_output_folder()" class="path_button" translation="__change__">Change</button>
-		<hr>
 
-		<p>
-			<input type="checkbox" id="merge" name="merge" class="settings_element">
-			<span class="info_icon" translation="__title:using_ffmpeg_promt__" title="With using ffmpeg"></span>
-			<label for="merge" translation="__merge__">Merge Video and Audio</label>
+		<p></p>
 
-			<select class="settings_element" name="audio_index" style="margin-left:10px;" translation="__title:track_index_promt__" title="Track index">
-				<option value="0">Audio 0 - Chinese</option>
-				<option value="1" selected>Audio 1 - English</option>
-				<option value="2">Audio 2 - Japanese</option>
-				<option value="3">Audio 3 - Korean</option>
-			</select>
-		</p>
-		<p>
-			<input type="checkbox" id="delete_after_merge" name="delete_after_merge" class="settings_element">
-			<label for="delete_after_merge" translation="__delete_after_merge__">Delete unnecessary files after merging</label>
-		</p>
+		<fieldset>
+			<legend translation="__merging_area__">Merging</legend>
+			<p>
+				<input type="checkbox" id="merge" name="merge" class="settings_element">
+				<label for="merge" translation="__merge__">Merge Video and Audio</label>
+				<span class="info_icon" translation="__title:using_ffmpeg_promt__" title="With using ffmpeg"></span>
+			</p>
+			<p>
+				<label translation="__audio_track__" style="margin-left: 26px;">Audio track:</label>
+				<select class="settings_element" name="audio_index" style="margin-left:10px;">
+					<option value="0">Chinese</option>
+					<option value="1" selected>English</option>
+					<option value="2">Japanese</option>
+					<option value="3">Korean</option>
+				</select>
+			</p>
+			<p>
+				<label translation="__quality__" style="margin-left: 26px;">Quality:</label>
+				<input type="range" min="8000" max="27000" step="1000" value="12000" list="markers" class="settings_element" name="video_quality" title="12000" onchange="this.title=this.value" style="margin-left: 4px;">
+				<datalist id="markers">
+					<option value="10000"></option>
+					<option value="15000"></option>
+					<option value="20000"></option>
+					<option value="25000"></option>
+				</datalist>
+			</p>
+			<p>
+				<input type="checkbox" id="delete_after_merge" name="delete_after_merge" class="settings_element">
+				<label for="delete_after_merge" translation="__delete_after_merge__">Delete unnecessary files after merging</label>
+			</p>
+		</fieldset>
+
+		<p></p>
 	</div>
 
 

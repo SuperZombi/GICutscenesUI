@@ -104,7 +104,7 @@ label{
 
 .path{
 	font-family: monospace;
-	max-width: 60%;
+	max-width: 70%;
 	padding: 1px 4px;
 	display: inline-block;
 	border-radius: 8px;
@@ -212,6 +212,13 @@ label{
 
 input[type="checkbox"]{
 	vertical-align: text-bottom;
+}
+input[type="range"]{
+	vertical-align: middle;
+	cursor: ew-resize;
+}
+input[type="range" i]{
+	color: #aaa;
 }
 
 #progress{

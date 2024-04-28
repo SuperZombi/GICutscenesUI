@@ -15,8 +15,6 @@
 	"save_title": "Save Settings to File",
 	"language": "Language:",
 	"output_folder": "Output Folder:",
-	"merge": "Merge Video and Audio",
-	"delete_after_merge": "Delete unnecessary files after merging",
 	"clear": "🗑Clear",
 	"start": "START",
 	"stop": "STOP",
@@ -25,13 +23,17 @@
 	"light": "Light",
 	"dark": "Dark",
 
+	"merging_area": "Merging",
+	"merge": "Merge Video and Audio",
+	"using_ffmpeg_promt": "With using ffmpeg",
+	"audio_track": "Audio track:",
+	"quality": "Quality:",
+	"delete_after_merge": "Delete unnecessary files after merging",
+
 	"no_files": "No Files!",
 	"select_script_file": "Select Script File!",
 	"saved": "Saved!",
 	"confirm_delete_settings": "Are you sure you want to Delete all Settings?",
-
-	"using_ffmpeg_promt": "With using ffmpeg",
-	"track_index_promt": "Track index",
 
 	"copy_files": "Copying Files...",
 	"run_demux": "Converting and Decrypting...",
