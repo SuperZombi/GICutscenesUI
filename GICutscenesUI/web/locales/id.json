@@ -18,7 +18,6 @@
 	"save": "Simpan Pengaturan ke Berkas",
 	"language": "Bahasa:",
 	"output_folder": "Folder Akhir:",
-	"merge": "Gabungkan Video dan Audio",
 	"delete_after_merge": "Hapus berkas tidak penting setelah penggabungan",
 	"clear": "🗑Bersihkan",
 	"start": "Mulai",
@@ -28,13 +27,16 @@
 	"light": "Terang",
 	"dark": "Gelap",
 
+	"merging_area": "Menggabungkan",
+	"merge": "Gabungkan Video dan Audio",
+	"using_ffmpeg_promt": "Memakai ffmpeg",
+	"audio_track": "Trek audio:",
+	"quality": "Kualitas:",
+	
 	"no_files": "Berkas Kosong!",
 	"select_script_file": "Pilih Berkas Script!",
 	"saved": "Tersimpan!",
 	"confirm_delete_settings": "Apakah Anda Yakin Ingin Menghapus Semua Pengaturan?",
-
-	"using_ffmpeg_promt": "Memakai ffmpeg",
-	"track_index_promt": "Index Track",
 
 	"copy_files": "Menyalin Berkas...",
 	"run_demux": "Mengkonversi dan Mendekripsi...",
