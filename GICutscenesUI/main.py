@@ -406,7 +406,7 @@ eel.init(resource_path("web"))
 browsers = ['chrome', 'edge', 'default']
 for browser in browsers:
 	try:
-		eel.start("main.html", size=(600, 700), mode=browser)
+		eel.start("main.html", size=(600, 700), mode=browser, port=0)
 		break
 	except Exception:
 		print(f"Failed to launch the app using {browser.title()} browser")
