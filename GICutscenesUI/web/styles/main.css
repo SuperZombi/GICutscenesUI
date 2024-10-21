@@ -328,16 +328,37 @@ table td{
 	border-radius: 16px;
 	box-sizing: border-box;
 	text-align: center;
+	position: relative;
+}
+.popup .close{
+	color: red;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	font-weight: bold;
+	cursor: pointer;
+	user-select: none;
+	transition: 0.15s;
+	font-size: 16pt;
+	width: 16pt;
+	height: 16pt;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	line-height: 16pt;
+}
+.popup .close:hover{
+	transform: rotate(90deg);
 }
 .popup > div svg{
-	fill: rgb(0, 235, 0);
+	fill: rgb(0, 200, 0);
 	height: 160px;
 	display: block;
 	margin: auto;
 }
 
 .popup button {
-	--glow-color: rgb(0, 235, 0);
+	--glow-color: rgb(0, 225, 0);
 	--btn-color: aliceblue;
 	cursor: pointer;
 	border: .25em solid var(--glow-color);

@@ -71,14 +71,17 @@ function donationPopup(){
 			return false;
 		}
 	}
+	function callback(){
+		document.querySelector("#donate-popup").classList.remove("show")
+		var currentTime = Math.floor(Date.now() / 1000);
+		localStorage.setItem('lastNotificationTime', currentTime);
+	}
+	document.querySelector("#donate-popup .close").onclick = callback
+	document.querySelector("#donate-popup button").onclick = callback
+	
 	if (checkLastNotificationTime()){
 		setTimeout(_=>{
 			document.querySelector("#donate-popup").classList.add("show")
-			document.querySelector("#donate-popup button").onclick = _=>{
-				document.querySelector("#donate-popup").classList.remove("show")
-			}
-			var currentTime = Math.floor(Date.now() / 1000);
-			localStorage.setItem('lastNotificationTime', currentTime);
 		}, 60*1000)
 	}
 }
