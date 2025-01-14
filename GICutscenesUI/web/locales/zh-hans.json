@@ -17,27 +17,38 @@
 	"save_title": "导出设置到文件",
 	"language": "语言:",
 	"output_folder": "输出文件夹:",
-	"merge": "合并视频和音频",
 	"clear": "🗑清空",
 	"start": "开始",
+	"stop": "停止",
 	"appearance": "外观",
 	"theme": "主题:",
 	"light": "浅色",
 	"dark": "深色",
+	
+	"merging_area": "合并",
+	"merge": "合并视频和音频",
+	"using_ffmpeg_promt": "使用 ffmpeg",
+	"audio_track": "音轨语言:",
+	"quality": "品质:",
+	"delete_after_merge": "合并后删除不必要的文件",
 
 	"no_files": "无文件!",
 	"select_script_file": "选择脚本文件!",
 	"saved": "已保存!",
 	"confirm_delete_settings": "确定删除所有设置吗?",
 
-	"using_ffmpeg_promt": "使用 ffmpeg",
-	"track_index_promt": "音轨列表",
-
 	"copy_files": "正在复制文件...",
 	"run_demux": "正在转换和解密...",
 	"rename_files": "正在重命名文件...",
 	"run_merge": "正在合并视频和音频...",
 	"open_output_dir": "打开输出文件夹",
+	"stopped": "停止",
 
-	"new_update": "新的版本可用!"
+	"new_update": "新版本可用!",
+	"update": "升级",
+
+	"donate_title": "喜欢这个免费程序吗?",
+	"donate_description": "你可以考虑通过小额捐款来支持开发工作!",
+	"donate_thanks": "感谢你的支持!",
+	"donate_button": "捐赠"
 }
