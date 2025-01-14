@@ -2,7 +2,7 @@
 	"__root__": {
 		"inherit": "en"
 	},
-	"home": "Utama",
+	"home": "Beranda",
 	"settings": "Pengaturan",
 	"select_files": "Tambahkan Berkas",
 	"select_files_dots": "Pilih Berkas:",
@@ -14,11 +14,12 @@
 	"change": "Ubah",
 	"reset": "Setel Ulang",
 	"reset_title": "Hapus Berkas Pengaturan",
+	"remove": "Hapus",
 	"save": "Simpan",
-	"save": "Simpan Pengaturan ke Berkas",
+	"save_title": "Simpan Pengaturan ke Berkas",
 	"language": "Bahasa:",
-	"output_folder": "Folder Akhir:",
-	"delete_after_merge": "Hapus berkas tidak penting setelah penggabungan",
+	"output_folder": "Folder Output:",
+	"delete_after_merge": "Hapus berkas tidak diperlukan setelah penggabungan",
 	"clear": "🗑Bersihkan",
 	"start": "Mulai",
 	"stop": "BERHENTI",
@@ -29,7 +30,7 @@
 
 	"merging_area": "Menggabungkan",
 	"merge": "Gabungkan Video dan Audio",
-	"using_ffmpeg_promt": "Memakai ffmpeg",
+	"using_ffmpeg_prompt": "Memakai ffmpeg",
 	"audio_track": "Trek audio:",
 	"quality": "Kualitas:",
 	
@@ -39,12 +40,17 @@
 	"confirm_delete_settings": "Apakah Anda Yakin Ingin Menghapus Semua Pengaturan?",
 
 	"copy_files": "Menyalin Berkas...",
-	"run_demux": "Mengkonversi dan Mendekripsi...",
-	"rename_files": "Menamai Berkas...",
+	"run_demux": "Mengonversi dan Mendekripsi...",
+	"rename_files": "Ubah Nama Berkas...",
 	"run_merge": "Menggabungkan Video dan Audio...",
-	"open_output_dir": "Buka Folder Akhir",
+	"open_output_dir": "Buka Folder Output",
 	"stopped": "Terhenti",
 
 	"new_update": "Pembaruan Baru!",
-	"update": "Perbarui"
+	"update": "Perbarui",
+
+	"donate_title": "Suka Program Gratis Ini?",
+	"donate_description": "Pertimbangkan untuk mendukung pengembangan dengan donasi kecil!",
+	"donate_thanks": "Terima kasih atas dukungan anda!",
+	"donate_button": "Donasi"
 }
