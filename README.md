@@ -15,7 +15,8 @@
 <details>
   <summary></summary>
   <img src="github/images/main.png" width="550px">
-  <img src="github/images/settings.png" width="550px">
+  <img src="github/images/settings_light.png" width="400px">
+  <img src="github/images/settings_dark.png" width="400px">
   <img src="github/images/animation_low.gif">
 </details>
 
