@@ -5,16 +5,19 @@
 .dark code{
 	background: grey;
 }
-.dark .tab {
+.dark .tabcontent{
+	color-scheme: dark;
+}
+.dark .tabs {
 	background: #202020;
 }
-.dark .tab button {
+.dark .tabs button {
 	color: white;
 }
-.dark .tab button:hover {
+.dark .tabs button:hover {
 	background-color: #303030;
 }
-.dark .tab button:active, .dark .tab button.active {
+.dark .tabs button:active, .dark .tabs button.active {
 	background-color: #454545;
 }
 .dark .browse{
@@ -23,6 +26,10 @@
 .dark #output{
 	background: #181818;
 	color: antiquewhite;
+}
+.dark .input_element {
+	background: #444;
+	border-color: #666;
 }
 .dark .link{
 	color: #00C0FF;

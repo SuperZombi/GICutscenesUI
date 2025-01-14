@@ -13,7 +13,7 @@
 </head>
 <body>
 
-	<div class="tab">
+	<div class="tabs">
 		<button data="home" class="active" onclick="openTab('home')" translation="__home__">Home</button>
 		<button data="settings" onclick="openTab('settings')" translation="__settings__">Settings</button>
 		<button data="about" onclick="openTab('about')" translation="__about__">About</button>
@@ -22,12 +22,14 @@
 
 
 	<div class="tabcontent showed" id="home">
-		<h2 translation="__select_files_dots__">Select Files:</h2>
-		<button id="fileSelector" class="browse" onclick="selectFiles()" translation="__select_files__">Select Files</button>
-		<button id="fileCleaner" class="browse" onclick="clearFiles()" translation="__clear_files__" style="display:none;">Clear</button>
-		<details id="preview_zone" open>
-			<summary></summary>
-		</details>
+		<div id="browse-area">
+			<h2 translation="__select_files_dots__" align="center">Select Files:</h2>
+			<div class="buttons-line">
+				<button id="fileSelector" class="browse" onclick="selectFiles()" translation="__select_files__">Select Files</button>
+				<button id="fileCleaner" class="browse" onclick="clearFiles()" translation="__clear_files__" style="display:none;">Clear</button>
+			</div>
+		</div>
+		<div id="preview_zone"></div>
 
 		<div id="progress">
 			<progress id="progress_bar"></progress>
@@ -54,28 +56,33 @@
 
 
 	<div class="tabcontent" id="settings">
-		<h2><code>GICutscenes.exe:</code></h2>
-		<input type="text" readonly class="path" id="script_path">
-		<button onclick="change_script_folder()" class="path_button" translation="__change__">Change</button>
-
-		<hr>
-		<p></p>
-
-		<div>
+		<fieldset style="text-align: center; border: 0; padding: 0;">
 			<button class="settings-button blue" onclick="resetSettings()" title="Delete Settings File"
 			translation="__title:reset_title__ __reset__" 
 			>Reset</button>
 			<button class="settings-button" onclick="exportSettings()" title="Export Settings to File" translation="__title:save_title__ __save__">Save</button>
-		</div>
+		</fieldset>
 
-		<p></p>
+		<fieldset>
+			<legend><code>GICutscenes.exe:</code></legend>
+			<input type="text" readonly class="input_element path" id="script_path">
+			<button onclick="change_script_folder()" class="input_element path_button" translation="__change__">Change</button>
+		</fieldset>
+
+		<fieldset>
+			<legend translation="__output_folder__">Output Folder:</legend>
+			<input type="text" readonly class="input_element path" id="output_path" class="settings_element">
+			<button onclick="change_output_folder()" class="input_element path_button" translation="__change__">Change</button>
+		</fieldset>
 
 		<fieldset>
 			<legend translation="__appearance__">Appearance</legend>
 			<div class="flexable" style="justify-content:space-evenly;">
 				<div>
-				<h3 translation="__language__" style="display:inline-block;">Language:</h3>
-					<select class="settings_element" name="lang" onchange="getTranslation()" style="margin-left:10px">
+					<span translation="__language__" style="display:inline-block;">
+						Language:
+					</span>
+					<select class="input_element settings_element" name="lang" onchange="getTranslation()" style="margin-left:10px">
 						<option value="en" selected>English</option>
 						<option value="ru">Русский</option>
 						<option value="uk">Українська</option>
@@ -90,20 +97,14 @@
 				</div>
 				
 				<div>
-				<h3 translation="__theme__" style="display:inline-block;">Theme:</h3>
-					<select class="settings_element" name="theme" onchange="changeTheme()" style="margin-left:10px">
+					<span translation="__theme__" style="display:inline-block;">Theme:</span>
+					<select class="input_element settings_element" name="theme" onchange="changeTheme()" style="margin-left:10px">
 						<option translation="__light__" value="light" selected>Light</option>
 						<option translation="__dark__" value="dark">Dark</option>
 					</select>
 				</div>
 			</div>
 		</fieldset>
-
-		<h3 translation="__output_folder__">Output Folder:</h3>
-		<input type="text" readonly class="path" id="output_path" class="settings_element">
-		<button onclick="change_output_folder()" class="path_button" translation="__change__">Change</button>
-
-		<p></p>
 
 		<fieldset>
 			<legend translation="__merging_area__">Merging</legend>
@@ -114,7 +115,7 @@
 			</p>
 			<p>
 				<label translation="__audio_track__" style="margin-left: 26px;">Audio track:</label>
-				<select class="settings_element" name="audio_index" style="margin-left:10px;">
+				<select class="input_element settings_element" name="audio_index" style="margin-left:10px;">
 					<option value="0">Chinese</option>
 					<option value="1" selected>English</option>
 					<option value="2">Japanese</option>
@@ -136,8 +137,6 @@
 				<label for="delete_after_merge" translation="__delete_after_merge__">Delete unnecessary files after merging</label>
 			</p>
 		</fieldset>
-
-		<p></p>
 	</div>
 
 

@@ -1,8 +1,11 @@
-:root{
-	scroll-behavior: smooth;
-}
+* { box-sizing: border-box; }
 body{
 	font-family: sans-serif;
+	display: flex;
+	flex-direction: column;
+	max-height: 100dvh;
+	overflow: hidden;
+	margin: 0; padding: 0;
 }
 code{
 	font-family: monospace;
@@ -18,19 +21,23 @@ label{
 }
 .tabcontent{
 	display: none;
-	padding: 6px 12px;
-	border: 1px solid #ccc;
-	border-top: none;
+	padding: 0 20px;
+	overflow: auto;
+	scrollbar-width: thin;
+	scroll-behavior: smooth;
 }
 .tabcontent.showed{
 	display: block;
 }
-.tab {
+.tabs {
 	overflow: hidden;
-	border: 1px solid #ccc;
 	background-color: #f1f1f1;
+	border-radius: 12px;
+	flex-shrink: 0;
+	margin: 10px;
+	margin-bottom: 6px;
 }
-.tab button {
+.tabs button {
 	background-color: inherit;
 	float: left;
 	border: none;
@@ -41,13 +48,20 @@ label{
 	font-weight: bold;
 	font-size: 15px;
 }
-.tab button:hover {
+.tabs button:hover {
 	background-color: #ddd;
 }
-.tab button:active, .tab button.active {
+.tabs button:active, .tabs button.active {
 	background-color: #ccc;
 }
 
+.buttons-line{
+	display: flex;
+	gap: 10px;
+	justify-content: center;
+	flex-wrap: wrap;
+	margin: 20px;
+}
 .browse{
 	font: 14pt "Ubuntu", sans-serif;
 	background: none;
@@ -80,17 +94,33 @@ label{
 }
 
 #preview_zone{
-	margin-top: 10px;
-	margin-left: 10px;
+	margin: 20px 10px;
+	margin-bottom: 5px;
 	font-family: monospace;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	font-size: 14px;
 }
-#preview_zone summary{
-	cursor: pointer;
-	margin-bottom: 10px;
+#preview_zone > div{
+	display: flex;
+	align-items: center;
+	gap: 8px;
 }
-
 #preview_zone .icon{
 	color: black;
+	width: 20px;
+	flex-shrink: 0;
+	text-align: center;
+	user-select: none;
+}
+#preview_zone .del{
+	color: red;
+	cursor: pointer;
+	user-select: none;
+}
+#preview_zone.no-remove .del{
+	display: none;
 }
 #preview_zone .ok{
 	color: #00c200;
@@ -102,18 +132,22 @@ label{
 	color: red;
 }
 
+.input_element {
+	border-radius: 8px;
+	padding: 4px 6px;
+	background: #eee;
+	border: 2px solid lightgrey;
+	font-size: 14px;
+	cursor: pointer;
+}
 .path{
 	font-family: monospace;
 	max-width: 70%;
-	padding: 1px 4px;
-	display: inline-block;
-	border-radius: 8px;
 	direction: RTL;
+	cursor: text;
 }
 .path_button{
-	border-radius: 6px;
-	cursor: pointer;
-	font-size: 14px;
+	padding: 4px 8px;
 }
 
 #open_dir{
@@ -219,6 +253,14 @@ input[type="range"]{
 }
 input[type="range" i]{
 	color: #aaa;
+}
+fieldset{
+	border-radius: 12px;
+	margin: 1em 0;
+	padding: 1em 0.75em;
+}
+fieldset legend{
+	font-size: 1.15rem;
 }
 
 #progress{

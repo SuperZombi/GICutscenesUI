@@ -8,9 +8,10 @@ import json
 from json_minify import json_minify
 import re
 import requests
+import win32api
 
 CONSOLE_DEBUG_MODE = False
-__version__ = '0.6.2'
+__version__ = '0.7.0'
 
 # ---- Required Functions ----
 
@@ -235,14 +236,17 @@ def log_subprocess_output(pipe, process=None):
 
 # ---- Explorer Functions ----
 
+def get_disks(): return [d for d in win32api.GetLogicalDriveStrings()[0]]
+
 @eel.expose
 def ask_files():
 	root = Tk()
 	root.withdraw()
 	root.wm_attributes('-topmost', 1)
-	files = askopenfilenames(parent=root, filetypes=[("Genshin Impact Cutscene", "*.usm"), ("All files", "*.*")])
+	files = askopenfilenames(initialdir=GENSHIN_FOLDER, parent=root,
+		filetypes=[("Genshin Impact Cutscene", "*.usm"), ("All files", "*.*")]
+	)
 	return files
-
 
 @eel.expose
 def get_script_file():
@@ -278,6 +282,20 @@ def ask_output_folder():
 def open_output_folder():
 	subprocess.run(['explorer', OUTPUT_F], creationflags=subprocess.CREATE_NO_WINDOW)
 
+def find_genshin_folder():
+	templates = (
+		('Games', 'Genshin Impact'),
+		('Program Files', 'Genshin Impact')
+	)
+	for _disk in get_disks():
+		disk = f'{_disk}:'+os.sep
+		for template in templates:
+			path = os.path.join(disk, *template)
+			if os.path.exists(path):
+				assets = os.path.join(path, "Genshin Impact game", "GenshinImpact_Data", "StreamingAssets", "VideoAssets", "StandaloneWindows64")
+				if os.path.exists(assets): return assets
+				print("[WARN] Assets not found!")
+GENSHIN_FOLDER = find_genshin_folder()
 
 
 # ---- MAIN Functions ----
@@ -310,6 +328,7 @@ def start_work(files, args):
 			send_message_to_ui_output("file_count", [i, file_lenth])
 			send_message_to_ui_output("event", "copy_files")
 			send_message_to_ui_output("work_file", file)
+			send_message_to_ui_output("console", f"----- {os.path.basename(file)} -----")
 			# MAIN CALL
 			shutil.copyfile(file, os.path.join(temp_folder, os.path.basename(file)))
 			send_message_to_ui_output("event", "run_demux")
@@ -336,7 +355,10 @@ def start_work(files, args):
 				new_file_name = os.path.join(OUTPUT_F, new_file_name)
 				try:
 					os.rename(file_name, new_file_name)
-				except: None
+				except:
+					send_message_to_ui_output("console", "\n")
+					send_message_to_ui_output("event", "error")
+					continue
 
 				# Delete hca encoded Audio (cuz wav files decoded)
 				for index in [0, 1, 2, 3]:

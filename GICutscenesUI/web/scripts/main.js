@@ -18,8 +18,8 @@ function openTab(tab){
 	window.location.hash = tab
 	document.querySelector(".tabcontent.showed").classList.remove("showed")
 	document.getElementById(tab).classList.add("showed")
-	document.querySelector(".tab > button.active").classList.remove("active")
-	document.querySelector(`.tab > button[data=${tab}]`).classList.add("active")
+	document.querySelector(".tabs > button.active").classList.remove("active")
+	document.querySelector(`.tabs > button[data=${tab}]`).classList.add("active")
 	setTimeout(_=>{window.scrollTo(0, 0)})
 	if (tab == "about"){
 		load_about_info()
@@ -58,22 +58,42 @@ function updatePreview(files){
 	let preview = document.getElementById("preview_zone")
 	files.forEach(e=>{
 		if (!preview.querySelector(`div[path='${e}']`)){
-			preview.innerHTML += `<div path='${e}'>${e.replace(/^.*[\\\/]/, '')}</div>`
+			preview.appendChild(addFilePreview(e))
 		}
 	})
 	document.getElementById("fileCleaner").style.display = "inline-block"
 }
+function addFilePreview(filename){
+	let div = document.createElement("div")
+	div.setAttribute("path", filename)
+	let icon = document.createElement("span")
+	icon.className = "icon"
+	icon.innerHTML = "🗎"
+	let text = document.createElement("span")
+	text.innerHTML = filename.replace(/^.*[\\\/]/, '')
+	let del_but = document.createElement("span")
+	del_but.className = "del"
+	del_but.innerHTML = "✖"
+	del_but.title = LANG("remove")
+	del_but.onclick = _=>{ div.remove() }
+	div.resetIcon = _=>{ icon.innerHTML = "🗎" }
+	div.setIcon = (text)=>{ icon.innerHTML = text }
+	div.appendChild(icon)
+	div.appendChild(text)
+	div.appendChild(del_but)
+	return div
+}
 function clearFiles(){
 	let preview = document.getElementById("preview_zone")
-	preview.innerHTML = '<summary></summary>'
+	preview.innerHTML = ''
 	document.getElementById("fileCleaner").style.display = "none"
+	document.getElementById("progress").style.display = "none"
 }
 
 function removeIcons_and_color(){
 	Array.from(document.getElementById("preview_zone").getElementsByTagName("div")).forEach(e=>{
 		e.className = ""
-		let icon = e.querySelector(".icon")
-		if (icon){icon.remove()}
+		e.resetIcon()
 	})
 }
 
@@ -98,6 +118,7 @@ async function start(){
 				let settings = parseSettings()
 				document.getElementById("open_dir").style.display = "none"
 				document.getElementById("progress").style.display = "block"
+				document.getElementById("preview_zone").classList.add("no-remove")
 				await eel.start_work(files, settings)();
 			}
 			else{
