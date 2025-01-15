@@ -257,7 +257,6 @@ input[type="range" i]{
 fieldset{
 	border-radius: 12px;
 	margin: 1em 0;
-	padding: 1em 0.75em;
 }
 fieldset legend{
 	font-size: 1.15rem;

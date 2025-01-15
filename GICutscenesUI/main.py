@@ -11,7 +11,7 @@ import requests
 import win32api
 
 CONSOLE_DEBUG_MODE = False
-__version__ = '0.7.0'
+__version__ = '0.7.1'
 
 # ---- Required Functions ----
 
@@ -329,19 +329,17 @@ def start_work(files, args):
 			send_message_to_ui_output("event", "copy_files")
 			send_message_to_ui_output("work_file", file)
 			send_message_to_ui_output("console", f"----- {os.path.basename(file)} -----")
-			# MAIN CALL
-			shutil.copyfile(file, os.path.join(temp_folder, os.path.basename(file)))
 			send_message_to_ui_output("event", "run_demux")
+			# MAIN CALL
 			p_status = 0
 			if CONSOLE_DEBUG_MODE:
-				subprocess.call([SCRIPT_FILE, 'batchDemux', temp_folder, '--output', OUTPUT_F])
+				subprocess.call([SCRIPT_FILE, 'demuxUsm', file, '--output', OUTPUT_F])
 			else:
-				process = subprocess.Popen([SCRIPT_FILE, 'batchDemux', temp_folder, '--output', OUTPUT_F], encoding=os.device_encoding(0), universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, creationflags=subprocess.CREATE_NO_WINDOW)
+				process = subprocess.Popen([SCRIPT_FILE, 'demuxUsm', file, '--output', OUTPUT_F], encoding=os.device_encoding(0), universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, creationflags=subprocess.CREATE_NO_WINDOW)
 				with process.stdout:
 					log_subprocess_output(process.stdout)
 				p_status = process.wait()
 
-			os.remove(os.path.join(temp_folder, os.path.basename(file)))
 			if p_status != 0:
 				send_message_to_ui_output("event", "error")
 			else:
@@ -353,9 +351,9 @@ def start_work(files, args):
 				new_file_name = str(old_file_name) + ".m2v"
 				file_name = os.path.join(OUTPUT_F, file_name)
 				new_file_name = os.path.join(OUTPUT_F, new_file_name)
-				try:
+				if os.path.exists(file_name):
 					os.rename(file_name, new_file_name)
-				except:
+				else:
 					send_message_to_ui_output("console", "\n")
 					send_message_to_ui_output("event", "error")
 					continue
