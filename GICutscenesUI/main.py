@@ -13,7 +13,7 @@ import matplotlib.font_manager
 from subtitles import *
 
 CONSOLE_DEBUG_MODE = False
-__version__ = '0.7.1'
+__version__ = '0.8.0'
 
 # ---- Required Functions ----
 
