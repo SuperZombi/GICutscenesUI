@@ -248,7 +248,8 @@ def get_disks(): return [d for d in win32api.GetLogicalDriveStrings()[0]]
 @eel.expose
 def get_all_fonts():
 	font_paths = matplotlib.font_manager.findSystemFonts()
-	return [matplotlib.font_manager.FontProperties(fname=path).get_name() for path in font_paths]
+	fonts = [matplotlib.font_manager.FontProperties(fname=path).get_name() for path in font_paths]
+	return sorted(set(fonts))
 
 @eel.expose
 def ask_files():

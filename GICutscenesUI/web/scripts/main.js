@@ -1,4 +1,5 @@
 (async _=>{
+	await get_all_fonts()
 	await load_settings()
 	changeTheme()
 	getTranslation()

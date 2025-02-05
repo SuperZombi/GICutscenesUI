@@ -262,13 +262,15 @@ fieldset legend{
 	font-size: 1.15rem;
 }
 
-.subtitles-area {
+.grid-layout {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	align-items: center;
-	width: min-content;
 	white-space: nowrap;
 	gap: 5px 10px;
+}
+.subtitles-area {
+	width: min-content;
 }
 #provider_local, #provider_url {
 	display: none;
@@ -280,7 +282,6 @@ fieldset legend{
 #provider_local input, #provider_url input{
 	width: 100%;
 }
-
 #subtitles_provider:has(option[value="local"]:checked) ~ #provider_local,
 #subtitles_provider:has(option[value="url"]:checked) ~ #provider_url
 {

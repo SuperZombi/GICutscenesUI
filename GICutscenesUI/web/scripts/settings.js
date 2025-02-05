@@ -59,6 +59,17 @@ async function get_subtitles_folder(){
 	update_path(folder, document.getElementById("subtitles_path"))
 }
 
+async function get_all_fonts(){
+	let fonts = await eel.get_all_fonts()();
+	let parent = document.querySelector("#subtitles_font")
+	fonts.forEach(font=>{
+		let option = document.createElement("option")
+		option.value = font
+		option.textContent = font
+		parent.appendChild(option)
+	})
+}
+
 
 function changeTheme(){
 	let value = document.querySelector(".settings_element[name=theme]").value
