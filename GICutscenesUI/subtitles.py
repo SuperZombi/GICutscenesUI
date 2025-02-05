@@ -1,27 +1,38 @@
+import os
+import re
 import requests
 from io import StringIO
 import pysrt
-import matplotlib.font_manager
 
 
-def get_all_fonts():
-	font_paths = matplotlib.font_manager.findSystemFonts()
-	return [matplotlib.font_manager.FontProperties(fname=path).get_name() for path in font_paths]
+def find_subtitles(name, lang, provider):
+	filename = f"{name}_{lang}.srt"
+	if provider.startswith('http'):
+		pattern = r'https://(github|gitlab)\.com/([^/]+)/([^/]+)'
+		match = re.search(pattern, provider)
+		if match:
+			site = match.group(1)
+			author = match.group(2)
+			repository = match.group(3)
 
-
-def find_subtitle_in_web(sub_name, provider, lang):
-	filename = f"{sub_name}_{lang}.srt"
-	if provider == "https://gitlab.com/Dimbreath/AnimeGameData":
-		url = f"{provider}/raw/master/Subtitle/{lang}/{filename}"
+			if site == "gitlab":
+				url = f"https://gitlab.com/{author}/{repository}/raw/master/Subtitle/{lang}/{filename}"
+			elif site == "github":
+				url = f"https://raw.githubusercontent.com/{author}/{repository}/main/Subtitle/{lang}/{filename}"
+		else:
+			url = f"{provider}/{lang}/{filename}"
+		r = requests.get(url)
+		if r.ok:
+			return StringIO(r.content.decode(r.encoding))
 	else:
-		raise NameError("Provider is not supported")
+		path = os.path.join(provider, lang, filename)
+		if os.path.exists(path):
+			with open(path, 'r', encoding='utf-8') as f:
+				data = f.read()
+			return StringIO(data)
 
-	r = requests.get(url)
-	if r.ok:
-		return StringIO(r.content.decode(r.encoding))
 
-
-def srt_to_ass(srt_file, ass_file, font_name="Arial", font_size=18):
+def srt_to_ass(srt_file, ass_file, font_name="Arial", font_size=14):
 	subs = pysrt.stream(srt_file)
 	with open(ass_file, 'w', encoding='utf-8') as f:
 		f.write("[Script Info]\n")

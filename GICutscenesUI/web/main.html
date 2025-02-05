@@ -64,12 +64,6 @@
 		</fieldset>
 
 		<fieldset>
-			<legend style="margin-bottom: 0.5em;"><code>GICutscenes.exe:</code></legend>
-			<input type="text" readonly class="input_element path" id="script_path">
-			<button onclick="change_script_folder()" class="input_element path_button" translation="__change__">Change</button>
-		</fieldset>
-
-		<fieldset>
 			<legend translation="__output_folder__">Output Folder:</legend>
 			<input type="text" readonly class="input_element path" id="output_path" class="settings_element">
 			<button onclick="change_output_folder()" class="input_element path_button" translation="__change__">Change</button>
@@ -136,6 +130,45 @@
 				<input type="checkbox" id="delete_after_merge" name="delete_after_merge" class="settings_element">
 				<label for="delete_after_merge" translation="__delete_after_merge__">Delete unnecessary files after merging</label>
 			</p>
+		</fieldset>
+
+		<fieldset>
+			<legend>Subtitles</legend>
+			<p>
+				<input type="checkbox" id="subtitles" name="subtitles" class="settings_element">
+				<label for="subtitles">Add subtitles</label>
+				<span class="info_icon" title="Works only if merging is enabled"></span>
+			</p>
+			<div class="subtitles-area" style="margin-left: 4px;">
+				<label>Subtitles provider:</label>
+				<select class="input_element settings_element" id="subtitles_provider" name="subtitles_provider">
+					<option value="https://gitlab.com/Dimbreath/AnimeGameData" selected>gitlab/Dimbreath/AnimeGameData</option>
+					<option value="https://github.com/Sycamore0/GenshinData">github/Sycamore0/GenshinData</option>
+					<option value="local">Local</option>
+					<option value="url">URL</option>
+				</select>
+				<div id="provider_local">
+					<input type="text" readonly class="input_element path" id="subtitles_path" class="settings_element">
+					<button onclick="change_subtitles_folder()" class="input_element path_button" translation="__change__">Change</button>
+				</div>
+				<div id="provider_url">
+					<input type="text" class="input_element settings_element" name="subtitles_url" placeholder="https://">
+				</div>
+
+				<label>Language:</label>
+				<select class="input_element settings_element" name="subtitles_lang">
+					<option value="EN" selected>English</option>
+				</select>
+
+				<label>Font:</label>
+				<select class="input_element settings_element" name="subtitles_font">
+					<option value="" selected>Default</option>
+				</select>
+
+				<label>Font size:</label>
+				<input type="number" class="input_element settings_element" name="subtitles_fontsize" value="14" min="4" max="64" step="1">
+			</div>
+			
 		</fieldset>
 	</div>
 

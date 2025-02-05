@@ -9,6 +9,7 @@ from json_minify import json_minify
 import re
 import requests
 import win32api
+import matplotlib.font_manager
 from subtitles import *
 
 CONSOLE_DEBUG_MODE = False
@@ -64,7 +65,7 @@ def file_in_temp(file):
 # ---- Settings Functions ----
 
 def load_settings_inline():
-	global SCRIPT_FILE, OUTPUT_F, FFMPEG
+	global SCRIPT_FILE, OUTPUT_F, FFMPEG, SUBTITLES_F
 	set_file = os.path.join(os.getcwd(), "UI-settings.json")
 	settings = {}
 	if os.path.exists(set_file):
@@ -76,10 +77,13 @@ def load_settings_inline():
 				OUTPUT_F = settings["output_folder"]
 			if "FFMPEG" in settings.keys():
 				FFMPEG = settings["FFMPEG"]
+			if "subtitles_folder" in settings.keys():
+				SUBTITLES_F = settings["subtitles_folder"]
 
 	SCRIPT_FILE = settings.get("script_file") or find_script("GICutscenes.exe")
 	OUTPUT_F = settings.get("output_folder") or os.path.join(os.getcwd(), "output")
 	FFMPEG = settings.get("FFMPEG") or find_script("ffmpeg.exe") or "ffmpeg"
+	SUBTITLES_F = settings.get("subtitles_folder") or ""
 
 	if os.path.exists(os.path.join(os.getcwd(), "versions.json")) and file_in_temp(SCRIPT_FILE):
 		local_ver_file = os.path.join(os.getcwd(), "versions.json")
@@ -103,6 +107,7 @@ def load_settings():
 @eel.expose
 def save_settings(settings):
 	settings['output_folder'] = OUTPUT_F
+	settings['subtitles_folder'] = SUBTITLES_F
 	if not file_in_temp(SCRIPT_FILE):
 		settings['script_file'] = SCRIPT_FILE
 	if not file_in_temp(FFMPEG):
@@ -114,10 +119,11 @@ def save_settings(settings):
 
 @eel.expose
 def delete_settings():
-	global SCRIPT_FILE, OUTPUT_F, FFMPEG
+	global SCRIPT_FILE, OUTPUT_F, FFMPEG, SUBTITLES_F
 	SCRIPT_FILE = find_script("GICutscenes.exe")
 	OUTPUT_F = os.path.join(os.getcwd(), "output")
 	FFMPEG = find_script("ffmpeg.exe") or "ffmpeg"
+	SUBTITLES_F = ""
 	
 	set_file = os.path.join(os.getcwd(), "UI-settings.json")
 	if os.path.exists(set_file):
@@ -240,6 +246,11 @@ def log_subprocess_output(pipe, process=None):
 def get_disks(): return [d for d in win32api.GetLogicalDriveStrings()[0]]
 
 @eel.expose
+def get_all_fonts():
+	font_paths = matplotlib.font_manager.findSystemFonts()
+	return [matplotlib.font_manager.FontProperties(fname=path).get_name() for path in font_paths]
+
+@eel.expose
 def ask_files():
 	root = Tk()
 	root.withdraw()
@@ -249,35 +260,33 @@ def ask_files():
 	)
 	return files
 
-@eel.expose
-def get_script_file():
-	return SCRIPT_FILE
+def ask_folder():
+	root = Tk()
+	root.withdraw()
+	root.wm_attributes('-topmost', 1)
+	return askdirectory(parent=root)
 
 @eel.expose
 def get_output_folder():
 	return OUTPUT_F
 
 @eel.expose
-def ask_script_file():
-	global SCRIPT_FILE
-	root = Tk()
-	root.withdraw()
-	root.wm_attributes('-topmost', 1)
-	file = askopenfilename(parent=root)
-	if file:
-		SCRIPT_FILE = file
-	return SCRIPT_FILE
+def get_subtitles_folder():
+	return SUBTITLES_F
 
 @eel.expose
 def ask_output_folder():
 	global OUTPUT_F
-	root = Tk()
-	root.withdraw()
-	root.wm_attributes('-topmost', 1)
-	folder = askdirectory(parent=root)
-	if folder:
-		OUTPUT_F = folder
+	folder = ask_folder()
+	if folder: OUTPUT_F = folder
 	return OUTPUT_F
+
+@eel.expose
+def ask_subtitles_folder():
+	global SUBTITLES_F
+	folder = ask_folder()
+	if folder: SUBTITLES_F = folder
+	return SUBTITLES_F
 
 @eel.expose
 def open_output_folder():
@@ -375,14 +384,32 @@ def start_work(files, args):
 						audio_file = os.path.join(OUTPUT_F , str(old_file_name) + "_" + str(audio_index) + ".wav")
 						output_file = os.path.join(OUTPUT_F, str(old_file_name) + ".mp4")
 
+						# Subtitles
 						subtitles_file = None
-						if True: # args
+						if args['subtitles']:
 							send_message_to_ui_output("console", "\nSearching for subtitles")
-							subtitles = find_subtitle_in_web(
-								old_file_name,
-								provider="https://gitlab.com/Dimbreath/AnimeGameData",
-								lang="RU"
-							)
+
+							if args.get('subtitles_provider') == "local":
+								if args.get('subtitles_folder'):
+									subtitles = find_subtitles(
+										old_file_name,
+										provider=args.get('subtitles_folder'),
+										lang=args.get('subtitles_lang')
+									)
+							elif args.get('subtitles_provider') == "url":
+								if args.get('subtitles_url'):
+									subtitles = find_subtitles(
+										old_file_name,
+										provider=args.get('subtitles_url'),
+										lang=args.get('subtitles_lang')
+									)
+							else:
+								subtitles = find_subtitles(
+									old_file_name,
+									provider=args.get('subtitles_provider'),
+									lang=args.get('subtitles_lang')
+								)
+
 							if not subtitles:
 								send_message_to_ui_output("console", "Subtitles not found!")
 							else:
@@ -391,10 +418,11 @@ def start_work(files, args):
 								srt_to_ass(
 									subtitles,
 									subtitles_file,
-									font_name="Arial",
-									font_size=18
+									font_name=args.get('subtitles_font'),
+									font_size=args.get('subtitles_fontsize')
 								)
 
+						# Merging
 						send_message_to_ui_output("event", "run_merge")
 						send_message_to_ui_output("console", "\nStarting ffmpeg")
 						if os.path.exists(output_file):
