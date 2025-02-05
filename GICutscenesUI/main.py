@@ -9,6 +9,7 @@ from json_minify import json_minify
 import re
 import requests
 import win32api
+from subtitles import *
 
 CONSOLE_DEBUG_MODE = False
 __version__ = '0.7.1'
@@ -352,6 +353,7 @@ def start_work(files, args):
 				file_name = os.path.join(OUTPUT_F, file_name)
 				new_file_name = os.path.join(OUTPUT_F, new_file_name)
 				if os.path.exists(file_name):
+					if os.path.exists(new_file_name): os.remove(new_file_name)
 					os.rename(file_name, new_file_name)
 				else:
 					send_message_to_ui_output("console", "\n")
@@ -369,10 +371,31 @@ def start_work(files, args):
 				if args['merge']:
 					if STOPED_BY_USER: break
 					else:
-						send_message_to_ui_output("event", "run_merge")
 						audio_index = int(args['audio_index'])
 						audio_file = os.path.join(OUTPUT_F , str(old_file_name) + "_" + str(audio_index) + ".wav")
 						output_file = os.path.join(OUTPUT_F, str(old_file_name) + ".mp4")
+
+						subtitles_file = None
+						if True: # args
+							send_message_to_ui_output("console", "\nSearching for subtitles")
+							subtitles = find_subtitle_in_web(
+								old_file_name,
+								provider="https://gitlab.com/Dimbreath/AnimeGameData",
+								lang="RU"
+							)
+							if not subtitles:
+								send_message_to_ui_output("console", "Subtitles not found!")
+							else:
+								send_message_to_ui_output("console", "Converting subtitles")
+								subtitles_file = os.path.join(OUTPUT_F, str(old_file_name) + ".ass")
+								srt_to_ass(
+									subtitles,
+									subtitles_file,
+									font_name="Arial",
+									font_size=18
+								)
+
+						send_message_to_ui_output("event", "run_merge")
 						send_message_to_ui_output("console", "\nStarting ffmpeg")
 						if os.path.exists(output_file):
 							send_message_to_ui_output("console", f'File {output_file} already exists.')
@@ -381,10 +404,24 @@ def start_work(files, args):
 						send_message_to_ui_output("console", "Working ffmpeg...")
 						p_status = 0
 						bitrate = int(args['video_quality']) * 1000
+						command = [
+							FFMPEG, '-hide_banner',
+							'-i', new_file_name,
+							'-i', audio_file
+						]
+						if subtitles_file:
+							subs_file = subtitles_file.replace("\\", "/").replace(":", "\\\\\\:")
+							command += ["-vf", f'subtitles={subs_file}']
+						command += [
+							'-b:v', str(bitrate),
+							'-b:a', '192K',
+							output_file
+						]
+
 						if CONSOLE_DEBUG_MODE:
-							subprocess.call([FFMPEG, '-hide_banner', '-i', new_file_name, '-i', audio_file, '-b:v', str(bitrate), '-b:a', '192K', output_file])
+							subprocess.call(command)
 						else:
-							process = subprocess.Popen([FFMPEG, '-hide_banner', '-i', new_file_name, '-i', audio_file, '-b:v', str(bitrate), '-b:a', '192K', output_file], encoding='utf-8', universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, creationflags=subprocess.CREATE_NO_WINDOW)
+							process = subprocess.Popen(command, encoding='utf-8', universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, creationflags=subprocess.CREATE_NO_WINDOW)
 							with process.stderr:
 								log_subprocess_output(process.stderr, process)
 							p_status = process.wait()
@@ -397,6 +434,7 @@ def start_work(files, args):
 							send_message_to_ui_output("console", "Merging complete!")
 							if args['delete_after_merge']:
 								send_message_to_ui_output("console", "Removing trash...")
+								if subtitles_file: os.remove(subtitles_file)
 								files_to_remove = [
 									old_file_name + ".m2v",
 									*[f"{old_file_name}_{i}.wav" for i in [0, 1, 2, 3]]
