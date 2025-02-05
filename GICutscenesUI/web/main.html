@@ -64,12 +64,6 @@
 		</fieldset>
 
 		<fieldset>
-			<legend style="margin-bottom: 0.5em;"><code>GICutscenes.exe:</code></legend>
-			<input type="text" readonly class="input_element path" id="script_path">
-			<button onclick="change_script_folder()" class="input_element path_button" translation="__change__">Change</button>
-		</fieldset>
-
-		<fieldset>
 			<legend translation="__output_folder__">Output Folder:</legend>
 			<input type="text" readonly class="input_element path" id="output_path" class="settings_element">
 			<button onclick="change_output_folder()" class="input_element path_button" translation="__change__">Change</button>
@@ -136,6 +130,58 @@
 				<input type="checkbox" id="delete_after_merge" name="delete_after_merge" class="settings_element">
 				<label for="delete_after_merge" translation="__delete_after_merge__">Delete unnecessary files after merging</label>
 			</p>
+		</fieldset>
+
+		<fieldset>
+			<legend translation="__subtitles_area__">Subtitles</legend>
+			<p>
+				<input type="checkbox" id="subtitles" name="subtitles" class="settings_element">
+				<label for="subtitles" translation="__subtitles_checkbox__">Add subtitles</label>
+				<span class="info_icon" translation="__title:subtitles_promt__" title="Works only if merging is enabled"></span>
+			</p>
+			<div class="grid-layout subtitles-area" style="margin-left: 4px;">
+				<label translation="__subtitles_provider__">Subtitles provider:</label>
+				<select class="input_element settings_element" id="subtitles_provider" name="subtitles_provider">
+					<option value="https://gitlab.com/Dimbreath/AnimeGameData" selected>gitlab/Dimbreath/AnimeGameData</option>
+					<option value="https://github.com/Sycamore0/GenshinData">github/Sycamore0/GenshinData</option>
+					<option value="local" translation="__subtitles_provider_local__">Local</option>
+					<option value="url" translation="__subtitles_provider_url__">URL</option>
+				</select>
+				<div id="provider_local">
+					<input type="text" readonly class="input_element path" id="subtitles_path" class="settings_element">
+					<button onclick="change_subtitles_folder()" class="input_element path_button" translation="__change__">Change</button>
+				</div>
+				<div id="provider_url">
+					<input type="text" class="input_element settings_element" name="subtitles_url" placeholder="https://">
+				</div>
+
+				<label translation="__subtitles_language__">Language:</label>
+				<select class="input_element settings_element" name="subtitles_lang">
+					<option value="EN" selected>English</option>
+					<option value="DE">German</option>
+					<option value="ES">Spanish</option>
+					<option value="RU">Russian</option>
+					<option value="FR">French</option>
+					<option value="IT">Italian</option>
+					<option value="PT">Portuguese</option>
+					<option value="ID">Indonesian</option>
+					<option value="CHS">Chinese Simplified</option>
+					<option value="CHT">Chinese Traditional</option>
+					<option value="JP">Japanese</option>
+					<option value="KR">Korean</option>
+					<option value="TH">Thai</option>
+					<option value="TR">Turkish</option>
+					<option value="VI">Vietnamese</option>
+				</select>
+
+				<label translation="__subtitles_font__">Font:</label>
+				<select class="input_element settings_element" name="subtitles_font" id="subtitles_font">
+					<option value="" selected translation="__subtitles_font_default__">Default</option>
+				</select>
+
+				<label translation="__subtitles_font_size__">Font size:</label>
+				<input type="number" class="input_element settings_element" name="subtitles_fontsize" value="14" min="4" max="64" step="1">
+			</div>
 		</fieldset>
 	</div>
 

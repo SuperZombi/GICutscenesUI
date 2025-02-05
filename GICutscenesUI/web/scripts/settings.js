@@ -42,12 +42,32 @@ function parseSettings(){
 
 
 async function change_output_folder(){
-	var folder = await eel.ask_output_folder()();
+	let folder = await eel.ask_output_folder()();
 	update_path(folder, document.getElementById("output_path"))
 }
 async function get_output_folder(){
-	var folder = await eel.get_output_folder()();
+	let folder = await eel.get_output_folder()();
 	update_path(folder, document.getElementById("output_path"))
+}
+
+async function change_subtitles_folder(){
+	let folder = await eel.ask_subtitles_folder()();
+	update_path(folder, document.getElementById("subtitles_path"))
+}
+async function get_subtitles_folder(){
+	let folder = await eel.get_subtitles_folder()();
+	update_path(folder, document.getElementById("subtitles_path"))
+}
+
+async function get_all_fonts(){
+	let fonts = await eel.get_all_fonts()();
+	let parent = document.querySelector("#subtitles_font")
+	fonts.forEach(font=>{
+		let option = document.createElement("option")
+		option.value = font
+		option.textContent = font
+		parent.appendChild(option)
+	})
 }
 
 

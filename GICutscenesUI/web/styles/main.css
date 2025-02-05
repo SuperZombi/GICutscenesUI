@@ -16,7 +16,7 @@ code{
 input[type="checkbox"]{
 	cursor: pointer;
 }
-label{
+label[for]{
 	cursor: pointer;
 }
 .tabcontent{
@@ -260,6 +260,32 @@ fieldset{
 }
 fieldset legend{
 	font-size: 1.15rem;
+}
+
+.grid-layout {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	align-items: center;
+	white-space: nowrap;
+	gap: 5px 10px;
+}
+.subtitles-area {
+	width: min-content;
+}
+#provider_local, #provider_url {
+	display: none;
+	width: 100%;
+	grid-column: 2;
+	min-width: 250px;
+	gap: 5px;
+}
+#provider_local input, #provider_url input{
+	width: 100%;
+}
+#subtitles_provider:has(option[value="local"]:checked) ~ #provider_local,
+#subtitles_provider:has(option[value="url"]:checked) ~ #provider_url
+{
+	display: flex;
 }
 
 #progress{

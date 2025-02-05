@@ -34,8 +34,17 @@
 	"quality": "Качество:",
 	"delete_after_merge": "Удалить ненужные файлы после объединения",
 
+	"subtitles_area": "Субтитры",
+	"subtitles_checkbox": "Добавить субтитры",
+	"subtitles_promt": "Работает только если включен рендеринг",
+	"subtitles_provider": "Расположение субтитров:",
+	"subtitles_provider_local": "Выбрать папку",
+	"subtitles_language": "Язык:",
+	"subtitles_font": "Шрифт:",
+	"subtitles_font_size": "Размер шрифта:",
+	"subtitles_font_default": "По умолчанию",
+
 	"no_files": "Нет Файлов!",
-	"select_script_file": "Выберите Файл Скрипта!",
 	"saved": "Сохранено!",
 	"confirm_delete_settings": "Вы уверены, что хотите Удалить все Настройки?",
 

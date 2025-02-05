@@ -1,4 +1,5 @@
 (async _=>{
+	await get_all_fonts()
 	await load_settings()
 	changeTheme()
 	getTranslation()
@@ -8,9 +9,8 @@
 		openTab(tab_now)
 	}
 
-	let folder = await eel.get_script_file()();
-	update_path(folder, document.getElementById("script_path"))
 	get_output_folder()
+	get_subtitles_folder()
 	donationPopup()
 })()
 
@@ -26,15 +26,6 @@ function openTab(tab){
 	}
 }
 
-
-async function change_script_folder(){
-	var folder = await eel.ask_script_file()();
-	update_path(folder, document.getElementById("script_path"))
-	
-	if (document.getElementById("script_path").value != folder){
-		allow_reload_info()
-	}
-}
 function update_path(path, input){
 	if (path){
 		input.value = path
@@ -113,20 +104,12 @@ async function start(){
 		if (files.length > 0){
 			clearConsole()
 			removeIcons_and_color()
-			if (document.getElementById("script_path").value){
-				// MAIN CALL
-				let settings = parseSettings()
-				document.getElementById("open_dir").style.display = "none"
-				document.getElementById("progress").style.display = "block"
-				document.getElementById("preview_zone").classList.add("no-remove")
-				await eel.start_work(files, settings)();
-			}
-			else{
-				openTab('settings')
-				setTimeout(()=>{
-					alert(LANG("select_script_file"))
-				},10)
-			}
+			// MAIN CALL
+			let settings = parseSettings()
+			document.getElementById("open_dir").style.display = "none"
+			document.getElementById("progress").style.display = "block"
+			document.getElementById("preview_zone").classList.add("no-remove")
+			await eel.start_work(files, settings)();
 		}
 		else{
 			alert(LANG("no_files"))

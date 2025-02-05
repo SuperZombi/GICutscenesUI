@@ -9,6 +9,8 @@ from json_minify import json_minify
 import re
 import requests
 import win32api
+import matplotlib.font_manager
+from subtitles import *
 
 CONSOLE_DEBUG_MODE = False
 __version__ = '0.7.1'
@@ -63,7 +65,7 @@ def file_in_temp(file):
 # ---- Settings Functions ----
 
 def load_settings_inline():
-	global SCRIPT_FILE, OUTPUT_F, FFMPEG
+	global SCRIPT_FILE, OUTPUT_F, FFMPEG, SUBTITLES_F
 	set_file = os.path.join(os.getcwd(), "UI-settings.json")
 	settings = {}
 	if os.path.exists(set_file):
@@ -75,10 +77,13 @@ def load_settings_inline():
 				OUTPUT_F = settings["output_folder"]
 			if "FFMPEG" in settings.keys():
 				FFMPEG = settings["FFMPEG"]
+			if "subtitles_folder" in settings.keys():
+				SUBTITLES_F = settings["subtitles_folder"]
 
 	SCRIPT_FILE = settings.get("script_file") or find_script("GICutscenes.exe")
 	OUTPUT_F = settings.get("output_folder") or os.path.join(os.getcwd(), "output")
 	FFMPEG = settings.get("FFMPEG") or find_script("ffmpeg.exe") or "ffmpeg"
+	SUBTITLES_F = settings.get("subtitles_folder") or ""
 
 	if os.path.exists(os.path.join(os.getcwd(), "versions.json")) and file_in_temp(SCRIPT_FILE):
 		local_ver_file = os.path.join(os.getcwd(), "versions.json")
@@ -102,6 +107,7 @@ def load_settings():
 @eel.expose
 def save_settings(settings):
 	settings['output_folder'] = OUTPUT_F
+	settings['subtitles_folder'] = SUBTITLES_F
 	if not file_in_temp(SCRIPT_FILE):
 		settings['script_file'] = SCRIPT_FILE
 	if not file_in_temp(FFMPEG):
@@ -113,10 +119,11 @@ def save_settings(settings):
 
 @eel.expose
 def delete_settings():
-	global SCRIPT_FILE, OUTPUT_F, FFMPEG
+	global SCRIPT_FILE, OUTPUT_F, FFMPEG, SUBTITLES_F
 	SCRIPT_FILE = find_script("GICutscenes.exe")
 	OUTPUT_F = os.path.join(os.getcwd(), "output")
 	FFMPEG = find_script("ffmpeg.exe") or "ffmpeg"
+	SUBTITLES_F = ""
 	
 	set_file = os.path.join(os.getcwd(), "UI-settings.json")
 	if os.path.exists(set_file):
@@ -239,6 +246,12 @@ def log_subprocess_output(pipe, process=None):
 def get_disks(): return [d for d in win32api.GetLogicalDriveStrings()[0]]
 
 @eel.expose
+def get_all_fonts():
+	font_paths = matplotlib.font_manager.findSystemFonts()
+	fonts = [matplotlib.font_manager.FontProperties(fname=path).get_name() for path in font_paths]
+	return sorted(set(fonts))
+
+@eel.expose
 def ask_files():
 	root = Tk()
 	root.withdraw()
@@ -248,35 +261,33 @@ def ask_files():
 	)
 	return files
 
-@eel.expose
-def get_script_file():
-	return SCRIPT_FILE
+def ask_folder():
+	root = Tk()
+	root.withdraw()
+	root.wm_attributes('-topmost', 1)
+	return askdirectory(parent=root)
 
 @eel.expose
 def get_output_folder():
 	return OUTPUT_F
 
 @eel.expose
-def ask_script_file():
-	global SCRIPT_FILE
-	root = Tk()
-	root.withdraw()
-	root.wm_attributes('-topmost', 1)
-	file = askopenfilename(parent=root)
-	if file:
-		SCRIPT_FILE = file
-	return SCRIPT_FILE
+def get_subtitles_folder():
+	return SUBTITLES_F
 
 @eel.expose
 def ask_output_folder():
 	global OUTPUT_F
-	root = Tk()
-	root.withdraw()
-	root.wm_attributes('-topmost', 1)
-	folder = askdirectory(parent=root)
-	if folder:
-		OUTPUT_F = folder
+	folder = ask_folder()
+	if folder: OUTPUT_F = folder
 	return OUTPUT_F
+
+@eel.expose
+def ask_subtitles_folder():
+	global SUBTITLES_F
+	folder = ask_folder()
+	if folder: SUBTITLES_F = folder
+	return SUBTITLES_F
 
 @eel.expose
 def open_output_folder():
@@ -352,6 +363,7 @@ def start_work(files, args):
 				file_name = os.path.join(OUTPUT_F, file_name)
 				new_file_name = os.path.join(OUTPUT_F, new_file_name)
 				if os.path.exists(file_name):
+					if os.path.exists(new_file_name): os.remove(new_file_name)
 					os.rename(file_name, new_file_name)
 				else:
 					send_message_to_ui_output("console", "\n")
@@ -369,10 +381,50 @@ def start_work(files, args):
 				if args['merge']:
 					if STOPED_BY_USER: break
 					else:
-						send_message_to_ui_output("event", "run_merge")
 						audio_index = int(args['audio_index'])
 						audio_file = os.path.join(OUTPUT_F , str(old_file_name) + "_" + str(audio_index) + ".wav")
 						output_file = os.path.join(OUTPUT_F, str(old_file_name) + ".mp4")
+
+						# Subtitles
+						subtitles_file = None
+						if args['subtitles']:
+							send_message_to_ui_output("console", "\nSearching for subtitles")
+
+							if args.get('subtitles_provider') == "local":
+								if args.get('subtitles_folder'):
+									subtitles = find_subtitles(
+										old_file_name,
+										provider=args.get('subtitles_folder'),
+										lang=args.get('subtitles_lang')
+									)
+							elif args.get('subtitles_provider') == "url":
+								if args.get('subtitles_url'):
+									subtitles = find_subtitles(
+										old_file_name,
+										provider=args.get('subtitles_url'),
+										lang=args.get('subtitles_lang')
+									)
+							else:
+								subtitles = find_subtitles(
+									old_file_name,
+									provider=args.get('subtitles_provider'),
+									lang=args.get('subtitles_lang')
+								)
+
+							if not subtitles:
+								send_message_to_ui_output("console", "Subtitles not found!")
+							else:
+								send_message_to_ui_output("console", "Converting subtitles")
+								subtitles_file = os.path.join(OUTPUT_F, str(old_file_name) + ".ass")
+								srt_to_ass(
+									subtitles,
+									subtitles_file,
+									font_name=args.get('subtitles_font'),
+									font_size=args.get('subtitles_fontsize')
+								)
+
+						# Merging
+						send_message_to_ui_output("event", "run_merge")
 						send_message_to_ui_output("console", "\nStarting ffmpeg")
 						if os.path.exists(output_file):
 							send_message_to_ui_output("console", f'File {output_file} already exists.')
@@ -381,10 +433,24 @@ def start_work(files, args):
 						send_message_to_ui_output("console", "Working ffmpeg...")
 						p_status = 0
 						bitrate = int(args['video_quality']) * 1000
+						command = [
+							FFMPEG, '-hide_banner',
+							'-i', new_file_name,
+							'-i', audio_file
+						]
+						if subtitles_file:
+							subs_file = subtitles_file.replace("\\", "/").replace(":", "\\\\\\:")
+							command += ["-vf", f'subtitles={subs_file}']
+						command += [
+							'-b:v', str(bitrate),
+							'-b:a', '192K',
+							output_file
+						]
+
 						if CONSOLE_DEBUG_MODE:
-							subprocess.call([FFMPEG, '-hide_banner', '-i', new_file_name, '-i', audio_file, '-b:v', str(bitrate), '-b:a', '192K', output_file])
+							subprocess.call(command)
 						else:
-							process = subprocess.Popen([FFMPEG, '-hide_banner', '-i', new_file_name, '-i', audio_file, '-b:v', str(bitrate), '-b:a', '192K', output_file], encoding='utf-8', universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, creationflags=subprocess.CREATE_NO_WINDOW)
+							process = subprocess.Popen(command, encoding='utf-8', universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, creationflags=subprocess.CREATE_NO_WINDOW)
 							with process.stderr:
 								log_subprocess_output(process.stderr, process)
 							p_status = process.wait()
@@ -397,6 +463,7 @@ def start_work(files, args):
 							send_message_to_ui_output("console", "Merging complete!")
 							if args['delete_after_merge']:
 								send_message_to_ui_output("console", "Removing trash...")
+								if subtitles_file: os.remove(subtitles_file)
 								files_to_remove = [
 									old_file_name + ".m2v",
 									*[f"{old_file_name}_{i}.wav" for i in [0, 1, 2, 3]]

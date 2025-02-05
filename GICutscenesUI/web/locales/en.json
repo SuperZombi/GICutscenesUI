@@ -31,8 +31,18 @@
 	"quality": "Quality:",
 	"delete_after_merge": "Delete unnecessary files after merging",
 
+	"subtitles_area": "Subtitles",
+	"subtitles_checkbox": "Add subtitles",
+	"subtitles_promt": "Works only if merging is enabled",
+	"subtitles_provider": "Subtitles provider:",
+	"subtitles_provider_local": "Local",
+	"subtitles_provider_url": "URL",
+	"subtitles_language": "Language:",
+	"subtitles_font": "Font:",
+	"subtitles_font_size": "Font size:",
+	"subtitles_font_default": "Default",
+
 	"no_files": "No Files!",
-	"select_script_file": "Select Script File!",
 	"saved": "Saved!",
 	"confirm_delete_settings": "Are you sure you want to Delete all Settings?",
 
