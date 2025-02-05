@@ -1,4 +1,4 @@
-from tkinter import Tk
+from tkinter import Tk, font
 from tkinter.filedialog import askdirectory, askopenfilename, askopenfilenames
 import eel
 import sys, os
@@ -9,11 +9,10 @@ from json_minify import json_minify
 import re
 import requests
 import win32api
-import matplotlib.font_manager
 from subtitles import *
 
 CONSOLE_DEBUG_MODE = False
-__version__ = '0.8.0'
+__version__ = '0.8.1'
 
 # ---- Required Functions ----
 
@@ -247,9 +246,8 @@ def get_disks(): return [d for d in win32api.GetLogicalDriveStrings()[0]]
 
 @eel.expose
 def get_all_fonts():
-	font_paths = matplotlib.font_manager.findSystemFonts()
-	fonts = [matplotlib.font_manager.FontProperties(fname=path).get_name() for path in font_paths]
-	return sorted(set(fonts))
+	root = Tk()
+	return sorted(set(font.families()))
 
 @eel.expose
 def ask_files():
