@@ -16,7 +16,7 @@ code{
 input[type="checkbox"]{
 	cursor: pointer;
 }
-label{
+label[for]{
 	cursor: pointer;
 }
 .tabcontent{

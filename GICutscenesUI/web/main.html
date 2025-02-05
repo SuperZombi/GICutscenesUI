@@ -133,19 +133,19 @@
 		</fieldset>
 
 		<fieldset>
-			<legend>Subtitles</legend>
+			<legend translation="__subtitles_area__">Subtitles</legend>
 			<p>
 				<input type="checkbox" id="subtitles" name="subtitles" class="settings_element">
-				<label for="subtitles">Add subtitles</label>
-				<span class="info_icon" title="Works only if merging is enabled"></span>
+				<label for="subtitles" translation="__subtitles_checkbox__">Add subtitles</label>
+				<span class="info_icon" translation="__title:subtitles_promt__" title="Works only if merging is enabled"></span>
 			</p>
 			<div class="grid-layout subtitles-area" style="margin-left: 4px;">
-				<label>Subtitles provider:</label>
+				<label translation="__subtitles_provider__">Subtitles provider:</label>
 				<select class="input_element settings_element" id="subtitles_provider" name="subtitles_provider">
 					<option value="https://gitlab.com/Dimbreath/AnimeGameData" selected>gitlab/Dimbreath/AnimeGameData</option>
 					<option value="https://github.com/Sycamore0/GenshinData">github/Sycamore0/GenshinData</option>
-					<option value="local">Local</option>
-					<option value="url">URL</option>
+					<option value="local" translation="__subtitles_provider_local__">Local</option>
+					<option value="url" translation="__subtitles_provider_url__">URL</option>
 				</select>
 				<div id="provider_local">
 					<input type="text" readonly class="input_element path" id="subtitles_path" class="settings_element">
@@ -155,7 +155,7 @@
 					<input type="text" class="input_element settings_element" name="subtitles_url" placeholder="https://">
 				</div>
 
-				<label>Language:</label>
+				<label translation="__subtitles_language__">Language:</label>
 				<select class="input_element settings_element" name="subtitles_lang">
 					<option value="EN" selected>English</option>
 					<option value="DE">German</option>
@@ -174,12 +174,12 @@
 					<option value="VI">Vietnamese</option>
 				</select>
 
-				<label>Font:</label>
+				<label translation="__subtitles_font__">Font:</label>
 				<select class="input_element settings_element" name="subtitles_font" id="subtitles_font">
-					<option value="" selected>Default</option>
+					<option value="" selected translation="__subtitles_font_default__">Default</option>
 				</select>
 
-				<label>Font size:</label>
+				<label translation="__subtitles_font_size__">Font size:</label>
 				<input type="number" class="input_element settings_element" name="subtitles_fontsize" value="14" min="4" max="64" step="1">
 			</div>
 		</fieldset>
