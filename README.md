@@ -32,13 +32,27 @@
 
 ### I have an error when demuxing files
 Try to update your [GI-cutscenes script](https://github.com/ToaHartor/GI-cutscenes/releases) to the latest version.<br>
-Specify the path to the `GI-cutscenes.exe` in the settings.
+Add the `GI-cutscenes.exe` file next to the exe file you are running.
 
 ### I have an error in merging video
 Try to update your [ffmpeg](https://github.com/BtbN/FFmpeg-Builds/releases) to the latest version.<br>
 Add the `ffmpeg.exe` file next to the exe file you are running.
 
-<br>
+### How can I add subtitles?
+You must enable merging. Then you need to select a subtitle provider.<br>
+This can be either one of the already suggested options.<br>
+But you can also download subtitles to your computer and specify the path to the folder with subtitles.<br>
+The path to the subtitles should look like this: `[Subtitles folder]\LANG\Cutscene_name_LANG.srt`
+
+### How can I make a font like in the game?
+Install the font that is located along the path:<br>
+`[Game directory]\Genshin Impact game\GenshinImpact_Data\StreamingAssets\MiHoYoSDKRes\HttpServerResources\font`
+
+### How can I customize subtitles?
+At the moment, it is possible to change the font and its size.<br>
+Later, the functionality of changing the color, stroke, position, and other will be added.
+
+<hr>
 
 ### Help with <a href="translations.md">translation</a>
 
