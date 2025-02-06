@@ -3,3 +3,7 @@
 
 ### History activity cutscene:
 [MS Drive](https://skylandstudio.sharepoint.com/:f:/s/game-assets/En-0IV7_9UVEqQyJM_n-rRQB3Hy-B2McObA3BkdWH89xAg)
+
+### Repositories with subtitles:
+* [Dimbreath/AnimeGameData](https://gitlab.com/Dimbreath/AnimeGameData)
+* [Sycamore0/GenshinData](https://github.com/Sycamore0/GenshinData)
