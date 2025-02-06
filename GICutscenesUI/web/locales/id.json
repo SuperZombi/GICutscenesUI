@@ -33,6 +33,17 @@
 	"using_ffmpeg_prompt": "Memakai ffmpeg",
 	"audio_track": "Trek audio:",
 	"quality": "Kualitas:",
+
+	"subtitles_area": "Subtitle",
+	"subtitles_checkbox": "Tambah subtitle",
+	"subtitles_promt": "Hanya bekerja jika penggabungan diaktifkan",
+	"subtitles_provider": "Penyedia subtitle :",
+	"subtitles_provider_local": "Lokal",
+	"subtitles_provider_url": "URL",
+	"subtitles_language": "Bahasa:",
+	"subtitles_font": "Huruf:",
+	"subtitles_font_size": "Ukuran huruf :",
+	"subtitles_font_default": "Default",
 	
 	"no_files": "Berkas Kosong!",
 	"select_script_file": "Pilih Berkas Script!",
