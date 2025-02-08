@@ -247,6 +247,7 @@ def get_disks(): return [d for d in win32api.GetLogicalDriveStrings()[0]]
 @eel.expose
 def get_all_fonts():
 	root = Tk()
+	root.withdraw()
 	return sorted(set(font.families()))
 
 @eel.expose
@@ -418,7 +419,10 @@ def start_work(files, args):
 									subtitles,
 									subtitles_file,
 									font_name=args.get('subtitles_font'),
-									font_size=args.get('subtitles_fontsize')
+									font_size=args.get('subtitles_fontsize'),
+									text_color=args.get('subtitles_text_color'),
+									outline_color=args.get('subtitles_outline_color'),
+									outline_width=args.get('subtitles_outline_width')
 								)
 
 						# Merging

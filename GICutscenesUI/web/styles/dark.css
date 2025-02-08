@@ -8,6 +8,9 @@
 .dark code{
 	background: grey;
 }
+.dark #settings_actions{
+	background: #2d2d2d;
+}
 .dark .tabcontent{
 	color-scheme: dark;
 }

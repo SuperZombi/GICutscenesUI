@@ -2,8 +2,10 @@ import os
 import re
 import requests
 from io import StringIO
-import pysrt
+import pysubs2
 
+
+def hex_to_rgb(hex): return tuple(int(hex.lstrip('#')[i:i+2], 16) for i in (0, 2, 4))
 
 def find_subtitles(name, lang, provider):
 	filename = f"{name}_{lang}.srt"
@@ -32,23 +34,18 @@ def find_subtitles(name, lang, provider):
 			return StringIO(data)
 
 
-def srt_to_ass(srt_file, ass_file, font_name="Arial", font_size=14):
-	subs = pysrt.stream(srt_file)
-	with open(ass_file, 'w', encoding='utf-8') as f:
-		f.write("[Script Info]\n")
-		f.write("Title: Converted Subtitles\n")
-		f.write("ScriptType: v4.00+\n")
-		f.write("WrapStyle: 0\n")
-		f.write("PlayDepth: 0\n\n")
-		f.write("[V4+ Styles]\n")
-		f.write(f"Style: Default,{font_name},{font_size},&H00FFFFFF,&H000000FF,"
-				"&H00000000,&H00000000,-1,0,0,0,100,100,0,0,1,2.0,0,2,10,10,10,1\n\n")
-		f.write("[Events]\n")
-		f.write("Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text\n")
-
-		for sub in subs:
-			start = sub.start.to_time()
-			end = sub.end.to_time()
-			start_time = f"{start.hour:02}:{start.minute:02}:{start.second:02}.{int(start.microsecond/10000):02}"
-			end_time = f"{end.hour:02}:{end.minute:02}:{end.second:02}.{int(end.microsecond/10000):02}"
-			f.write(f"Dialogue: 0,{start_time},{end_time},Default,,0,0,0,,{sub.text}\n")
+def srt_to_ass(srt_file, ass_file,
+		font_name="Arial", font_size=14,
+		text_color='#ffffff',
+		outline_color='#000000', outline_width=1
+	):
+	subs = pysubs2.SSAFile.from_string(srt_file.read(), format_="srt")
+	style = pysubs2.SSAStyle()
+	style.fontname = font_name
+	style.fontsize = font_size
+	style.primarycolor = pysubs2.Color(*hex_to_rgb(text_color))
+	style.outlinecolor = pysubs2.Color(*hex_to_rgb(outline_color))
+	style.outline = outline_width
+	style.shadow = 0
+	subs.styles["Default"] = style
+	subs.save(ass_file, format_="ass")
