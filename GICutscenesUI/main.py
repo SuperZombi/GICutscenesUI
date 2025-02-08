@@ -12,7 +12,7 @@ import win32api
 from subtitles import *
 
 CONSOLE_DEBUG_MODE = False
-__version__ = '0.8.1'
+__version__ = '0.8.2'
 
 # ---- Required Functions ----
 
@@ -422,7 +422,9 @@ def start_work(files, args):
 									font_size=args.get('subtitles_fontsize'),
 									text_color=args.get('subtitles_text_color'),
 									outline_color=args.get('subtitles_outline_color'),
-									outline_width=args.get('subtitles_outline_width')
+									outline_width=args.get('subtitles_outline_width'),
+									bold=args.get('subtitles_bold'),
+									italic=args.get('subtitles_italic')
 								)
 
 						# Merging

@@ -37,7 +37,8 @@ def find_subtitles(name, lang, provider):
 def srt_to_ass(srt_file, ass_file,
 		font_name="Arial", font_size=14,
 		text_color='#ffffff',
-		outline_color='#000000', outline_width=1
+		outline_color='#000000', outline_width=1,
+		bold=False, italic=False
 	):
 	subs = pysubs2.SSAFile.from_string(srt_file.read(), format_="srt")
 	style = pysubs2.SSAStyle()
@@ -47,5 +48,7 @@ def srt_to_ass(srt_file, ass_file,
 	style.outlinecolor = pysubs2.Color(*hex_to_rgb(outline_color))
 	style.outline = outline_width
 	style.shadow = 0
+	style.bold = bold
+	style.italic = italic
 	subs.styles["Default"] = style
 	subs.save(ass_file, format_="ass")

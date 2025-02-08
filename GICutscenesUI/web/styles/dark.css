@@ -37,6 +37,10 @@
 	background: #444;
 	border-color: #666;
 }
+.dark .text_style_btn {
+	--checked-color: #888;
+	border-color: #888;
+}
 .dark .link{
 	color: #00C0FF;
 }
