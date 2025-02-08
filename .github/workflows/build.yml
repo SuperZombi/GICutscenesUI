@@ -1,0 +1,43 @@
+name: Build GICutscenesUI
+
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: pwsh
+        working-directory: ./GICutscenesUI
+    steps:
+    - name: Checkout the repo
+      uses: actions/checkout@v4
+    - name: Set up Python 3.12
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install Eel JSON_minify pysrt pywin32 Requests pyinstaller
+    - name: Set up ffmpeg
+      run: |
+        Invoke-WebRequest -Uri "https://www.gyan.dev/ffmpeg/builds/ffmpeg-git-essentials.7z" -OutFile ./ffmpeg.7z
+        7z e ffmpeg.7z */bin/ffmpeg.exe
+    - name: Set up GICutscenes
+      run: |
+        Invoke-WebRequest -Uri "https://github.com/ToaHartor/GI-cutscenes/releases/download/v0.5.0/GICutscenes-0.5.0-win-x64-standalone.zip" -OutFile ./gicutscenes.zip
+        7z e gicutscenes.zip versions.json appsettings.json GICutscenes.exe
+    - name: Use PyInstaller to build GICutscenesUI
+      run: pyinstaller --noconfirm --onefile --noconsole --icon="./web/images/icon.ico" --name="GICutscenesUI" --version-file="../github/ver" --add-data="web\\;.\\web" --add-data="GICutscenes.exe;." --add-data="appsettings.json;." --add-data="versions.json;." --add-data="ffmpeg.exe;." main.py
+    - name: Upload the artifact
+      uses: actions/upload-artifact@v4
+      with:
+          name: GICutscenesUI
+          path: ./GICutscenesUI/dist/GICutscenesUI.exe
