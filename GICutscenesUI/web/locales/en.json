@@ -43,6 +43,11 @@
 	"subtitles_font_default": "Default",
 	"subtitles_customization_button": "Customization",
 	"subtitles_customization_header": "Customization of Subtitles",
+	"subtitles_text_color": "Text color:",
+	"subtitles_outline_color": "Outline color:",
+	"subtitles_outline_width": "Outline width:",
+	"subtitles_bold": "Bold",
+	"subtitles_italic": "Italic",
 
 	"no_files": "No Files!",
 	"saved": "Saved!",

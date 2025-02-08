@@ -45,6 +45,11 @@
 	"subtitles_font_default": "Стандартний",
 	"subtitles_customization_button": "Зовнішній вигляд",
 	"subtitles_customization_header": "Налаштування субтитрів",
+	"subtitles_text_color": "Колір тексту:",
+	"subtitles_outline_color": "Колір контуру:",
+	"subtitles_outline_width": "Ширина контуру:",
+	"subtitles_bold": "Жирний",
+	"subtitles_italic": "Курсивний",
 
 	"no_files": "Немає Файлів!",
 	"saved": "Збережено!",

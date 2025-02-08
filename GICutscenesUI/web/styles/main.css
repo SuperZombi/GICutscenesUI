@@ -13,10 +13,9 @@ code{
 	padding: 3px 5px 3px 5px;
 	border-radius: 8px;
 }
-input[type="checkbox"]{
-	cursor: pointer;
-}
-label[for]{
+input[type="checkbox"],
+input[type="color"],
+label[for] {
 	cursor: pointer;
 }
 .tabcontent{
@@ -146,6 +145,24 @@ label[for]{
 	direction: RTL;
 	cursor: text;
 }
+.text_style_btn {
+	width: 30px;
+	height: 30px;
+	padding: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-family: monospace;
+	line-height: 30px;
+	font-size: 15px;
+	--checked-color: lightgrey;
+}
+.text_style_btn input[type="checkbox"]{ display: none; }
+.text_style_btn:has(input[type="checkbox"]:checked), 
+.text_style_btn:has(input[type="checkbox"]:checked){
+	background: var(--checked-color);
+	font-weight: bold;
+}
 
 #open_dir{
 	display: none;
@@ -209,6 +226,17 @@ label[for]{
 	filter: grayscale(0.8);
 }
 
+#settings_actions {
+	position: sticky;
+	top: 0;
+	text-align: center;
+	border: 0;
+	margin: 5px 0;
+	margin-bottom: -5px;
+	padding: 5px 0;
+	background: white;
+}
+
 .settings-button {
 	background-color: #2ea44f;
 	border: 1px solid rgba(27, 31, 35, .15);
@@ -270,9 +298,9 @@ fieldset legend{
 	width: min-content;
 }
 .subtitles-customize {
-	width: min-content;
-	margin: auto;
+	width: fit-content;
 	text-align: right;
+	gap: 10px;
 }
 #provider_local, #provider_url {
 	display: none;

@@ -1,0 +1,6 @@
+Eel
+JSON_minify
+requests
+pysubs2
+pywin32
+pyinstaller

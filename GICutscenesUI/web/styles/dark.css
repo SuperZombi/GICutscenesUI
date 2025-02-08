@@ -8,6 +8,9 @@
 .dark code{
 	background: grey;
 }
+.dark #settings_actions{
+	background: #2d2d2d;
+}
 .dark .tabcontent{
 	color-scheme: dark;
 }
@@ -33,6 +36,10 @@
 .dark .input_element {
 	background: #444;
 	border-color: #666;
+}
+.dark .text_style_btn {
+	--checked-color: #888;
+	border-color: #888;
 }
 .dark .link{
 	color: #00C0FF;
