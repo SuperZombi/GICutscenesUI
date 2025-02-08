@@ -32,6 +32,17 @@
 	"quality": "品质:",
 	"delete_after_merge": "合并后删除不必要的文件",
 
+	"subtitles_area": "字幕",
+	"subtitles_checkbox": "添加字幕",
+	"subtitles_promt": "仅在启用合并功能时可用",
+	"subtitles_provider": "字幕来源：",
+	"subtitles_provider_local": "本地",
+	"subtitles_provider_url": "URL",
+	"subtitles_language": "语言：",
+	"subtitles_font": "字体：",
+	"subtitles_font_size": "字号：",
+	"subtitles_font_default": "默认",
+
 	"no_files": "无文件!",
 	"select_script_file": "选择脚本文件!",
 	"saved": "已保存!",
