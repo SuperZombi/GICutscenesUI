@@ -17,8 +17,8 @@
 		<button data="home" class="active" onclick="openTab('home')" translation="__home__">Home</button>
 		<button data="settings" onclick="openTab('settings')" translation="__settings__">Settings</button>
 		<button data="about" onclick="openTab('about')" translation="__about__">About</button>
+		<button data="subtitles_customize" style="display:none">Subtitles</button>
 	</div>
-
 
 
 	<div class="tabcontent showed" id="home">
@@ -155,34 +155,26 @@
 					<input type="text" class="input_element settings_element" name="subtitles_url" placeholder="https://">
 				</div>
 
-				<label translation="__subtitles_language__">Language:</label>
-				<select class="input_element settings_element" name="subtitles_lang">
-					<option value="EN" selected>English</option>
-					<option value="DE">German</option>
-					<option value="ES">Spanish</option>
-					<option value="RU">Russian</option>
-					<option value="FR">French</option>
-					<option value="IT">Italian</option>
-					<option value="PT">Portuguese</option>
-					<option value="ID">Indonesian</option>
-					<option value="CHS">Chinese Simplified</option>
-					<option value="CHT">Chinese Traditional</option>
-					<option value="JP">Japanese</option>
-					<option value="KR">Korean</option>
-					<option value="TH">Thai</option>
-					<option value="TR">Turkish</option>
-					<option value="VI">Vietnamese</option>
-				</select>
-
-				<label translation="__subtitles_font__">Font:</label>
-				<select class="input_element settings_element" name="subtitles_font" id="subtitles_font">
-					<option value="" selected translation="__subtitles_font_default__">Default</option>
-				</select>
-
-				<label translation="__subtitles_font_size__">Font size:</label>
-				<input type="number" class="input_element settings_element" name="subtitles_fontsize" value="14" min="4" max="64" step="1">
+				<button onclick="openTab('subtitles_customize')" class="input_element" translation="__subtitles_customization_button__">Customization</button>
 			</div>
 		</fieldset>
+	</div>
+
+
+	<div class="tabcontent" id="subtitles_customize">
+		<h3 align="center" translation="__subtitles_customization_header__">Customize Subtitles</h3>
+		<div class="grid-layout subtitles-customize">
+			<label translation="__subtitles_font__">Font:</label>
+			<select class="input_element settings_element" name="subtitles_font" id="subtitles_font">
+				<option value="" selected translation="__subtitles_font_default__">Default</option>
+			</select>
+
+			<label translation="__subtitles_font_size__">Font size:</label>
+			<input type="number" class="input_element settings_element" name="subtitles_fontsize" value="14" min="4" max="64" step="1">
+		</div>
+		<p align="center">
+			<button onclick="exportSettings();openTab('settings')" class="input_element" style="min-width:100px;" translation="__save__">Save</button>
+		</p>
 	</div>
 
 

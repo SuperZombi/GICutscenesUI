@@ -269,6 +269,11 @@ fieldset legend{
 .subtitles-area {
 	width: min-content;
 }
+.subtitles-customize {
+	width: min-content;
+	margin: auto;
+	text-align: right;
+}
 #provider_local, #provider_url {
 	display: none;
 	width: 100%;

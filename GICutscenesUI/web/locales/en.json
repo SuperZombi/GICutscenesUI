@@ -41,6 +41,8 @@
 	"subtitles_font": "Font:",
 	"subtitles_font_size": "Font size:",
 	"subtitles_font_default": "Default",
+	"subtitles_customization_button": "Customization",
+	"subtitles_customization_header": "Customization of Subtitles",
 
 	"no_files": "No Files!",
 	"saved": "Saved!",

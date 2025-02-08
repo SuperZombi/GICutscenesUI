@@ -43,6 +43,8 @@
 	"subtitles_font": "Шрифт:",
 	"subtitles_font_size": "Размер шрифта:",
 	"subtitles_font_default": "По умолчанию",
+	"subtitles_customization_button": "Внешний вид",
+	"subtitles_customization_header": "Настройка субтитров",
 
 	"no_files": "Нет Файлов!",
 	"saved": "Сохранено!",
