@@ -66,7 +66,7 @@
 		<fieldset>
 			<legend translation="__output_folder__">Output Folder:</legend>
 			<input type="text" readonly class="input_element path" id="output_path" class="settings_element">
-			<button onclick="change_output_folder()" class="input_element path_button" translation="__change__">Change</button>
+			<button onclick="change_output_folder()" class="input_element" translation="__change__">Change</button>
 		</fieldset>
 
 		<fieldset>
@@ -149,7 +149,7 @@
 				</select>
 				<div id="provider_local">
 					<input type="text" readonly class="input_element path" id="subtitles_path" class="settings_element">
-					<button onclick="change_subtitles_folder()" class="input_element path_button" translation="__change__">Change</button>
+					<button onclick="change_subtitles_folder()" class="input_element" translation="__change__">Change</button>
 				</div>
 				<div id="provider_url">
 					<input type="text" class="input_element settings_element" name="subtitles_url" placeholder="https://">
@@ -202,7 +202,7 @@
 		<hr>
 		<div class="flexable" style="justify-content:space-around;">
 			<div>
-				<table>
+				<table style="white-space:nowrap;">
 					<tr>
 						<td><a href="https://github.com/ToaHartor/GI-cutscenes" target="_blank" class="link">GI-cutscenes</a>:</td>
 						<td><code class="version" id="script_ver"></code></td>
@@ -213,7 +213,7 @@
 						</td><td><code class="version" id="ver_file_status"></code></td>
 					</tr>
 					<tr>
-						<td>Ffmpeg version:</td>
+						<td style="text-align:right;">Ffmpeg:</td>
 						<td><code class="version" id="ffmpeg_ver"></code></td>
 					</tr>
 					<tr id="ffmpeg_year_line" style="display:none;">

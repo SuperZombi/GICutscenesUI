@@ -69,7 +69,7 @@ async function load_version_file(){
 			document.getElementById("ver_file_status").classList.add("update")
 			document.getElementById("ver_file_status").innerHTML = LANG("new_update")
 			let button = document.createElement("button")
-			button.classList.add("path_button")
+			button.classList.add("input_element")
 			button.style.marginLeft = "5px"
 			button.innerHTML = LANG("update")
 			button.setAttribute("translation", "__update__")

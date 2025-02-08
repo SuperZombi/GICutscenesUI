@@ -134,7 +134,7 @@ label[for]{
 
 .input_element {
 	border-radius: 8px;
-	padding: 4px 6px;
+	padding: 4px 8px;
 	background: #eee;
 	border: 2px solid lightgrey;
 	font-size: 14px;
@@ -145,9 +145,6 @@ label[for]{
 	max-width: 70%;
 	direction: RTL;
 	cursor: text;
-}
-.path_button{
-	padding: 4px 8px;
 }
 
 #open_dir{
