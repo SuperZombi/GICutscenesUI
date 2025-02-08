@@ -91,11 +91,7 @@ function allow_reload_info(){
 }
 
 function is_this_new_ver(old_ver, new_ver){
-	function clean(string){
-		return string.replace(/[^0-9. ]/g, "")
-	}
-	if (clean(old_ver) != clean(new_ver)){
-		return true;
-	}
-	return false;
+	function clean(string){ return string.replace(/[^0-9. ]/g, "") }
+	function asNum(string){ return parseInt(clean(string).split(".").join("")) }
+	return asNum(new_ver) > asNum(old_ver);
 }
