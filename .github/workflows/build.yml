@@ -25,7 +25,7 @@ jobs:
     - name: Install Python dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install Eel JSON_minify pysrt pywin32 Requests pyinstaller
+        pip install -r ../github/requirements.txt
     - name: Set up GICutscenes
       run: |
         Invoke-WebRequest -Uri "https://github.com/ToaHartor/GI-cutscenes/releases/download/v0.5.0/GICutscenes-0.5.0-win-x64-standalone.zip" -OutFile ./gicutscenes.zip
