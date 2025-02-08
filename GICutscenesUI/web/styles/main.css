@@ -13,10 +13,9 @@ code{
 	padding: 3px 5px 3px 5px;
 	border-radius: 8px;
 }
-input[type="checkbox"]{
-	cursor: pointer;
-}
-label[for]{
+input[type="checkbox"],
+input[type="color"],
+label[for] {
 	cursor: pointer;
 }
 .tabcontent{
@@ -299,8 +298,7 @@ fieldset legend{
 	width: min-content;
 }
 .subtitles-customize {
-	width: min-content;
-	margin: auto;
+	width: fit-content;
 	text-align: right;
 	gap: 10px;
 }

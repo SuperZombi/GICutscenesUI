@@ -184,7 +184,7 @@
 		<h3 align="center" translation="__subtitles_customization_header__">Customize Subtitles</h3>
 		<div class="grid-layout subtitles-customize">
 			<label translation="__subtitles_font__">Font:</label>
-			<select class="input_element settings_element" name="subtitles_font" id="subtitles_font">
+			<select class="input_element settings_element" name="subtitles_font" id="subtitles_font" style="width:fit-content;">
 				<option value="" selected translation="__subtitles_font_default__">Default</option>
 			</select>
 
@@ -193,23 +193,23 @@
 
 			<span></span>
 			<div style="display: flex; gap: 5px;">
-				<label class="input_element text_style_btn">
+				<label class="input_element text_style_btn" translation="__title:subtitles_bold__">
 					<input type="checkbox" class="settings_element" name="subtitles_bold">
 					<span>B</span>
 				</label>
-				<label class="input_element text_style_btn">
+				<label class="input_element text_style_btn" translation="__title:subtitles_italic__">
 					<input type="checkbox" class="settings_element" name="subtitles_italic">
 					<span>I</span>
 				</label>
 			</div>
 
-			<label>Text color:</label>
+			<label translation="__subtitles_text_color__">Text color:</label>
 			<input type="color" name="subtitles_text_color" class="settings_element" value="#ffffff">
 
-			<label>Outline color:</label>
+			<label translation="__subtitles_outline_color__">Outline color:</label>
 			<input type="color" name="subtitles_outline_color" class="settings_element" value="#000000">
 
-			<label>Outline width:</label>
+			<label translation="__subtitles_outline_width__">Outline width:</label>
 			<input type="number" name="subtitles_outline_width" class="input_element settings_element" min="0" max="10" step="0.5" value="1" style="width:fit-content">
 		</div>
 		<p align="center">
