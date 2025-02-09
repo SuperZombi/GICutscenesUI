@@ -30,7 +30,7 @@
 
 	"merging_area": "Menggabungkan",
 	"merge": "Gabungkan Video dan Audio",
-	"using_ffmpeg_prompt": "Memakai ffmpeg",
+	"using_ffmpeg_promt": "Memakai ffmpeg",
 	"audio_track": "Trek audio:",
 	"quality": "Kualitas:",
 
@@ -44,6 +44,13 @@
 	"subtitles_font": "Huruf:",
 	"subtitles_font_size": "Ukuran huruf:",
 	"subtitles_font_default": "Default",
+	"subtitles_customization_button": "Personalisasi",
+	"subtitles_customization_header": "Personalisasi Subtitle",
+	"subtitles_text_color": "Warna teks:",
+	"subtitles_outline_color": "Warna outline:",
+	"subtitles_outline_width": "Lebar outline:",
+	"subtitles_bold": "Tebal",
+	"subtitles_italic": "Miring",
 	
 	"no_files": "Berkas Kosong!",
 	"select_script_file": "Pilih Berkas Script!",
