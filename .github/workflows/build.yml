@@ -1,0 +1,40 @@
+name: Build GICutscenesUI
+
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: pwsh
+        working-directory: ./GICutscenesUI
+    steps:
+    - name: Checkout the repo
+      uses: actions/checkout@v4
+    - name: Set up Python 3.12
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r ../github/requirements.txt
+    - name: Set up GICutscenes
+      run: |
+        Invoke-WebRequest -Uri "https://github.com/ToaHartor/GI-cutscenes/releases/download/v0.5.0/GICutscenes-0.5.0-win-x64-standalone.zip" -OutFile ./gicutscenes.zip
+        7z e gicutscenes.zip appsettings.json GICutscenes.exe
+        Invoke-WebRequest -Uri "https://raw.githubusercontent.com/ToaHartor/GI-cutscenes/refs/heads/main/versions.json" -OutFile ./versions.json
+    - name: Use PyInstaller to build GICutscenesUI
+      run: pyinstaller --noconfirm --onefile --noconsole --icon="./web/images/icon.ico" --name="GICutscenesUI" --version-file="../github/ver" --add-data="web\\;.\\web" --add-data="GICutscenes.exe;." --add-data="appsettings.json;." --add-data="versions.json;." --add-data="../github/ffmpeg.exe;." main.py
+    - name: Upload the artifact
+      uses: actions/upload-artifact@v4
+      with:
+          name: GICutscenesUI
+          path: ./GICutscenesUI/dist/GICutscenesUI.exe
