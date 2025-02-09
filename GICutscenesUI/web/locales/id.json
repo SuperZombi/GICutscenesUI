@@ -30,13 +30,13 @@
 
 	"merging_area": "Menggabungkan",
 	"merge": "Gabungkan Video dan Audio",
-	"using_ffmpeg_promt": "Memakai ffmpeg",
+	"using_ffmpeg_tooltip": "Memakai ffmpeg",
 	"audio_track": "Trek audio:",
 	"quality": "Kualitas:",
 
 	"subtitles_area": "Subtitle",
 	"subtitles_checkbox": "Tambahkan subtitle",
-	"subtitles_promt": "Hanya bekerja jika penggabungan diaktifkan",
+	"subtitles_tooltip": "Hanya bekerja jika penggabungan diaktifkan",
 	"subtitles_provider": "Penyedia subtitle:",
 	"subtitles_provider_local": "Lokal",
 	"subtitles_provider_url": "URL",

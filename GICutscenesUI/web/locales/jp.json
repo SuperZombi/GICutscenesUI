@@ -33,8 +33,8 @@
 	"saved": "保存完了",
 	"confirm_delete_settings": "本当に全ての設定を初期化してもよろしいですか?",
 
-	"using_ffmpeg_promt": "ffmpegを使う",
-	"track_index_promt": "トラックインデックス",
+	"using_ffmpeg_tooltip": "ffmpegを使う",
+	"track_index_tooltip": "トラックインデックス",
 
 	"copy_files": "ファイルコピー中...",
 	"run_demux": "変換と復号中...",

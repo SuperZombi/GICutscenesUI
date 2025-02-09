@@ -26,14 +26,14 @@
 
 	"merging_area": "Merging",
 	"merge": "Merge Video and Audio",
-	"using_ffmpeg_promt": "With using ffmpeg",
+	"using_ffmpeg_tooltip": "With using ffmpeg",
 	"audio_track": "Audio track:",
 	"quality": "Quality:",
 	"delete_after_merge": "Delete unnecessary files after merging",
 
 	"subtitles_area": "Subtitles",
 	"subtitles_checkbox": "Add subtitles",
-	"subtitles_promt": "Works only if merging is enabled",
+	"subtitles_tooltip": "Works only if merging is enabled",
 	"subtitles_provider": "Subtitles provider:",
 	"subtitles_provider_local": "Local",
 	"subtitles_provider_url": "URL",

@@ -30,8 +30,8 @@
 	"saved": "Enregistré!",
 	"confirm_delete_settings": "Êtes-vous sûr de vouloir supprimer vos paramètres?",
 
-	"using_ffmpeg_promt": "Utilise ffmpeg",
-	"track_index_promt": "Indice de piste",
+	"using_ffmpeg_tooltip": "Utilise ffmpeg",
+	"track_index_tooltip": "Indice de piste",
 
 	"copy_files": "Copie des fichiers...",
 	"run_demux": "Conversion et Déchiffrement...",
