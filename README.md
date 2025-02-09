@@ -11,7 +11,7 @@
     <a href="#donate"><img src="https://shields.io/badge/💲-Support_the_Project-2ea043"></a>
 </p>
 
-## Screenshots:
+## Screenshots:віф
 <details>
   <summary></summary>
   <img src="github/images/main.png" width="550px">
