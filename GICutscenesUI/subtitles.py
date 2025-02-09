@@ -55,7 +55,7 @@ def srt_to_ass(srt_file, ass_file, **kwargs):
 	subs.styles["Default"] = apply_styles(**kwargs)
 	subs.save(ass_file, format_="ass")
 
-def make_subs_template(file, text="Hello, world!", **kwargs):
+def make_subs_template(text, file, **kwargs):
 	subs = pysubs2.SSAFile()
 	subs.styles["Default"] = apply_styles(**kwargs)
 	subs.events.append(

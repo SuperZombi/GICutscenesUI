@@ -311,8 +311,15 @@ GENSHIN_FOLDER = find_genshin_folder()
 
 # ---- Subtitles Functions ----
 @eel.expose
-def render_preview(tempfile="temp.ass", width=1920, height=1080, **kwargs):
-	make_subs_template(file=tempfile, **kwargs)
+def make_subs_preview(args):
+	params = {
+		"text": "Hello, world!",
+		"tempfile": "temp.ass",
+		"width": 1920, "height": 1080,
+		**args
+	}
+	width, height, tempfile = params.pop("width"), params.pop("height"), params.pop("tempfile")
+	make_subs_template(text=params.pop("text"), file=tempfile, **params)
 	cmd = [
 		FFMPEG, '-f', 'lavfi', '-i', 
 		f'color=color=black@0.0:size={width}x{height},format=rgba,subtitles={tempfile}:alpha=1', 
