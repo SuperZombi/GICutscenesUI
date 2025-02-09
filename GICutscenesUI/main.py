@@ -7,12 +7,13 @@ import subprocess
 import json
 from json_minify import json_minify
 import re
+import base64
 import requests
 import win32api
 from subtitles import *
 
 CONSOLE_DEBUG_MODE = False
-__version__ = '0.8.2'
+__version__ = '0.8.3'
 
 # ---- Required Functions ----
 
@@ -306,6 +307,31 @@ def find_genshin_folder():
 				if os.path.exists(assets): return assets
 				print("[WARN] Assets not found!")
 GENSHIN_FOLDER = find_genshin_folder()
+
+
+# ---- Subtitles Functions ----
+@eel.expose
+def make_subs_preview(args):
+	params = {
+		"text": "Hello, world!",
+		"tempfile": "temp.ass",
+		"width": 1920, "height": 1080,
+		**args
+	}
+	width, height, tempfile = params.pop("width"), params.pop("height"), params.pop("tempfile")
+	make_subs_template(text=params.pop("text"), file=tempfile, **params)
+	cmd = [
+		FFMPEG, '-f', 'lavfi', '-i', 
+		f'color=color=black@0.0:size={width}x{height},format=rgba,subtitles={tempfile}:alpha=1', 
+		'-vframes', '1', '-f', 'image2pipe', '-vcodec', 'png', '-'
+	]
+	process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, creationflags=subprocess.CREATE_NO_WINDOW)
+	output, error = process.communicate()
+	os.remove(tempfile)
+	if process.returncode == 0:
+		img_base64 = base64.b64encode(output).decode('utf-8')
+		data_url = f"data:image/png;base64,{img_base64}"
+		return data_url
 
 
 # ---- MAIN Functions ----

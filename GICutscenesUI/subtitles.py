@@ -33,14 +33,12 @@ def find_subtitles(name, lang, provider):
 				data = f.read()
 			return StringIO(data)
 
-
-def srt_to_ass(srt_file, ass_file,
+def apply_styles(
 		font_name="Arial", font_size=14,
 		text_color='#ffffff',
 		outline_color='#000000', outline_width=1,
 		bold=False, italic=False
 	):
-	subs = pysubs2.SSAFile.from_string(srt_file.read(), format_="srt")
 	style = pysubs2.SSAStyle()
 	style.fontname = font_name
 	style.fontsize = font_size
@@ -50,5 +48,17 @@ def srt_to_ass(srt_file, ass_file,
 	style.shadow = 0
 	style.bold = bold
 	style.italic = italic
-	subs.styles["Default"] = style
+	return style
+
+def srt_to_ass(srt_file, ass_file, **kwargs):
+	subs = pysubs2.SSAFile.from_string(srt_file.read(), format_="srt")
+	subs.styles["Default"] = apply_styles(**kwargs)
 	subs.save(ass_file, format_="ass")
+
+def make_subs_template(text, file, **kwargs):
+	subs = pysubs2.SSAFile()
+	subs.styles["Default"] = apply_styles(**kwargs)
+	subs.events.append(
+		pysubs2.SSAEvent(start=0, end=1000, text=text)
+	)
+	subs.save(file)

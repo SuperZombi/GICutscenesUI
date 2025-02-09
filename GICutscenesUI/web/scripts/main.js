@@ -11,6 +11,7 @@
 
 	get_output_folder()
 	get_subtitles_folder()
+	init_subtitles_preview()
 	donationPopup()
 })()
 

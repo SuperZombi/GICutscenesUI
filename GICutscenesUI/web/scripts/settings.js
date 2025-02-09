@@ -81,6 +81,40 @@ function changeTheme(){
 	}
 }
 
+
+function init_subtitles_preview(){
+	let elements = document.querySelectorAll(".subtitles_setting")
+	function get_values(){
+		let replace_keys = {
+			"subtitles_font": "font_name",
+			"subtitles_fontsize": "font_size",
+			"subtitles_text_color": "text_color",
+			"subtitles_outline_color": "outline_color",
+			"subtitles_outline_width": "outline_width",
+			"subtitles_bold": "bold",
+			"subtitles_italic": "italic"
+		}
+		let final = {}
+		elements.forEach(e=>{
+			if (e.type == "checkbox"){
+				final[replace_keys[e.name]] = e.checked
+			}
+			else {
+				final[replace_keys[e.name]] = e.value
+			}
+		})
+		return final
+	}
+	async function make_request(){
+		let data_img = await eel.make_subs_preview(get_values())();
+		document.getElementById("subtitles_preview").src = data_img || "";
+	}
+	elements.forEach(e=>{
+		e.onchange = make_request
+	})
+	make_request()
+}
+
 function donationPopup(){
 	function checkLastNotificationTime(){
 		let currentTime = Math.floor(Date.now() / 1000);
