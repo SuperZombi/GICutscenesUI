@@ -29,7 +29,8 @@ jobs:
     - name: Set up GICutscenes
       run: |
         Invoke-WebRequest -Uri "https://github.com/ToaHartor/GI-cutscenes/releases/download/v0.5.0/GICutscenes-0.5.0-win-x64-standalone.zip" -OutFile ./gicutscenes.zip
-        7z e gicutscenes.zip versions.json appsettings.json GICutscenes.exe
+        7z e gicutscenes.zip appsettings.json GICutscenes.exe
+        Invoke-WebRequest -Uri "https://raw.githubusercontent.com/ToaHartor/GI-cutscenes/refs/heads/main/versions.json" -OutFile ./versions.json
     - name: Use PyInstaller to build GICutscenesUI
       run: pyinstaller --noconfirm --onefile --noconsole --icon="./web/images/icon.ico" --name="GICutscenesUI" --version-file="../github/ver" --add-data="web\\;.\\web" --add-data="GICutscenes.exe;." --add-data="appsettings.json;." --add-data="versions.json;." --add-data="../github/ffmpeg.exe;." main.py
     - name: Upload the artifact
