@@ -42,6 +42,13 @@
 	"subtitles_font": "字体：",
 	"subtitles_font_size": "字号：",
 	"subtitles_font_default": "默认",
+	"subtitles_customization_button": "自定义",
+	"subtitles_customization_header": "自定义字幕",
+	"subtitles_text_color": "文本颜色：",
+	"subtitles_outline_color": "轮廓颜色：",
+	"subtitles_outline_width": "轮廓宽度：",
+	"subtitles_bold": "粗体",
+	"subtitles_italic": "斜体",
 
 	"no_files": "无文件!",
 	"select_script_file": "选择脚本文件!",
