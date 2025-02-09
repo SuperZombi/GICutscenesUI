@@ -292,7 +292,7 @@ fieldset legend{
 	grid-template-columns: 1fr 1fr;
 	align-items: center;
 	white-space: nowrap;
-	gap: 5px 10px;
+	gap: 6px 10px;
 }
 .subtitles-area {
 	width: min-content;
@@ -413,6 +413,7 @@ table td{
 	height: 100%;
 	overflow: hidden;
 	background-color: rgba(0, 0, 0, 0.5);
+	backdrop-filter: blur(3px);
 }
 .popup.show{
 	display: block;

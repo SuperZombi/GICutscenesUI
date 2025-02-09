@@ -27,14 +27,14 @@
 	
 	"merging_area": "合并",
 	"merge": "合并视频和音频",
-	"using_ffmpeg_promt": "使用 ffmpeg",
+	"using_ffmpeg_tooltip": "使用 ffmpeg",
 	"audio_track": "音轨语言:",
 	"quality": "品质:",
 	"delete_after_merge": "合并后删除不必要的文件",
 
 	"subtitles_area": "字幕",
 	"subtitles_checkbox": "添加字幕",
-	"subtitles_promt": "仅在启用合并功能时可用",
+	"subtitles_tooltip": "仅在启用合并功能时可用",
 	"subtitles_provider": "字幕来源：",
 	"subtitles_provider_local": "本地",
 	"subtitles_provider_url": "URL",

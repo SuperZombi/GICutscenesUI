@@ -30,8 +30,8 @@
 	"saved": "已保存!",
 	"confirm_delete_settings": "確定刪除所有設置嗎?",
 
-	"using_ffmpeg_promt": "使用 ffmpeg",
-	"track_index_promt": "音軌列表",
+	"using_ffmpeg_tooltip": "使用 ffmpeg",
+	"track_index_tooltip": "音軌列表",
 
 	"copy_files": "正在復製文件...",
 	"run_demux": "正在轉換和解密...",

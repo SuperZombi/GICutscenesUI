@@ -30,8 +30,8 @@
 	"saved": "Đã lưu!",
 	"confirm_delete_settings": "Bạn có muốn xoá hết tất cả cài đặt?",
 
-	"using_ffmpeg_promt": "Sử dụng FFMPEG",
-	"track_index_promt": "Track index",
+	"using_ffmpeg_tooltip": "Sử dụng FFMPEG",
+	"track_index_tooltip": "Track index",
 
 	"copy_files": "Sao chép file...",
 	"run_demux": "Đang giải mã và chuyển đổi...",

@@ -48,10 +48,6 @@ The path to the subtitles should look like this: `[Subtitles folder]\LANG\Cutsce
 Install the font that is located along the path:<br>
 `[Game directory]\Genshin Impact game\GenshinImpact_Data\StreamingAssets\MiHoYoSDKRes\HttpServerResources\font`
 
-### How can I customize subtitles?
-At the moment, it is possible to change the font and its size.<br>
-Later, the functionality of changing the color, stroke, position, and other will be added.
-
 <hr>
 
 ### Help with <a href="translations.md">translation</a>

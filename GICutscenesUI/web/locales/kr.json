@@ -30,8 +30,8 @@
 	"saved": "저장 완료!",
 	"confirm_delete_settings": "정말로 이 설정을 삭제하시겠습니까?",
 
-	"using_ffmpeg_promt": "ffmpeg 파일을 사용",
-	"track_index_promt": "오디오 언어 목록",
+	"using_ffmpeg_tooltip": "ffmpeg 파일을 사용",
+	"track_index_tooltip": "오디오 언어 목록",
 
 	"copy_files": "파일 복사중...",
 	"run_demux": "전환 및 해독중...",

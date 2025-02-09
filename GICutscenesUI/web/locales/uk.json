@@ -29,14 +29,14 @@
 
 	"merging_area": "Рендеринг",
 	"merge": "Об'єднати Відео та Аудіо",
-	"using_ffmpeg_promt": "За допомогою ffmpeg",
+	"using_ffmpeg_tooltip": "За допомогою ffmpeg",
 	"audio_track": "Аудіо доріжка:",
 	"quality": "Якість:",
 	"delete_after_merge": "Видалити непотрібні файли після об’єднання",
 
 	"subtitles_area": "Субтитри",
 	"subtitles_checkbox": "Додати субтитри",
-	"subtitles_promt": "Працює тільки якщо увімкнено рендеринг",
+	"subtitles_tooltip": "Працює тільки якщо увімкнено рендеринг",
 	"subtitles_provider": "Розташування субтитрів:",
 	"subtitles_provider_local": "Вибрати папку",
 	"subtitles_language": "Мова:",
