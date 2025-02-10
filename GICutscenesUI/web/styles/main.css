@@ -327,6 +327,7 @@ fieldset legend{
 	object-fit: cover;
 	object-position: bottom;
 	background: lime;
+	border-radius: 8px;
 }
 
 
