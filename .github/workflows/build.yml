@@ -3,6 +3,8 @@ name: Build GICutscenesUI
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - 'GICutscenesUI/**'
 
 permissions:
   contents: read
