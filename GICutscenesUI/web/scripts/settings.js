@@ -91,6 +91,7 @@ function init_subtitles_preview(){
 			"subtitles_text_color": "text_color",
 			"subtitles_outline_color": "outline_color",
 			"subtitles_outline_width": "outline_width",
+			"subtitles_letter_spacing": "letter_spacing",
 			"subtitles_bold": "bold",
 			"subtitles_italic": "italic"
 		}

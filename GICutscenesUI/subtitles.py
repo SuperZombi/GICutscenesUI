@@ -36,7 +36,8 @@ def find_subtitles(name, lang, provider):
 def apply_styles(
 		font_name="Arial", font_size=14,
 		text_color='#ffffff',
-		outline_color='#000000', outline_width=1,
+		outline_color='#000000',
+		outline_width=1, letter_spacing=0,
 		bold=False, italic=False
 	):
 	style = pysubs2.SSAStyle()
@@ -46,6 +47,7 @@ def apply_styles(
 	style.outlinecolor = pysubs2.Color(*hex_to_rgb(outline_color))
 	style.outline = outline_width
 	style.shadow = 0
+	style.spacing = letter_spacing
 	style.bold = bold
 	style.italic = italic
 	return style
