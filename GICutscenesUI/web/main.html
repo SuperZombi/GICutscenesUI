@@ -50,7 +50,7 @@
 
 		<div id="console_wrapper" class="hide">
 			<textarea id="output" cols="30" rows="10" readonly></textarea>
-			<button onclick="clearConsole()" translation="__clear__">🗑Clear</button>
+			<button onclick="clearConsole()" translation="__clear__">Clear</button>
 		</div>
 		<p><button onclick="showConsole()" translation="__console_button__" class="browse custom_browse hide" id="show_console">Console</button></p>
 
@@ -149,8 +149,8 @@
 			<div class="grid-layout subtitles-area" style="margin-left: 4px;">
 				<label translation="__subtitles_provider__">Subtitles provider:</label>
 				<select class="input_element settings_element" id="subtitles_provider" name="subtitles_provider">
-					<option value="https://gitlab.com/Dimbreath/AnimeGameData" selected>gitlab/Dimbreath/AnimeGameData</option>
-					<option value="https://github.com/Sycamore0/GenshinData">github/Sycamore0/GenshinData</option>
+					<option value="https://gitlab.com/Dimbreath/AnimeGameData" class="mono" selected>gitlab/Dimbreath/AnimeGameData</option>
+					<option value="https://github.com/Sycamore0/GenshinData" class="mono">github/Sycamore0/GenshinData</option>
 					<option value="local" translation="__subtitles_provider_local__">Local</option>
 					<option value="url" translation="__subtitles_provider_url__">URL</option>
 				</select>
@@ -159,7 +159,7 @@
 					<button onclick="change_subtitles_folder()" class="input_element" translation="__change__">Change</button>
 				</div>
 				<div id="provider_url">
-					<input type="text" class="input_element settings_element" name="subtitles_url" placeholder="https://">
+					<input type="text" class="input_element settings_element" name="subtitles_url" placeholder="https://" style="font-family:monospace;">
 				</div>
 
 				<label translation="__subtitles_language__">Language:</label>
@@ -167,7 +167,7 @@
 					<option value="EN" selected>English</option>
 					<option value="DE">German</option>
 					<option value="ES">Spanish</option>
-					<option value="RU">Russian</option>
+					<option value="RU">Русский</option>
 					<option value="FR">French</option>
 					<option value="IT">Italian</option>
 					<option value="PT">Portuguese</option>
