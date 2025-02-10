@@ -378,6 +378,7 @@ def start_work(files, args):
 
 			if p_status != 0:
 				send_message_to_ui_output("event", "error")
+				send_message_to_ui_output("sub_work", {"name": "keys", "status": False})
 			else:
 				send_message_to_ui_output("event", "rename_files")
 
@@ -393,6 +394,7 @@ def start_work(files, args):
 				else:
 					send_message_to_ui_output("console", "\n")
 					send_message_to_ui_output("event", "error")
+					send_message_to_ui_output("sub_work", {"name": "keys", "status": False})
 					continue
 
 				# Delete hca encoded Audio (cuz wav files decoded)
@@ -438,8 +440,10 @@ def start_work(files, args):
 
 							if not subtitles:
 								send_message_to_ui_output("console", "Subtitles not found!")
+								send_message_to_ui_output("sub_work", {"name": "subtitles", "status": False})
 							else:
 								send_message_to_ui_output("console", "Converting subtitles")
+								send_message_to_ui_output("sub_work", {"name": "subtitles", "status": True})
 								subtitles_file = os.path.join(OUTPUT_F, str(old_file_name) + ".ass")
 								srt_to_ass(
 									subtitles,

@@ -4,6 +4,7 @@
 	<title>GICutscenes</title>
 	<link rel="shortcut icon" href="images/icon.ico" type="image/x-icon">
 	<script type="text/javascript" src="/eel.js"></script>
+	<link rel='stylesheet' href="styles/fontawesome/css/all.min.css">
 	<link rel="stylesheet" href="styles/main.css">
 	<link rel="stylesheet" href="styles/dark.css">
 	<script src="scripts/language.js" defer></script>
@@ -31,24 +32,27 @@
 		</div>
 		<div id="preview_zone"></div>
 
-		<div id="progress">
-			<progress id="progress_bar"></progress>
-			<span id="current_progress">0/0</span>
-			<span id="current_work"></span>
-
-			<progress id="ffmpeg_progress" min="0" max="100" value="0" style="display:none"></progress>
-			<span id="ffmpeg_progress_text" style="display:none; font-size: 0.8em;">0%</span>
-
-			<div id="console_wrapper">
-				<textarea id="output" cols="30" rows="10" readonly></textarea>
-				<button onclick="clearConsole()" translation="__clear__">🗑Clear</button>
+		<div id="progress" class="hide">
+			<div>
+				<progress id="progress_bar"></progress>
+				<span id="current_progress">0/0</span>
+				<span id="current_work"></span>
 			</div>
-
-			<button onclick="openOutputFolder()"  translation="__open_output_dir__" class="browse" id="open_dir">Open Output Dir</button>
+			<div id="ffmpeg_progress_area" class="hide">
+				<progress id="ffmpeg_progress" min="0" max="100" value="0"></progress>
+				<span id="ffmpeg_progress_text">0%</span>
+			</div>
 		</div>
+		<p><button onclick="openOutputFolder()" translation="__open_output_dir__" class="browse custom_browse hide" id="open_dir">Open Output Dir</button></p>
+
+		<div id="console_wrapper" class="hide">
+			<textarea id="output" cols="30" rows="10" readonly></textarea>
+			<button onclick="clearConsole()" translation="__clear__">🗑Clear</button>
+		</div>
+		<p><button onclick="showConsole()" translation="__console_button__" class="browse custom_browse hide" id="show_console">Console</button></p>
 
 		<div id="start_area">
-			<button onclick="stop()" id="stop" translation="__stop__" style="display:none;">STOP</button>
+			<button onclick="stop()" id="stop" translation="__stop__" class="hide">STOP</button>
 			<button onclick="start()" id="start" translation="__start__">START</button>
 		</div>
 	</div>
