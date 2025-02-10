@@ -18,6 +18,9 @@ input[type="color"],
 label[for] {
 	cursor: pointer;
 }
+input[type="number"]{
+	cursor: text;
+}
 .tabcontent{
 	display: none;
 	padding: 0 20px;
