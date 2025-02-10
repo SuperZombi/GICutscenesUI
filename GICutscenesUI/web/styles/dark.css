@@ -2,6 +2,12 @@
 	background: #2d2d2d;
 	color: white;
 }
+.dark #loader-area{
+	background: #2d2d2d;
+}
+.dark #loader-area > svg {
+	stroke: white;
+}
 .dark hr {
 	border-color: grey;
 }

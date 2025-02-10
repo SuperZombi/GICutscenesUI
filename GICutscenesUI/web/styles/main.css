@@ -22,6 +22,25 @@ input[type="number"],
 input[type="text"]{
 	cursor: text;
 }
+#loader-area{
+	background: white;
+	position: fixed;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1;
+	transition: 0.5s;
+}
+#loader-area > svg{
+	height: 50px;
+	stroke: black;
+}
+#loader-area.hidden {
+	opacity: 0;
+	visibility: hidden;
+}
+
 .tabcontent{
 	display: none;
 	padding: 0 20px;

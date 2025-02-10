@@ -13,6 +13,9 @@
 	get_subtitles_folder()
 	init_subtitles_preview()
 	donationPopup()
+	setTimeout(_=>{
+		document.querySelector("#loader-area").classList.add("hidden")
+	}, 100)
 })()
 
 function openTab(tab){
