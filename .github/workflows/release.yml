@@ -1,0 +1,22 @@
+name: Attach latest build to Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  attach-artifact:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download latest build artifact
+        uses: dawidd6/action-download-artifact@v8
+        with:
+          workflow: build.yml
+          workflow_conclusion: success
+          name: GICutscenesUI
+      - name: Upload to Release
+        uses: xresloader/upload-to-github-release@v1
+        with:
+          file: "GICutscenesUI.exe"
+          update_latest_release: true
