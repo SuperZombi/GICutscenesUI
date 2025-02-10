@@ -2,7 +2,7 @@
 	await get_all_fonts()
 	await load_settings()
 	changeTheme()
-	getTranslation()
+	await getTranslation()
 
 	let tab_now = window.location.hash.split("#").at(-1)
 	if (tab_now){
@@ -13,6 +13,9 @@
 	get_subtitles_folder()
 	init_subtitles_preview()
 	donationPopup()
+	setTimeout(_=>{
+		document.querySelector("#loader-area").classList.add("hidden")
+	}, 100)
 })()
 
 function openTab(tab){
@@ -40,53 +43,65 @@ function update_path(path, input){
 
 
 async function selectFiles(){
-	var files = await eel.ask_files()();
+	let files = await eel.ask_files()();
 	if (files && files.length > 0){
 		updatePreview(files)
 	}
 }
 function updatePreview(files){
 	removeIcons_and_color()
-	let preview = document.getElementById("preview_zone")
+	let parent = document.getElementById("preview_zone")
 	files.forEach(e=>{
-		if (!preview.querySelector(`div[path='${e}']`)){
-			preview.appendChild(addFilePreview(e))
+		if (!parent.querySelector(`.file[path='${e}']`)){
+			parent.appendChild(addFilePreview(e))
 		}
 	})
-	document.getElementById("fileCleaner").style.display = "inline-block"
+	document.querySelector("#fileCleaner").classList.remove("hide")
 }
 function addFilePreview(filename){
 	let div = document.createElement("div")
+	div.className = "file input_element"
 	div.setAttribute("path", filename)
-	let icon = document.createElement("span")
-	icon.className = "icon"
-	icon.innerHTML = "🗎"
+	let icon_wrapper = document.createElement("span")
+	icon_wrapper.className = "icon"
+	let icon = document.createElement("i")
+	icon.className = "fa-solid fa-file"
+	icon_wrapper.appendChild(icon)
 	let text = document.createElement("span")
+	text.className = "text"
 	text.innerHTML = filename.replace(/^.*[\\\/]/, '')
 	let del_but = document.createElement("span")
-	del_but.className = "del"
-	del_but.innerHTML = "✖"
+	del_but.className = "icon del"
+	del_but.innerHTML = '<i class="fa-regular fa-circle-xmark"></i>'
 	del_but.title = LANG("remove")
 	del_but.onclick = _=>{ div.remove() }
-	div.resetIcon = _=>{ icon.innerHTML = "🗎" }
-	div.setIcon = (text)=>{ icon.innerHTML = text }
-	div.appendChild(icon)
+	let statuses = document.createElement("div")
+	statuses.className = "statuses"
+	div.addStatus = status=>{
+		let i = document.createElement("i")
+		i.className = status
+		statuses.appendChild(i)
+	}
+	div.reset = _=>{
+		div.className = "file input_element"
+		icon.className = "fa-solid fa-file"
+		statuses.innerHTML = ""
+	}
+	div.setIcon = (classes)=>{ icon.className = classes }
+	div.appendChild(icon_wrapper)
 	div.appendChild(text)
+	div.appendChild(statuses)
 	div.appendChild(del_but)
 	return div
 }
 function clearFiles(){
 	let preview = document.getElementById("preview_zone")
 	preview.innerHTML = ''
-	document.getElementById("fileCleaner").style.display = "none"
-	document.getElementById("progress").style.display = "none"
+	document.querySelector("#fileCleaner").classList.add("hide")
 }
 
 function removeIcons_and_color(){
-	Array.from(document.getElementById("preview_zone").getElementsByTagName("div")).forEach(e=>{
-		e.className = ""
-		e.resetIcon()
-	})
+	document.querySelectorAll("#preview_zone .file").forEach(e=>{e.reset()})
 }
 
 async function openOutputFolder(){
@@ -98,7 +113,7 @@ var BLOCK_START = false;
 async function start(){
 	if (!BLOCK_START){
 		var files = []
-		Array.from(document.getElementById("preview_zone").getElementsByTagName("div")).forEach(e=>{
+		document.querySelectorAll("#preview_zone .file").forEach(e=>{
 			files.push(e.getAttribute("path"))
 		})
 
@@ -107,9 +122,6 @@ async function start(){
 			removeIcons_and_color()
 			// MAIN CALL
 			let settings = parseSettings()
-			document.getElementById("open_dir").style.display = "none"
-			document.getElementById("progress").style.display = "block"
-			document.getElementById("preview_zone").classList.add("no-remove")
 			await eel.start_work(files, settings)();
 		}
 		else{

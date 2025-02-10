@@ -13,7 +13,7 @@ import win32api
 from subtitles import *
 
 CONSOLE_DEBUG_MODE = False
-__version__ = '0.8.4'
+__version__ = '0.8.5'
 
 # ---- Required Functions ----
 
@@ -28,20 +28,27 @@ def get_version():
 
 # ---- Locales ----
 
+remove_coma_regex = r'''(?<=[}\]"']),(?!\s*[{["'])'''
+
 @eel.expose
 def get_translation(code):
 	tr_file = os.path.join(resource_path("web"), "locales", code + ".json")
 	if os.path.exists(tr_file):
 		with open(tr_file, 'r', encoding="utf-8-sig") as file:
 			string = json_minify(file.read()) # remove comments
-
-			# remove coma at the end of json
-			regex = r'''(?<=[}\]"']),(?!\s*[{["'])'''
-			string = re.sub(regex, "", string, 0)
-
+			string = re.sub(remove_coma_regex, "", string, 0) # remove coma at the end
 			output = json.loads(string)
 			return output
-	return
+
+def load_subs_preview_text():
+	file = os.path.join(resource_path("web"), "locales", "subtitles_preview.json")
+	with open(file, 'r', encoding="utf-8-sig") as f:
+		string = re.sub(remove_coma_regex, "", f.read(), 0)
+		data = json.loads(string)
+	def wraper(lang): return data.get(lang, data.get('en'))
+	return wraper
+
+SUBTITLES_PREVIEW_TEXT = load_subs_preview_text()
 
 
 # ---- EXE Functions ----
@@ -313,13 +320,12 @@ GENSHIN_FOLDER = find_genshin_folder()
 @eel.expose
 def make_subs_preview(args):
 	params = {
-		"text": "Hello, world!",
 		"tempfile": "temp.ass",
 		"width": 1920, "height": 1080,
 		**args
 	}
 	width, height, tempfile = params.pop("width"), params.pop("height"), params.pop("tempfile")
-	make_subs_template(text=params.pop("text"), file=tempfile, **params)
+	make_subs_template(text=SUBTITLES_PREVIEW_TEXT(params.pop("lang")), file=tempfile, **params)
 	cmd = [
 		FFMPEG, '-f', 'lavfi', '-i', 
 		f'color=color=black@0.0:size={width}x{height},format=rgba,subtitles={tempfile}:alpha=1', 
@@ -378,6 +384,7 @@ def start_work(files, args):
 
 			if p_status != 0:
 				send_message_to_ui_output("event", "error")
+				send_message_to_ui_output("sub_work", {"name": "keys", "status": False})
 			else:
 				send_message_to_ui_output("event", "rename_files")
 
@@ -393,6 +400,7 @@ def start_work(files, args):
 				else:
 					send_message_to_ui_output("console", "\n")
 					send_message_to_ui_output("event", "error")
+					send_message_to_ui_output("sub_work", {"name": "keys", "status": False})
 					continue
 
 				# Delete hca encoded Audio (cuz wav files decoded)
@@ -438,8 +446,10 @@ def start_work(files, args):
 
 							if not subtitles:
 								send_message_to_ui_output("console", "Subtitles not found!")
+								send_message_to_ui_output("sub_work", {"name": "subtitles", "status": False})
 							else:
 								send_message_to_ui_output("console", "Converting subtitles")
+								send_message_to_ui_output("sub_work", {"name": "subtitles", "status": True})
 								subtitles_file = os.path.join(OUTPUT_F, str(old_file_name) + ".ass")
 								srt_to_ass(
 									subtitles,
@@ -524,7 +534,7 @@ eel.init(resource_path("web"))
 browsers = ['chrome', 'edge', 'default']
 for browser in browsers:
 	try:
-		eel.start("main.html", size=(600, 700), mode=browser, port=0)
+		eel.start("main.html", size=(600, 740), mode=browser, port=0)
 		break
 	except Exception:
 		print(f"Failed to launch the app using {browser.title()} browser")

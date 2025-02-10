@@ -18,9 +18,29 @@ input[type="color"],
 label[for] {
 	cursor: pointer;
 }
-input[type="number"]{
+input[type="number"],
+input[type="text"]{
 	cursor: text;
 }
+#loader-area{
+	background: white;
+	position: fixed;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1;
+	transition: 0.5s;
+}
+#loader-area > svg{
+	height: 50px;
+	stroke: black;
+}
+#loader-area.hidden {
+	opacity: 0;
+	visibility: hidden;
+}
+
 .tabcontent{
 	display: none;
 	padding: 0 20px;
@@ -96,41 +116,60 @@ input[type="number"]{
 }
 
 #preview_zone{
-	margin: 20px 10px;
-	margin-bottom: 5px;
-	font-family: monospace;
+	margin: 10px 0;
 	display: flex;
 	flex-direction: column;
-	gap: 10px;
+	gap: 6px;
 	font-size: 14px;
 }
-#preview_zone > div{
-	display: flex;
+#preview_zone .file {
+	border-radius: 8px;
+	padding: 6px;
+	display: grid;
+	grid-template-columns: 15px 1fr 1fr auto;
 	align-items: center;
-	gap: 8px;
+	justify-items: center;
+	gap: 6px;
+	cursor: auto;
 }
-#preview_zone .icon{
-	color: black;
-	width: 20px;
-	flex-shrink: 0;
-	text-align: center;
-	user-select: none;
+#preview_zone .file .text {
+	justify-self: start;
+	font-family: monospace;
+	line-height: 1;
 }
-#preview_zone .del{
+#preview_zone .file .icon {
+	display: flex;
+}
+#preview_zone .file .del {
 	color: red;
 	cursor: pointer;
-	user-select: none;
+	margin-left: 2px;
+	font-size: 16px;
 }
 #preview_zone.no-remove .del{
 	display: none;
 }
-#preview_zone .ok{
-	color: #00c200;
-}
-#preview_zone .now{
+#preview_zone .file.now{
 	color: #0075ff;
 }
-#preview_zone .error{
+#preview_zone .file.ok{
+	color: #00c200;
+}
+#preview_zone .file.error{
+	color: red;
+}
+#preview_zone .file.stoped{
+	color: orange;
+}
+#preview_zone .file .statuses {
+	justify-self: end;
+	display: flex;
+	gap: 5px;
+}
+#preview_zone .file .statuses .ok{
+	color: #00c200;
+}
+#preview_zone .file .statuses .error{
 	color: red;
 }
 
@@ -167,8 +206,8 @@ input[type="number"]{
 	font-weight: bold;
 }
 
-#open_dir{
-	display: none;
+.custom_browse{
+	display: block;
 	margin: auto;
 	padding: 8px 40px;
 	max-width: 100%;
@@ -178,7 +217,7 @@ input[type="number"]{
 	border: none;
 	text-transform: uppercase;
 }
-#open_dir:hover{
+.custom_browse:hover{
 	padding: 8px 70px;
 	background: #1c79c7;
 }
@@ -204,6 +243,7 @@ input[type="number"]{
 	transition: .2s ease-out;
 	box-shadow: 0 4px 0 #1899D6;
 	text-transform: uppercase;
+	user-select: none;
 }
 #start_area > *:hover {
 	filter: brightness(1.1);
@@ -320,6 +360,9 @@ fieldset legend{
 {
 	display: flex;
 }
+#subtitles_provider:has(option.mono:checked){
+	font-family: monospace;
+}
 
 #subtitles_preview{
 	width: 100%;
@@ -332,16 +375,34 @@ fieldset legend{
 
 
 #progress{
-	display: none;
-	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	padding: 5px;
 }
-#progress > span{
-	margin: 0 5px 0 5px;
+.hide {
+	display: none !important;
+}
+#console_wrapper{
+	margin: 10px 0;
+	position: relative;
+}
+#console_wrapper > button {
+	position: absolute;
+	right: 0;
+	top: 0;
+	font-size: 14px;
+	cursor: pointer;
 }
 #output{
 	box-sizing: border-box;
 	width: 100%;
 	resize: vertical;
+	border-radius: 8px;
+	border: none;
+	outline: none;
+	padding: 6px 8px;
+	background: lightgrey;
 }
 
 .flexable{
@@ -371,19 +432,6 @@ fieldset legend{
 #github{
 	margin-right: 2px;
 	vertical-align: bottom;
-}
-
-#console_wrapper{
-	margin-top: 10px;
-	margin-bottom: 10px;
-	position: relative;
-}
-#console_wrapper > button {
-	position: absolute;
-	right: 0;
-	top: 0;
-	font-size: 14px;
-	cursor: pointer;
 }
 
 .info_icon::after{

@@ -4,6 +4,7 @@
 	<title>GICutscenes</title>
 	<link rel="shortcut icon" href="images/icon.ico" type="image/x-icon">
 	<script type="text/javascript" src="/eel.js"></script>
+	<link rel='stylesheet' href="styles/fontawesome/css/all.min.css">
 	<link rel="stylesheet" href="styles/main.css">
 	<link rel="stylesheet" href="styles/dark.css">
 	<script src="scripts/language.js" defer></script>
@@ -12,6 +13,9 @@
 	<script src="scripts/about.js" defer></script>
 </head>
 <body>
+	<div id="loader-area">
+		<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g><circle cx="12" cy="12" r="9.5" fill="none" stroke-width="3" stroke-linecap="round"><animate attributeName="stroke-dasharray" dur="1.5s" calcMode="spline" values="0 150;42 150;42 150;42 150" keyTimes="0;0.475;0.95;1" keySplines="0.42,0,0.58,1;0.42,0,0.58,1;0.42,0,0.58,1" repeatCount="indefinite"/><animate attributeName="stroke-dashoffset" dur="1.5s" calcMode="spline" values="0;-16;-59;-59" keyTimes="0;0.475;0.95;1" keySplines="0.42,0,0.58,1;0.42,0,0.58,1;0.42,0,0.58,1" repeatCount="indefinite"/></circle><animateTransform attributeName="transform" type="rotate" dur="2s" values="0 12 12;360 12 12" repeatCount="indefinite"/></g></svg>
+	</div>
 
 	<div class="tabs">
 		<button data="home" class="active" onclick="openTab('home')" translation="__home__">Home</button>
@@ -31,24 +35,27 @@
 		</div>
 		<div id="preview_zone"></div>
 
-		<div id="progress">
-			<progress id="progress_bar"></progress>
-			<span id="current_progress">0/0</span>
-			<span id="current_work"></span>
-
-			<progress id="ffmpeg_progress" min="0" max="100" value="0" style="display:none"></progress>
-			<span id="ffmpeg_progress_text" style="display:none; font-size: 0.8em;">0%</span>
-
-			<div id="console_wrapper">
-				<textarea id="output" cols="30" rows="10" readonly></textarea>
-				<button onclick="clearConsole()" translation="__clear__">🗑Clear</button>
+		<div id="progress" class="hide">
+			<div>
+				<progress id="progress_bar"></progress>
+				<span id="current_progress">0/0</span>
+				<span id="current_work"></span>
 			</div>
-
-			<button onclick="openOutputFolder()"  translation="__open_output_dir__" class="browse" id="open_dir">Open Output Dir</button>
+			<div id="ffmpeg_progress_area" class="hide">
+				<progress id="ffmpeg_progress" min="0" max="100" value="0"></progress>
+				<span id="ffmpeg_progress_text">0%</span>
+			</div>
 		</div>
+		<p><button onclick="openOutputFolder()" translation="__open_output_dir__" class="browse custom_browse hide" id="open_dir">Open Output Dir</button></p>
+
+		<div id="console_wrapper" class="hide">
+			<textarea id="output" cols="30" rows="10" readonly></textarea>
+			<button onclick="clearConsole()" translation="__clear__">Clear</button>
+		</div>
+		<p><button onclick="showConsole()" translation="__console_button__" class="browse custom_browse hide" id="show_console">Console</button></p>
 
 		<div id="start_area">
-			<button onclick="stop()" id="stop" translation="__stop__" style="display:none;">STOP</button>
+			<button onclick="stop()" id="stop" translation="__stop__" class="hide">STOP</button>
 			<button onclick="start()" id="start" translation="__start__">START</button>
 		</div>
 	</div>
@@ -142,8 +149,8 @@
 			<div class="grid-layout subtitles-area" style="margin-left: 4px;">
 				<label translation="__subtitles_provider__">Subtitles provider:</label>
 				<select class="input_element settings_element" id="subtitles_provider" name="subtitles_provider">
-					<option value="https://gitlab.com/Dimbreath/AnimeGameData" selected>gitlab/Dimbreath/AnimeGameData</option>
-					<option value="https://github.com/Sycamore0/GenshinData">github/Sycamore0/GenshinData</option>
+					<option value="https://gitlab.com/Dimbreath/AnimeGameData" class="mono" selected>gitlab/Dimbreath/AnimeGameData</option>
+					<option value="https://github.com/Sycamore0/GenshinData" class="mono">github/Sycamore0/GenshinData</option>
 					<option value="local" translation="__subtitles_provider_local__">Local</option>
 					<option value="url" translation="__subtitles_provider_url__">URL</option>
 				</select>
@@ -152,7 +159,7 @@
 					<button onclick="change_subtitles_folder()" class="input_element" translation="__change__">Change</button>
 				</div>
 				<div id="provider_url">
-					<input type="text" class="input_element settings_element" name="subtitles_url" placeholder="https://">
+					<input type="text" class="input_element settings_element" name="subtitles_url" placeholder="https://" style="font-family:monospace;">
 				</div>
 
 				<label translation="__subtitles_language__">Language:</label>
@@ -160,7 +167,7 @@
 					<option value="EN" selected>English</option>
 					<option value="DE">German</option>
 					<option value="ES">Spanish</option>
-					<option value="RU">Russian</option>
+					<option value="RU">Русский</option>
 					<option value="FR">French</option>
 					<option value="IT">Italian</option>
 					<option value="PT">Portuguese</option>

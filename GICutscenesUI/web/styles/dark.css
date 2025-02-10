@@ -2,6 +2,12 @@
 	background: #2d2d2d;
 	color: white;
 }
+.dark #loader-area{
+	background: #2d2d2d;
+}
+.dark #loader-area > svg {
+	stroke: white;
+}
 .dark hr {
 	border-color: grey;
 }
@@ -61,15 +67,23 @@
 .dark .link code{
 	background: #505050;
 }
-
-.dark #preview_zone .icon{
-	color: white;
+.dark #preview_zone .file.now{
+	color: yellow;
 }
-.dark #preview_zone .ok{
+.dark #preview_zone .file.ok{
 	color: lime;
 }
-.dark #preview_zone .now{
-	color: yellow;
+.dark #preview_zone .file.error{
+	color: red;
+}
+.dark #preview_zone .file.stoped{
+	color: orange;
+}
+.dark #preview_zone .file .statuses .ok{
+	color: lime;
+}
+.dark #preview_zone .file .statuses .error{
+	color: red;
 }
 
 .dark .popup > div{

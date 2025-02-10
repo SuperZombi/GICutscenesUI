@@ -1,6 +1,10 @@
 function clearConsole(){
 	document.getElementById("output").value = "";
 }
+function showConsole(){
+	document.querySelector("#show_console").classList.add("hide")
+	document.querySelector("#console_wrapper").classList.remove("hide")
+}
 
 var maxDuration = 1;
 
@@ -33,8 +37,8 @@ function putMessageInOutput(type, message) {
 															Math.round(current_percents)
 														)
 													, 100)
-						document.getElementById("ffmpeg_progress").value = percents_rounded
-						document.getElementById("ffmpeg_progress_text").innerHTML = percents_rounded + "%"
+						document.querySelector("#ffmpeg_progress").value = percents_rounded
+						document.querySelector("#ffmpeg_progress_text").innerHTML = percents_rounded + "%"
 					}
 				})
 			}
@@ -52,29 +56,30 @@ function putMessageInOutput(type, message) {
 		document.getElementById("current_progress").innerHTML = message[0] + "/" + message[1]
 	}
 	else if (type == "event"){
-		var work_status = document.getElementById("current_work")
+		let work_status = document.getElementById("current_work")
 		if (message == "finish"){
-			work_status.innerHTML = ""
-			document.getElementById("browse-area").style.display = "block"
-			document.getElementById("open_dir").style.display = "block"
-			document.getElementById("start").disabled = false;
-			document.getElementById("stop").style.display = "none";
-			document.getElementById("preview_zone").classList.remove("no-remove")
-
-			document.getElementById("ffmpeg_progress").style.display = "none"
-			document.getElementById("ffmpeg_progress_text").style.display = "none"
 			BLOCK_START = false;
+			work_status.innerHTML = ""
+			toggleStartStop("start")
+			document.querySelector("#open_dir").classList.remove("hide")
+			document.querySelector("#browse-area").classList.remove("hide")
+			document.querySelector("#preview_zone").classList.remove("no-remove")
+			document.querySelector("#progress").classList.add("hide")
+			document.querySelector("#ffmpeg_progress_area").classList.add("hide")
 		}
 		else if (message == "start"){
 			BLOCK_START = true;
-			document.getElementById("start").disabled = true;
-			document.getElementById("stop").disabled = false;
-			document.getElementById("stop").style.display = "inline-block";
-			document.getElementById("browse-area").style.display = "none"
+			toggleStartStop("stop")
+			document.querySelector("#open_dir").classList.add("hide")
+			document.querySelector("#browse-area").classList.add("hide")
+			document.querySelector("#preview_zone").classList.add("no-remove")
+			document.querySelector("#progress").classList.remove("hide")
+			if (document.querySelector("#console_wrapper").classList.contains("hide")){
+				document.querySelector("#show_console").classList.remove("hide")
+			}
 		}
 		else if (message == "run_merge"){
-			document.getElementById("ffmpeg_progress").style.display = "inline-block"
-			document.getElementById("ffmpeg_progress_text").style.display = "inline-block"
+			document.querySelector("#ffmpeg_progress_area").classList.remove("hide")
 			work_status.innerHTML = LANG(message)
 		}
 		else if (message == "ok" || message == "error" || message == "stoped"){
@@ -88,11 +93,13 @@ function putMessageInOutput(type, message) {
 		}
 	}
 	else if (type == "work_file"){
-		document.getElementById("ffmpeg_progress").style.display = "none"
-		document.getElementById("ffmpeg_progress_text").style.display = "none"
-		document.getElementById("ffmpeg_progress").value = 0
-		document.getElementById("ffmpeg_progress_text").innerHTML = "0%"
+		document.querySelector("#ffmpeg_progress_area").classList.add("hide")
+		document.querySelector("#ffmpeg_progress").value = 0
+		document.querySelector("#ffmpeg_progress_text").innerHTML = "0%"
 		file_status_in_list()
+	}
+	else if (type == "sub_work"){
+		addWorkToFile(message.name, message.status)
 	}
 	else{
 		console.log(message)
@@ -104,20 +111,46 @@ function file_status_in_list(status="now"){
 	let element = document.querySelectorAll("#preview_zone > div")[index]
 
 	if (status == "ok"){
-		element.className = "ok"
-		element.setIcon("✓")
+		element.classList.add("ok")
+		element.setIcon("fa-regular fa-circle-check")
 	}
 	else if (status == "now"){
-		element.className = "now"
-		element.setIcon("➤")
+		element.classList.add("now")
+		element.setIcon("fa-solid fa-spinner fa-spin")
 	}
 	else if (status == "error"){
-		element.className = "error"
-		element.setIcon("❌")
+		element.classList.add("error")
+		element.setIcon("fa-regular fa-circle-exclamation")
 	}
 	else if (status == "stoped"){
-		element.className = "now"
-		element.setIcon("🛑")
+		element.classList.add("stoped")
+		element.setIcon("fa-regular fa-circle-stop")
+	}
+}
+function addWorkToFile(workname, status=true){
+	let index = document.getElementById("progress_bar").value
+	let element = document.querySelectorAll("#preview_zone > div")[index]
+	if (workname == "subtitles"){
+		element.addStatus(`fa-solid fa-closed-captioning ${status?"ok":"error"}`)
+	}
+	else if (workname == "keys"){
+		element.addStatus(`fa-solid fa-key ${status?"ok":"error"}`)
+	}
+}
+
+function toggleStartStop(action="start"){
+	let start_but = document.querySelector("#start")
+	let stop_but = document.querySelector("#stop")
+	if (action == "stop"){
+		start_but.disabled = true;
+		stop_but.disabled = false;
+		start_but.classList.add("hide")
+		stop_but.classList.remove("hide")
+	} else {
+		stop_but.disabled = true;
+		start_but.disabled = false;
+		stop_but.classList.add("hide")
+		start_but.classList.remove("hide")
 	}
 }
 

@@ -40,6 +40,16 @@ function parseSettings(){
 	return settings
 }
 
+function changeTheme(){
+	let value = document.querySelector(".settings_element[name=theme]").value
+	if (value == 'dark'){
+		document.body.classList.add('dark')
+	}
+	else{
+		document.body.classList.remove('dark')
+	}
+}
+
 
 async function change_output_folder(){
 	let folder = await eel.ask_output_folder()();
@@ -70,18 +80,6 @@ async function get_all_fonts(){
 	})
 }
 
-
-function changeTheme(){
-	let value = document.querySelector(".settings_element[name=theme]").value
-	if (value == 'dark'){
-		document.body.classList.add('dark')
-	}
-	else{
-		document.body.classList.remove('dark')
-	}
-}
-
-
 function init_subtitles_preview(){
 	let elements = document.querySelectorAll(".subtitles_setting")
 	function get_values(){
@@ -107,10 +105,11 @@ function init_subtitles_preview(){
 		return final
 	}
 	async function make_request(){
-		let data_img = await eel.make_subs_preview(get_values())();
+		let subs_lang = document.querySelector(".input_element[name='subtitles_lang']").value.toLocaleLowerCase()
+		let data_img = await eel.make_subs_preview({lang: subs_lang,...get_values()})();
 		document.getElementById("subtitles_preview").src = data_img || "";
 	}
-	elements.forEach(e=>{
+	[document.querySelector(".input_element[name='subtitles_lang']"), ...elements].forEach(e=>{
 		e.onchange = make_request
 	})
 	make_request()
