@@ -2,7 +2,7 @@
 	await get_all_fonts()
 	await load_settings()
 	changeTheme()
-	getTranslation()
+	await getTranslation()
 
 	let tab_now = window.location.hash.split("#").at(-1)
 	if (tab_now){
