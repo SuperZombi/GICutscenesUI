@@ -13,7 +13,7 @@ import win32api
 from subtitles import *
 
 CONSOLE_DEBUG_MODE = False
-__version__ = '0.8.3'
+__version__ = '0.8.4'
 
 # ---- Required Functions ----
 
