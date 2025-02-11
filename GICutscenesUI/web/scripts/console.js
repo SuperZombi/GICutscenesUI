@@ -109,21 +109,20 @@ function putMessageInOutput(type, message) {
 function file_status_in_list(status="now"){
 	let index = document.getElementById("progress_bar").value
 	let element = document.querySelectorAll("#preview_zone > div")[index]
-
 	if (status == "ok"){
-		element.classList.add("ok")
+		element.setClass("ok")
 		element.setIcon("fa-regular fa-circle-check")
 	}
 	else if (status == "now"){
-		element.classList.add("now")
+		element.setClass("now")
 		element.setIcon("fa-solid fa-spinner fa-spin")
 	}
 	else if (status == "error"){
-		element.classList.add("error")
+		element.setClass("error")
 		element.setIcon("fa-regular fa-circle-exclamation")
 	}
 	else if (status == "stoped"){
-		element.classList.add("stoped")
+		element.setClass("stoped")
 		element.setIcon("fa-regular fa-circle-stop")
 	}
 }

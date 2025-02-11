@@ -67,23 +67,8 @@
 .dark .link code{
 	background: #505050;
 }
-.dark #preview_zone .file.now{
-	color: yellow;
-}
-.dark #preview_zone .file.ok{
-	color: lime;
-}
-.dark #preview_zone .file.error{
-	color: red;
-}
-.dark #preview_zone .file.stoped{
-	color: orange;
-}
-.dark #preview_zone .file .statuses .ok{
-	color: lime;
-}
-.dark #preview_zone .file .statuses .error{
-	color: red;
+.dark #preview_zone .file .fa-file {
+	font-weight: bold;
 }
 
 .dark .popup > div{

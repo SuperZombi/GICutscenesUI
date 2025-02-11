@@ -59,13 +59,14 @@ function updatePreview(files){
 	document.querySelector("#fileCleaner").classList.remove("hide")
 }
 function addFilePreview(filename){
+	let base_classname = "file input_element"
 	let div = document.createElement("div")
-	div.className = "file input_element"
+	div.className = base_classname
 	div.setAttribute("path", filename)
 	let icon_wrapper = document.createElement("span")
 	icon_wrapper.className = "icon"
 	let icon = document.createElement("i")
-	icon.className = "fa-solid fa-file"
+	icon.className = "fa-regular fa-file"
 	icon_wrapper.appendChild(icon)
 	let text = document.createElement("span")
 	text.className = "text"
@@ -83,11 +84,12 @@ function addFilePreview(filename){
 		statuses.appendChild(i)
 	}
 	div.reset = _=>{
-		div.className = "file input_element"
+		div.className = base_classname
 		icon.className = "fa-solid fa-file"
 		statuses.innerHTML = ""
 	}
-	div.setIcon = (classes)=>{ icon.className = classes }
+	div.setClass = class_=>{ div.className = `${base_classname} ${class_}` }
+	div.setIcon = classes=>{ icon.className = classes }
 	div.appendChild(icon_wrapper)
 	div.appendChild(text)
 	div.appendChild(statuses)
