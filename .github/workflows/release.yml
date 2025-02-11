@@ -3,6 +3,7 @@ name: Attach latest build to Release
 on:
   release:
     types: [published]
+  workflow_dispatch:
 
 jobs:
   attach-artifact:
@@ -19,4 +20,5 @@ jobs:
         uses: xresloader/upload-to-github-release@v1
         with:
           file: "GICutscenesUI.exe"
+          overwrite: true
           update_latest_release: true
