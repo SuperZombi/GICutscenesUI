@@ -116,7 +116,8 @@ input[type="text"]{
 }
 
 #preview_zone{
-	margin: 10px 0;
+	max-width: 600px;
+	margin: 10px auto;
 	display: flex;
 	flex-direction: column;
 	gap: 6px;
@@ -141,7 +142,7 @@ input[type="text"]{
 	display: flex;
 }
 #preview_zone .file .del {
-	color: red;
+	color: #f03;
 	cursor: pointer;
 	margin-left: 2px;
 	font-size: 16px;
@@ -153,13 +154,16 @@ input[type="text"]{
 	color: #0075ff;
 }
 #preview_zone .file.ok{
-	color: #00c200;
+	color: #27c93f;
 }
 #preview_zone .file.error{
-	color: red;
+	color: #f03;
 }
 #preview_zone .file.stoped{
 	color: orange;
+}
+#preview_zone .file.stoped .statuses {
+	visibility: hidden;
 }
 #preview_zone .file .statuses {
 	justify-self: end;
@@ -167,10 +171,10 @@ input[type="text"]{
 	gap: 5px;
 }
 #preview_zone .file .statuses .ok{
-	color: #00c200;
+	color: #27c93f;
 }
 #preview_zone .file .statuses .error{
-	color: red;
+	color: #f03;
 }
 
 .input_element {
@@ -379,6 +383,8 @@ fieldset legend{
 	flex-direction: column;
 	gap: 5px;
 	padding: 5px;
+	max-width: 600px;
+	margin: auto;
 }
 .hide {
 	display: none !important;
