@@ -19,6 +19,7 @@
 	"save_title": "Simpan Pengaturan ke Berkas",
 	"language": "Bahasa:",
 	"output_folder": "Folder Output:",
+	"console_button": "konsol",
 	"delete_after_merge": "Hapus berkas tidak diperlukan setelah penggabungan",
 	"clear": "Bersihkan",
 	"start": "Mulai",
