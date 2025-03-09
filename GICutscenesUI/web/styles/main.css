@@ -40,6 +40,9 @@ input[type="text"]{
 	opacity: 0;
 	visibility: hidden;
 }
+hr{
+	max-width: 750px;
+}
 
 .tabcontent{
 	display: none;
@@ -56,8 +59,10 @@ input[type="text"]{
 	background-color: #f1f1f1;
 	border-radius: 12px;
 	flex-shrink: 0;
-	margin: 10px;
+	margin: 10px auto;
 	margin-bottom: 6px;
+	width: calc(100% - 20px);
+	max-width: 750px;
 }
 .tabs button {
 	background-color: inherit;
@@ -278,7 +283,7 @@ input[type="text"]{
 	top: 0;
 	text-align: center;
 	border: 0;
-	margin: 5px 0;
+	margin: 5px auto;
 	margin-bottom: -5px;
 	padding: 5px 0;
 	background: white;
@@ -328,7 +333,8 @@ input[type="range" i]{
 }
 fieldset{
 	border-radius: 12px;
-	margin: 1em 0;
+	margin: 1em auto;
+	max-width: 750px;
 }
 fieldset legend{
 	font-size: 1.15rem;
@@ -369,12 +375,13 @@ fieldset legend{
 }
 
 #subtitles_preview{
-	width: 100%;
-	height: 200px;
-	object-fit: cover;
-	object-position: bottom;
+	max-width: min(100%, 750px);
+	max-height: 42vh;
+	object-fit: contain;
 	background: lime;
 	border-radius: 8px;
+	display: block;
+	margin: auto;
 }
 
 
@@ -390,8 +397,9 @@ fieldset legend{
 	display: none !important;
 }
 #console_wrapper{
-	margin: 10px 0;
+	margin: 10px auto;
 	position: relative;
+	max-width: 750px;
 }
 #console_wrapper > button {
 	position: absolute;
@@ -415,6 +423,8 @@ fieldset legend{
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	max-width: 750px;
+	margin: auto;
 }
 .link{
 	color: blue;
@@ -483,13 +493,15 @@ table td{
 	backdrop-filter: blur(3px);
 }
 .popup.show{
-	display: block;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 .popup > div{
 	background: rgb(240, 250, 255, 0.85);
-	margin: 15% auto;
 	padding: 20px;
-	width: 70%;
+	width: 75%;
+	max-width: 750px;
 	border-radius: 16px;
 	box-sizing: border-box;
 	text-align: center;
