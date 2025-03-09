@@ -31,8 +31,8 @@ jobs:
     - name: Use PyInstaller to build GICutscenesUI
       run: pyinstaller --noconfirm --onefile --noconsole --icon="./web/images/icon.ico" --name="GICutscenesUI" --version-file="../github/ver" --add-data="web\\;.\\web" --add-data="GICutscenes.exe;." --add-data="appsettings.json;." --add-data="versions.json;." --add-data="../github/ffmpeg.exe;." main.py
     - name: Upload to Release
-        uses: xresloader/upload-to-github-release@v1
-        with:
-          file: ./GICutscenesUI/dist/GICutscenesUI.exe
-          overwrite: true
-          update_latest_release: true
+      uses: xresloader/upload-to-github-release@v1
+      with:
+        file: ./GICutscenesUI/dist/GICutscenesUI.exe
+        overwrite: true
+        update_latest_release: true
