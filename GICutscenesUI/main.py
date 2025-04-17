@@ -153,6 +153,18 @@ def get_GICutscenes_ver():
 			text = answer.decode(os.device_encoding(0))
 		return text.strip()
 
+def get_ffmpeg_output(cmd):
+	process = subprocess.Popen([
+		FFMPEG, "-hide_banner"] + cmd,
+		stdout=subprocess.PIPE, creationflags=subprocess.CREATE_NO_WINDOW
+	)
+	answer = process.communicate()[0]
+	try:
+		text = answer.decode('utf-8')
+	except UnicodeDecodeError:
+		text = answer.decode(os.device_encoding(0))
+	return text
+
 @eel.expose
 def get_ffmpeg_ver():
 	def find_ver(text):
@@ -162,12 +174,7 @@ def get_ffmpeg_ver():
 		if match is not None:
 			return match
 	try:
-		process = subprocess.Popen([FFMPEG, "-version"], stdout=subprocess.PIPE, creationflags=subprocess.CREATE_NO_WINDOW)
-		answer = process.communicate()[0]
-		try:
-			text = answer.decode('utf-8')
-		except UnicodeDecodeError:
-			text = answer.decode(os.device_encoding(0))
+		text = get_ffmpeg_output(['-version'])
 		final = {'ver': find_ver(text.strip()), 'year': find_year(text.strip())}
 		return final
 	except: return {}
@@ -340,6 +347,32 @@ def make_subs_preview(args):
 		return data_url
 
 
+# ---- GPU Functions ----
+GPU_args = {
+	"nvidia": {
+		"decode": 'cuda',
+		"encode": 'h264_nvenc'
+	},
+	"intel": {
+		"encode": 'h264_qsv'
+	}
+}
+@eel.expose
+def get_ffmpeg_supports():
+	suported = []
+	try:
+		encoders = get_ffmpeg_output(['-encoders'])
+		accelerators = get_ffmpeg_output(['-hwaccels'])
+	except: return suported
+
+	for gpu, args in GPU_args.items():
+		if args.get("encode") in encoders:
+			if args.get("decode") and not (args.get("decode") in accelerators):
+				continue
+			suported.append(gpu)
+	return suported
+
+
 # ---- MAIN Functions ----
 STOPED_BY_USER = None
 @eel.expose
@@ -474,14 +507,19 @@ def start_work(files, args):
 						send_message_to_ui_output("console", "Working ffmpeg...")
 						p_status = 0
 						bitrate = int(args['video_quality']) * 1000
-						command = [
-							FFMPEG, '-hide_banner',
+						gp_args = GPU_args[args.get('gpu')] if args.get('gpu') and args.get('gpu') in GPU_args else {}
+						command = [FFMPEG, '-hide_banner']
+						if "decode" in gp_args:
+							command += ['-hwaccel', gp_args['decode']]
+						command += [
 							'-i', new_file_name,
 							'-i', audio_file
 						]
 						if subtitles_file:
 							subs_file = subtitles_file.replace("\\", "/").replace(":", "\\\\\\:")
 							command += ["-vf", f'subtitles={subs_file}']
+						if "encode" in gp_args:
+							command += ['-c:v', gp_args['encode']]
 						command += [
 							'-b:v', str(bitrate),
 							'-b:a', '192K',
