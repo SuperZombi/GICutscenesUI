@@ -115,6 +115,17 @@ function init_subtitles_preview(){
 	make_request()
 }
 
+async function get_encoders(){
+	let gpus = await eel.get_ffmpeg_supports()()
+	let parrent = document.querySelector(".settings_element[name='gpu']")
+	gpus.forEach(gpu=>{
+		let option = document.createElement("option")
+		option.value = gpu
+		option.innerHTML = gpu
+		parrent.appendChild(option)
+	})
+}
+
 function donationPopup(){
 	function checkLastNotificationTime(){
 		let currentTime = Math.floor(Date.now() / 1000);

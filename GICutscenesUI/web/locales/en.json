@@ -24,6 +24,8 @@
 	"theme": "Theme:",
 	"light": "Light",
 	"dark": "Dark",
+	"gpu": "GPU:",
+	"gpu_none": "None",
 
 	"merging_area": "Merging",
 	"merge": "Merge Video and Audio",
