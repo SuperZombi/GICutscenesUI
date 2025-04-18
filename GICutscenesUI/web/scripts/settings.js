@@ -6,6 +6,11 @@ async function load_settings(){
 			if (el.type == "checkbox"){
 				el.checked = settings[key]
 			}
+			else if (el.tagName == 'SELECT'){
+				if (el.querySelector(`option[value="${settings[key]}"]`)){
+					el.value = settings[key]
+				}
+			}
 			else{
 				el.value = settings[key]
 			}
