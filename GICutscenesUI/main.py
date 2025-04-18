@@ -9,7 +9,6 @@ from json_minify import json_minify
 import re
 import base64
 import requests
-import win32api
 from subtitles import *
 
 CONSOLE_DEBUG_MODE = False
@@ -257,7 +256,9 @@ def log_subprocess_output(pipe, process=None):
 
 # ---- Explorer Functions ----
 
-def get_disks(): return [d for d in win32api.GetLogicalDriveStrings()[0]]
+def get_disks():
+	import win32api
+	return [d for d in win32api.GetLogicalDriveStrings()[0]]
 
 @eel.expose
 def get_all_fonts():
@@ -308,18 +309,20 @@ def open_output_folder():
 	subprocess.run(['explorer', OUTPUT_F], creationflags=subprocess.CREATE_NO_WINDOW)
 
 def find_genshin_folder():
-	templates = (
-		('Games', 'Genshin Impact'),
-		('Program Files', 'Genshin Impact')
-	)
-	for _disk in get_disks():
-		disk = f'{_disk}:'+os.sep
-		for template in templates:
-			path = os.path.join(disk, *template)
-			if os.path.exists(path):
-				assets = os.path.join(path, "Genshin Impact game", "GenshinImpact_Data", "StreamingAssets", "VideoAssets", "StandaloneWindows64")
-				if os.path.exists(assets): return assets
-				print("[WARN] Assets not found!")
+	if os.name == "nt":
+		templates = (
+			('Games', 'Genshin Impact'),
+			('Program Files', 'Genshin Impact'),
+			('Program Files', 'HoYoPlay', 'games')
+		)
+		for _disk in get_disks():
+			disk = f'{_disk}:'+os.sep
+			for template in templates:
+				path = os.path.join(disk, *template)
+				if os.path.exists(path):
+					assets = os.path.join(path, "Genshin Impact game", "GenshinImpact_Data", "StreamingAssets", "VideoAssets", "StandaloneWindows64")
+					if os.path.exists(assets): return assets
+					print("[WARN] Assets not found!")
 GENSHIN_FOLDER = find_genshin_folder()
 
 
@@ -581,7 +584,7 @@ def start_work(files, args):
 
 eel.init(resource_path("web"))
 
-browsers = ['chrome', 'edge', 'default']
+browsers = ['chrome', 'default']
 for browser in browsers:
 	try:
 		eel.start("main.html", size=(600, 800), mode=browser, port=0)
