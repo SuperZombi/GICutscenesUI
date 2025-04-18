@@ -28,6 +28,8 @@
 	"theme": "Tema:",
 	"light": "Terang",
 	"dark": "Gelap",
+	"gpu": "GPU:",
+	"gpu_none": "Nonaktif",
 
 	"merging_area": "Menggabungkan",
 	"merge": "Gabungkan Video dan Audio",
