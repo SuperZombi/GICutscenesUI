@@ -13,7 +13,7 @@ import win32api
 from subtitles import *
 
 CONSOLE_DEBUG_MODE = False
-__version__ = '0.9.0'
+__version__ = '0.9.1'
 
 # ---- Required Functions ----
 
@@ -354,21 +354,31 @@ GPU_args = {
 		"encode": 'h264_nvenc'
 	},
 	"intel": {
+		"decode": 'qsv',
 		"encode": 'h264_qsv'
+	},
+	"amd": {
+		"encode": "h264_amf"
 	}
 }
+def test_encoder(encoder, decoder=None):
+	try:
+		cmd = [
+			FFMPEG, '-f', 'lavfi', '-i', 
+			'color=black:size=360x360', 
+			'-vframes', '1', '-f', "null",
+			'-vcodec', encoder, '-'
+		]
+		process = subprocess.Popen(cmd, creationflags=subprocess.CREATE_NO_WINDOW)
+		returncode = process.wait()
+		if returncode == 0: return True
+	except: None
+
 @eel.expose
 def get_ffmpeg_supports():
 	suported = []
-	try:
-		encoders = get_ffmpeg_output(['-encoders'])
-		accelerators = get_ffmpeg_output(['-hwaccels'])
-	except: return suported
-
 	for gpu, args in GPU_args.items():
-		if args.get("encode") in encoders:
-			if args.get("decode") and not (args.get("decode") in accelerators):
-				continue
+		if test_encoder(args.get("encode")):
 			suported.append(gpu)
 	return suported
 
@@ -510,7 +520,9 @@ def start_work(files, args):
 						gp_args = GPU_args[args.get('gpu')] if args.get('gpu') and args.get('gpu') in GPU_args else {}
 						command = [FFMPEG, '-hide_banner']
 						if "decode" in gp_args:
-							command += ['-hwaccel', gp_args['decode']]
+							if gp_args['decode'] == "qsv" and subtitles_file: pass
+							else:
+								command += ['-hwaccel', gp_args['decode']]
 						command += [
 							'-i', new_file_name,
 							'-i', audio_file
