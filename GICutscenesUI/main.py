@@ -306,7 +306,10 @@ def ask_subtitles_folder():
 
 @eel.expose
 def open_output_folder():
-	subprocess.run(['explorer', OUTPUT_F], creationflags=subprocess.CREATE_NO_WINDOW)
+	if os.name == "nt":
+		subprocess.run(['explorer', OUTPUT_F], creationflags=subprocess.CREATE_NO_WINDOW)
+	elif os.name == "posix":
+		subprocess.run(['xdg-open', OUTPUT_F], creationflags=subprocess.CREATE_NO_WINDOW)
 
 def find_genshin_folder():
 	if os.name == "nt":
