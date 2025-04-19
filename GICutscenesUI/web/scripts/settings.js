@@ -1,5 +1,8 @@
-async function load_settings(){
+async function load_settings(keys=null){
 	let settings = await eel.load_settings()()
+	if (keys){
+		settings = Object.fromEntries(Object.entries(settings).filter(([key]) => keys.includes(key)))
+	}
 	Object.keys(settings).forEach(key=>{
 		let el = document.querySelector(`.settings_element[name=${key}]`)
 		if (el){
@@ -143,15 +146,13 @@ function donationPopup(){
 	}
 	function callback(){
 		document.querySelector("#donate-popup").classList.remove("show")
-		var currentTime = Math.floor(Date.now() / 1000);
+		let currentTime = Math.floor(Date.now() / 1000);
 		localStorage.setItem('lastNotificationTime', currentTime);
 	}
 	document.querySelector("#donate-popup .close").onclick = callback
 	document.querySelector("#donate-popup button").onclick = callback
 	
 	if (checkLastNotificationTime()){
-		setTimeout(_=>{
-			document.querySelector("#donate-popup").classList.add("show")
-		}, 60*1000)
+		document.querySelector("#donate-popup").classList.add("show")
 	}
 }
