@@ -1,7 +1,7 @@
 <h1 align="center">GI-Cutscenes UI</h1>
 
 <p align="center">
-    <img src="github/images/icons/UI/ui-1.png" height="200px" align="center">
+    <img src="github/images/icons/UI/ui-1.png" width="200px" align="center">
 </p>
 <p align="center">
     <strong> User Interface for <a href="https://github.com/ToaHartor/GI-cutscenes">Genshin Cutscenes Demuxer</a></strong>
