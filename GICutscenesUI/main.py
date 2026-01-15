@@ -325,7 +325,7 @@ def find_genshin_folder():
 				if os.path.exists(path):
 					assets = os.path.join(path, "Genshin Impact game", "GenshinImpact_Data", "StreamingAssets", "VideoAssets", "StandaloneWindows64")
 					if os.path.exists(assets): return assets
-					print("[WARN] Assets not found!")
+	print("[WARN] Assets not found!")
 GENSHIN_FOLDER = find_genshin_folder()
 
 
