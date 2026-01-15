@@ -11,6 +11,13 @@
     <a href="#donate"><img src="https://shields.io/badge/💲-Support_the_Project-2ea043"></a>
 </p>
 
+<h2 align="center">
+    <a href="https://github.com/SuperZombi/GICutscenesUI/releases/latest/download/GICutscenesUI.exe">
+        <img src="https://github.com/user-attachments/assets/f402fe4d-ca13-4522-8524-c16ed637966e" width="30" align="top">
+        Download
+    </a>
+</h2>
+
 ## Screenshots:
 <details>
   <summary></summary>
@@ -21,11 +28,6 @@
   <img src="github/images/subtitles.png" width="550px"><br>
   <img src="github/images/animation_low.gif" width="550px">
 </details>
-
-## Usage:
-1. Download archive from [Releases](https://github.com/SuperZombi/GICutscenesUI/releases/latest)
-2. Unzip it to a convenient location.
-3. Start ```GICutscenesUI.exe```
 
 ## FAQ
 
